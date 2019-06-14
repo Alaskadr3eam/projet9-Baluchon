@@ -10,6 +10,8 @@ import UIKit
 
 class WeatherSettingDomicileViewController: UIViewController {
 
+    @IBOutlet weak var cityTextField: UITextField!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

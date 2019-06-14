@@ -8,16 +8,8 @@
 
 import UIKit
 
-class TranslateViewController: UIViewController, LanguageTableViewControllerDelegate {
-    func changeLanguage(language: Language, sender: UIButton) {
-        sender.setTitle(language.name, for: .normal)
-        sender.accessibilityIdentifier = language.code
-    }
-    
-
-
-    
-    
+class TranslateViewController: UIViewController {
+  
     @IBOutlet weak var languageSource: UIButton!
     @IBOutlet weak var languageTarget: UIButton!
     @IBOutlet weak var textSource: UITextView!
@@ -26,31 +18,53 @@ class TranslateViewController: UIViewController, LanguageTableViewControllerDele
     @IBOutlet weak var textTranslated: UITextView!
     @IBOutlet weak var deleteText: UIButton!
     @IBOutlet weak var switchLanguage: UIButton!
-    
-    //let translate = Translate()
-    
+
+    var textSourceIsNotEmpty: Bool {
+        if textSource.text.isEmpty == true || textSource.text == "Placeholder" {
+            //Alerte
+            return false
+        }
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        initButton(source: languageSource, target: languageTarget)
         customTextViewPlaceholder(textView: textSource)
         customTextView(textView: textTranslated)
         toggleActivityIndicator(shown: false)
-        setButton()
 
         textSource.delegate = self
  
     }
+
+    func initButton(source: UIButton, target: UIButton) {
+        source.setTitle(Language.list[0].name, for: .normal)
+        source.accessibilityIdentifier = Language.list[0].code
+        
+        target.setTitle(Language.list[1].name, for: .normal)
+        target.accessibilityIdentifier = Language.list[1].code
+    }
     
     @IBAction func submitTranslate() {
-        self.toggleActivityIndicator(shown: true)
-        TranslateService.shared.createTranslateRequest(text: textSource.text, source: languageSource.accessibilityIdentifier!, target: languageTarget.accessibilityIdentifier!)
-        TranslateService.shared.getTranslate { (translationData, error) in
-            if error == nil && translationData == nil {
-                self.textTranslated.text = TranslateService.shared.translatedText
-                self.indicatorActivity.isHidden = true
-            } else {
-            //
-            }
+        if !textSourceIsNotEmpty {
+            return
         }
+        self.toggleActivityIndicator(shown: true)
+        TranslateService.shared.getTranslate(text: textSource.text, source: languageSource.accessibilityIdentifier!, target: languageTarget.accessibilityIdentifier!) { (translationData, error) in
+            if let error = error {
+                //alert
+                return
+            }
+            guard let translationData = translationData else {
+                return
+            }
+                DispatchQueue.main.async {
+                    self.textTranslated.text = translationData.data.translations[0].translatedText
+                    self.indicatorActivity.isHidden = true
+            }
+            }
+        
     }
 
     @IBAction func deletedText() {
@@ -60,18 +74,18 @@ class TranslateViewController: UIViewController, LanguageTableViewControllerDele
     }
 
     @IBAction func reverseLanguage(sender: UIButton) {
-        let code = languageSource.accessibilityIdentifier
-        let name = languageSource.title(for: .normal)
-            let code1 = languageTarget.accessibilityIdentifier
-            let name1 = languageTarget.title(for: .normal)
-            languageSource.setTitle(name1, for: .normal)
-            languageSource.accessibilityIdentifier = code1
-        languageTarget.setTitle(name, for: .normal)
-        languageTarget.accessibilityIdentifier = code
+        exchangeLanguage()
     }
 
     private func exchangeLanguage() {
-        
+        let code = languageSource.accessibilityIdentifier
+        let name = languageSource.title(for: .normal)
+        let code1 = languageTarget.accessibilityIdentifier
+        let name1 = languageTarget.title(for: .normal)
+        languageSource.setTitle(name1, for: .normal)
+        languageSource.accessibilityIdentifier = code1
+        languageTarget.setTitle(name, for: .normal)
+        languageTarget.accessibilityIdentifier = code
     }
 
     private func toggleActivityIndicator(shown: Bool) {
@@ -100,6 +114,7 @@ class TranslateViewController: UIViewController, LanguageTableViewControllerDele
 }
 
 extension TranslateViewController: UITextViewDelegate {
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Placeholder" {
             customTextView(textView: textView)
@@ -133,24 +148,16 @@ extension TranslateViewController: UITextViewDelegate {
     }
 }
 
-extension TranslateViewController {
-    func setButton () {
-        
-    /* languageSource.setTitle(Setting.shared.languageSource.name, for: .normal)
-        languageSource.value(forKeyPath: Setting.shared.languageSource.code)
-        languageSource.currentAttributedTitle = Setting.shared.languageSource.code
-        
-        languageTarget.setTitle(Setting.shared.languageTarget.name, for: .normal)
-        languageTarget.value(forKeyPath: Setting.shared.languageTarget.code)
-   */ }
+extension TranslateViewController: LanguageTableViewControllerDelegate  {
+
+    func changeLanguage(language: Language, sender: UIButton) {
+        sender.setTitle(language.name, for: .normal)
+        sender.accessibilityIdentifier = language.code
+    }
+
 }
  
-    /*
-     private func translation(_ sender: UIButton) {
-        TranslateService.shared.getTranslate(q: textSource.text, source: (languageSource.titleLabel?.text)!, target: (languageTarget.titleLabel?.text)!)
-        self.updateTextFieldTranslated()
-    }
-*/
+
     
 
 

@@ -127,7 +127,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4do-AM-5ZX">
-                                <rect key="frame" x="0.0" y="64" width="375" height="278"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="259"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6so-MQ-DK4">
@@ -159,37 +159,47 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0dP-Vb-J9p">
-                                <rect key="frame" x="0.0" y="340" width="375" height="278"/>
+                                <rect key="frame" x="0.0" y="322" width="375" height="276"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="jwt-cG-NYQ">
-                                        <rect key="frame" x="168" y="236" width="39" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </pageControl>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jv5-gt-S7T">
-                                        <rect key="frame" x="0.0" y="3" width="375" height="273"/>
+                                        <rect key="frame" x="0.0" y="3" width="375" height="289"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="82s-44-gMQ">
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="82s-44-gMQ">
                                             <size key="itemSize" width="375" height="278"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="g0l-Dy-71j">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseIdentifier" id="g0l-Dy-71j" customClass="WeatherCollectionViewCell" customModule="newbaluchon" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="5.5" width="375" height="278"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qtA-Is-5fP">
-                                                            <rect key="frame" x="333" y="20" width="22" height="22"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x90-2X-jJc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="285"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add here your city holiday" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJV-Kp-E8L">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ii-Va-0Sl">
+                                                            <rect key="frame" x="75" y="215" width="225" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxT-5X-WrJ">
+                                                            <rect key="frame" x="164" y="32" width="46" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np5-lQ-6cO">
+                                                            <rect key="frame" x="138" y="119" width="98" height="41"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -198,75 +208,167 @@
                                                     </subviews>
                                                 </view>
                                                 <color key="backgroundColor" red="0.70844453569999999" green="0.70274907350000004" blue="0.70587712530000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <outlet property="imageWeather" destination="x90-2X-jJc" id="90l-ru-Nhw"/>
+                                                    <outlet property="labelCityName" destination="pxT-5X-WrJ" id="SRn-UR-gIE"/>
+                                                    <outlet property="labelDescription" destination="1ii-Va-0Sl" id="BN8-sq-fYj"/>
+                                                    <outlet property="labelTemp" destination="Np5-lQ-6cO" id="JRA-BB-1Df"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="ZQD-B4-sUp" id="jgq-1X-ppQ"/>
+                                            <outlet property="delegate" destination="ZQD-B4-sUp" id="5Ri-8K-Xwl"/>
+                                        </connections>
                                     </collectionView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.70844453569999999" green="0.70274907350000004" blue="0.70587712530000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="jwt-cG-NYQ">
+                                <rect key="frame" x="166" y="589" width="41" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qtA-Is-5fP">
+                                <rect key="frame" x="332" y="598" width="27" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="liste"/>
+                                <connections>
+                                    <segue destination="AuN-Rf-cdP" kind="showDetail" id="uno-7G-ggd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fv3-a9-NS6"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="XcY-g3-72T"/>
                     <navigationItem key="navigationItem" title="Weather" id="J9L-gC-NJa">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="LWT-Gf-sv7">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZeH-ro-a4r">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="tappedButtonWeather" destination="ZQD-B4-sUp" eventType="touchUpInside" id="fxj-eZ-LFm"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="LWT-Gf-sv7">
+                            <connections>
+                                <segue destination="81w-hY-VCF" kind="presentation" identifier="enterCity" id="mGN-Y6-qKZ"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="Jv5-gt-S7T" id="lSI-P1-Z6M"/>
+                        <outlet property="imageWeather" destination="6so-MQ-DK4" id="4kw-DA-Gjt"/>
+                        <outlet property="labelDomicileCity" destination="6Dq-WD-eJ5" id="YK6-RP-IDA"/>
+                        <outlet property="labelDomicileDescription" destination="Mtl-Vz-c1V" id="yBa-xI-KyQ"/>
+                        <outlet property="labelDomicileTemp" destination="tFN-CR-fex" id="FUK-Ko-dUG"/>
+                        <outlet property="pageControl" destination="jwt-cG-NYQ" id="lqc-dv-lJi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="75f-GH-mfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="484" y="509.59520239880067"/>
+            <point key="canvasLocation" x="520.79999999999995" y="509.59520239880067"/>
         </scene>
-        <!--View Controller-->
+        <!--Weather Setting Domicile View Controller-->
         <scene sceneID="bqR-W0-69d">
             <objects>
-                <viewController id="81w-hY-VCF" sceneMemberID="viewController">
+                <viewController id="81w-hY-VCF" customClass="WeatherSettingDomicileViewController" customModule="newbaluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vYD-EY-EdN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paris" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TPs-TK-5dj">
-                                <rect key="frame" x="16" y="90" width="238" height="30"/>
+                                <rect key="frame" x="68" y="295" width="238" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="saisir ville et pays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySP-HP-0Y8">
-                                <rect key="frame" x="120" y="61" width="134" height="21"/>
+                                <rect key="frame" x="120" y="251" width="134" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UOF-BU-9sU">
-                                <rect key="frame" x="296" y="90" width="53" height="30"/>
+                                <rect key="frame" x="306" y="20" width="53" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Annuler"/>
+                                <connections>
+                                    <segue destination="ZQD-B4-sUp" kind="presentation" identifier="return" id="lgS-oB-C5V"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWL-q4-Sth">
+                                <rect key="frame" x="150" y="348" width="76" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Enregistrer"/>
+                                <connections>
+                                    <segue destination="aMP-hS-FiD" kind="unwind" unwindAction="saveToWeatherViewControllerWithSegue:" id="3de-qu-Ufe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="a0P-8Q-H4K"/>
                     </view>
+                    <connections>
+                        <outlet property="cityTextField" destination="TPs-TK-5dj" id="wle-Sg-JzH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2B-uR-gjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aMP-hS-FiD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1229.5999999999999" y="505.99700149925042"/>
+            <point key="canvasLocation" x="1510" y="510"/>
         </scene>
-        <!--Item-->
+        <!--Weather Table View Controller-->
+        <scene sceneID="Krb-Qw-b1f">
+            <objects>
+                <tableViewController id="AuN-Rf-cdP" customClass="WeatherTableViewController" customModule="newbaluchon" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="xPP-pd-6dM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherCell" textLabel="WY8-et-HS6" detailTextLabel="BFM-DM-avZ" style="IBUITableViewCellStyleValue1" id="hmQ-Ts-ez2" customClass="WeatherTableViewCell" customModule="newbaluchon" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hmQ-Ts-ez2" id="lo6-kk-vLA">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WY8-et-HS6">
+                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BFM-DM-avZ">
+                                            <rect key="frame" x="315" y="12" width="44" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CUL-NN-VTV">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imageCell" destination="CUL-NN-VTV" id="fGH-7t-71T"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="AuN-Rf-cdP" id="LPy-0b-ZHT"/>
+                            <outlet property="delegate" destination="AuN-Rf-cdP" id="D1H-sx-EeB"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xWJ-KW-izc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1453.5999999999999" y="1287.7061469265368"/>
+        </scene>
+        <!--Weather-->
         <scene sceneID="QfP-mH-I43">
             <objects>
                 <navigationController id="3Lq-j1-0U2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" selectedImage="weather-item" id="NET-R1-L0S"/>
+                    <tabBarItem key="tabBarItem" title="Weather" image="weather-item" id="NET-R1-L0S"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kNs-3D-YwT">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -334,13 +436,13 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hqa-IV-vZs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="P00-fn-ug0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1243" y="-196"/>
+            <point key="canvasLocation" x="1510" y="-199"/>
         </scene>
-        <!--Item-->
+        <!--Translate-->
         <scene sceneID="ueU-WW-xvE">
             <objects>
                 <navigationController id="EjG-Rz-Ne9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" selectedImage="translator-item" id="AK4-GM-enM"/>
+                    <tabBarItem key="tabBarItem" title="Translate" image="translator-item" id="AK4-GM-enM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nYX-Op-Qjd">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -356,11 +458,13 @@
     </scenes>
     <resources>
         <image name="error" width="256" height="256"/>
+        <image name="liste" width="225" height="225"/>
         <image name="transfer" width="240" height="240"/>
         <image name="translator-item" width="25" height="25"/>
         <image name="weather-item" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tdp-6u-Qex"/>
+        <segue reference="CC9-pN-p5z"/>
     </inferredMetricsTieBreakers>
 </document>

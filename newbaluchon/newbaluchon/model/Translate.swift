@@ -8,10 +8,14 @@
 
 import Foundation
 struct TranslationData: Codable {
-    var data: [Translations]
+    var data: Translations
 }
 
 struct Translations: Codable {
+    var translations: [Translation]
+}
+
+struct Translation: Codable {
     var translatedText: String
 }
 

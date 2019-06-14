@@ -9,30 +9,16 @@
 import Foundation
 
 struct WeatherData: Decodable {
-    var coordinate: Coordinate
-    var weather: [Weather]
-    var base: String
+    var weather: [Weathers]
     var main: Main
-    var visibility: Int
-    var wind: Wind
-    var clouds: Clouds
-    var dt: Int
-    var sys: Sys
-    var timezone: Double
-    var id: Double
     var name: String
-    var cod: Int
-    
-}
-struct Coordinate: Codable {
-    var lon: Double
-    var lat: Double
 }
 
-struct Weather: Codable {
+
+struct Weathers: Codable {
     var id: Int
     var main: String
-    var desciption: String
+    var description: String
     var icon: String
 }
 
@@ -44,20 +30,37 @@ struct Main: Codable {
     var temp_max: Double
 }
 
-struct Wind: Codable {
-    var speed: Int
-}
-
-struct Clouds: Codable {
-    var all: Int
-}
-
-struct Sys: Codable {
-    var type: Int
-    var id: Int
-    var message: Double
+struct WeatherDataLocation {
+    var name: String
     var country: String
-    var sunrise: Double
-    var sunset: Int
 }
 
+class WeatherHoliday {
+    var name = ""
+    var temperature = 0.0
+    var description = ""
+    var image = ""
+}
+
+/*
+class WeatherDomicile: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var temperature = ""
+    @objc dynamic var description = ""
+    @objc dynamic var image: Data? = nil
+}
+
+class WeatherHoliday: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var temperature = ""
+    @objc dynamic var description = ""
+    @objc dynamic var image: Data? = nil
+}
+
+class WeatherLocation: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var temperature = ""
+    @objc dynamic var description = ""
+    @objc dynamic var image: Data? = nil
+}
+*/

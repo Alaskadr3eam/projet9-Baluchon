@@ -31,14 +31,11 @@ class WeatherService {
                 print("errorData")
                 return
             }
-            print(data)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 completionHandler(nil, error)
                 print("error response")
                 return
             }
-            print(response)
-            
             guard let weatherData = try? JSONDecoder().decode(WeatherData.self, from: data) else {
                 completionHandler(nil, error)
                 print("error responseJSON")
@@ -50,6 +47,37 @@ class WeatherService {
             print(weatherData.weather[0].icon)
             print(weatherData.weather[0].description)
          
+            completionHandler(weatherData, nil)
+        }
+        task?.resume()
+    }
+
+    func getWeatherLocation(city: String, completionHandler: @escaping (WeatherData?,Error?) -> Void) {
+        var request = ServiceCreateRequest.createWeatherRequest(city: city)
+        request.httpMethod = "GET"
+        let session = URLSession(configuration: .default)
+        task?.cancel()
+        task = session.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                completionHandler(nil, error)
+                print("errorData")
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completionHandler(nil, error)
+                print("error response")
+                return
+            }
+            guard let weatherData = try? JSONDecoder().decode(WeatherData.self, from: data) else {
+                completionHandler(nil, error)
+                print("error responseJSON")
+                return
+            }
+            print(weatherData.name)
+            print(weatherData.main.temp)
+            print(weatherData.weather[0].icon)
+            print(weatherData.weather[0].description)
+            
             completionHandler(weatherData, nil)
         }
         task?.resume()

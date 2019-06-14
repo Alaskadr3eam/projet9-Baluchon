@@ -18,5 +18,13 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Need for App</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>coucou toi</string>
+	<key>NSLocationUsageDescription</key>
+	<string>encore toi</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>toujours toi !!!!</string>
 </dict>
 </plist>
