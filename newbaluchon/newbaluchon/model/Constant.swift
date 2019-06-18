@@ -20,5 +20,11 @@ struct Constant {
     static var translateUrl = URL(string: "https://translation.googleapis.com/language/translate/v2")!
     static var apiKeyTranslate = "AIzaSyDX07xWgK_IQRN3wXHFBopwycC9AzachOU"
 
-    
+    // MARK: - properties moneyConvertEur
+    static var moneyUrl = URL(string: "http://data.fixer.io/api/latest")!
+    static var apiKeyMoney = "64c9be90700082a08ab21d1f2cef1132"
+
+    // MARK: - properties moneyRecupArrayDevise
+    static var deviseUrl = URL(string: "http://data.fixer.io/api/symbols")!
+    static var apiKeyDevise = "64c9be90700082a08ab21d1f2cef1132"
 }

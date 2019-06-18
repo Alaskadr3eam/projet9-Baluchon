@@ -7,17 +7,31 @@
 //
 
 import UIKit
+import RealmSwift
 import CoreLocation
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, SaveCity {
+    func saveCityInRealm(city: String) {
+        addNewCity(city: city)
+        labelDomicileCity.text = objectsCity[0].name
+        dismiss(animated: true, completion: nil)
+    }
+    
+
+    var realm: Realm!
+    var objectsWeathers = DBManager.sharedInstance.getDataFromDBWeatherHoliday()
+    var objectsCity = DBManager.sharedInstance.getDataFromDBCityNameDomicile()
 
     @IBOutlet weak var labelDomicileCity: UILabel!
     @IBOutlet weak var labelDomicileTemp: UILabel!
     @IBOutlet weak var labelDomicileDescription: UILabel!
     @IBOutlet weak var imageWeather: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var pageControl: LocationPageControl!
     var currentPage = 0
+    
+
+    
 
     //var dataWeatherHoliday = [WeatherHoliday]()
 
@@ -25,10 +39,13 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
+        DBManager.self
+        
+        //DBManager.sharedInstance.deleteAllFromDatabase()
+        
         cityDomicileItEnter()
     
-        labelDomicileCity.text = UserDefaults.standard.string(forKey: "cityName") ?? ""
         initLocationManager()
 
         collectionView.delegate = self
@@ -44,33 +61,61 @@ class WeatherViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        //initLocationManager()
-        labelDomicileCity.text = UserDefaults.standard.string(forKey: "cityName") ?? ""
+        collectionView.reloadData()
+        initLocationManager()
+        //labelDomicileCity.text = UserDefaults.standard.string(forKey: "cityName") ?? ""
         locationWeatherCity()
         requestWeather()
     }
 
     func cityDomicileItEnter() {
-        if UserDefaults.standard.string(forKey: "cityName") ?? "" == nil || UserDefaults.standard.string(forKey: "cityName") ?? "" == "" {
+        let domcile = CityNameDomicile()
+        domcile.name = ""
+        DBManager.sharedInstance.addDataCityNameDomicile(object: domcile)
+        if objectsCity.count == 1 {
+            performSegue(withIdentifier: "enterCity", sender: nil)
+        } else {
+            return
+        }
+        /*
+        let domcile = CityNameDomicile()
+        domcile.name = "Paris"
+        DBManager.sharedInstance.addDataCityNameDomicile(object: domcile)
+        if objectsCity.first?.name == "Paris" {
             performSegue(withIdentifier: "enterCity", sender: nil)
         }
+ */
     }
+
 
    @IBAction func saveToWeatherViewController (segue: UIStoryboardSegue) {
         let settingViewController = segue.source as! WeatherSettingDomicileViewController
-        if settingViewController.cityTextField.text!.isEmpty != true {
-            let cityDomicile = settingViewController.cityTextField.text!
-            UserDefaults.standard.set(cityDomicile, forKey: "cityName")
-            labelDomicileCity.text = cityDomicile
+        if settingViewController.cityTextField.text!.isEmpty == true {
+            
+           return
         } else {
-            // alert ( guard )
-            return
+            let cityDomicile = settingViewController.cityTextField.text!
+            addNewCity(city: cityDomicile)
+            labelDomicileCity.text = objectsCity[0].name
+            //dismiss(animated: true, completion: nil)
         }
+    }
+
+    @IBAction func anulateToWeatherViewController (segue: UIStoryboardSegue) {
         dismiss(animated: true, completion: nil)
     }
-    
+
+    @IBAction func annulateAddHolidayToWeatherTableViewController (segue: UIStoryboardSegue) {
+        //let addCityWeatherViewController = segue.source as! AddCityWeatherUIViewController
+        dismiss(animated: true, completion: nil)
+    }
+
+    private func addNewCity(city: String) {
+        DBManager.sharedInstance.addOrUpdateDataFirst(city: city)
+    }
+
      func requestWeather() {
-        WeatherService.shared.getWeather(city: labelDomicileCity.text!) { (weatherData, error) in
+        WeatherService.shared.getWeather(city: objectsCity[0].name!) { (weatherData, error) in
             if let error = error {
                 //alert
                 return
@@ -106,17 +151,18 @@ class WeatherViewController: UIViewController {
 }
 
 extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constant.dataWeatherHoliday.count
+        return objectsWeathers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseIdentifier", for: indexPath) as! WeatherCollectionViewCell
-            self.pageControl.numberOfPages = Constant.dataWeatherHoliday.count
-            cell.labelCityName.text = Constant.dataWeatherHoliday[indexPath.row].name
-            cell.labelTemp.text = "\(Constant.dataWeatherHoliday[indexPath.row].temperature)°C"
-            cell.labelDescription.text = Constant.dataWeatherHoliday[indexPath.row].description
-            cell.imageWeather.image = UIImage(named: Constant.dataWeatherHoliday[indexPath.row].image)
+            self.pageControl.numberOfPages = objectsWeathers.count
+            cell.labelCityName.text = objectsWeathers[indexPath.row].name
+            cell.labelTemp.text = objectsWeathers[indexPath.row].temperature
+            cell.labelDescription.text = objectsWeathers[indexPath.row].descriptionWeather
+            cell.imageWeather.image = UIImage(named: objectsWeathers[indexPath.row].image!)
             return cell
         }
     
@@ -163,7 +209,18 @@ extension WeatherViewController: CLLocationManagerDelegate {
             }
         }
 
+    func updateWeatherLocation(city: String, country: String) {
+        if objectsWeathers.count == 0 {
+            requestWeatherLocation(city: city, country: country)
+        } else {
+            
+        }
+    }
+    
+
+    
     func requestWeatherLocation(city: String, country: String) {
+        
         WeatherService.shared.getWeatherLocation(city: "\(city),\(country)") { (weatherData, error) in
             if let error = error {
                 //alert
@@ -172,23 +229,54 @@ extension WeatherViewController: CLLocationManagerDelegate {
             guard let weatherData = weatherData else {
                 return
             }
-            DispatchQueue.main.async {
-                let weatherLocation = WeatherHoliday()
-                weatherLocation.name = weatherData.name
-                weatherLocation.temperature = weatherData.main.temp
-                weatherLocation.description = weatherData.weather[0].description
-                weatherLocation.image = weatherData.weather[0].icon
-                if Constant.dataWeatherHoliday.count == 0 {
-                    Constant.dataWeatherHoliday.append(weatherLocation)
-                } else {
-                    Constant.dataWeatherHoliday[0] = weatherLocation
-                }
-                self.collectionView.reloadData()
+             DispatchQueue.main.async {
+            DBManager.sharedInstance.addOrUpdateDataWeatherHolidayFirst(weather: weatherData)
             }
+             /*   //let weatherLocation = WeatherHoliday()
+                weatherLocation.name = weatherData.name
+                weatherLocation.temperature = String(weatherData.main.temp)
+                weatherLocation.descriptionWeather = weatherData.weather[0].description
+                weatherLocation.image = weatherData.weather[0].icon
+            DispatchQueue.main.async {
+                if self.objectsWeathers.count == 0 {
+                try! self.realm.write {
+                    self.realm.add(weatherLocation)
+                }
+                } else {
+                    if let newWeatherLocation = self.objectsWeathers.first {
+                        try! self.realm.write {
+                            newWeatherLocation.name = weatherData.name
+                            newWeatherLocation.temperature = String(weatherData.main.temp)
+                            newWeatherLocation.descriptionWeather = weatherData.weather[0].description
+                            newWeatherLocation.image = weatherData.weather[0].icon
+                            }
+                    }
+                    
+                }
+            }
+ */
+                
+            
         }
+        self.collectionView.reloadData()
     }
-
+   /*
+    let newWeatherLocation = self.objectsWeathers.first
+    DispatchQueue(label: "com.example.myApp.bg").async {
+    //let realm = try! Realm()
+    guard let person = realm.resolve(newWeatherLocation) else {
+    return // person was deleted
+    }
+    try! realm.write {
+    weatherLocation.name = weatherData.name
+    weatherLocation.temperature = String(weatherData.main.temp)
+    weatherLocation.descriptionWeather = weatherData.weather[0].description
+    weatherLocation.image = weatherData.weather[0].icon
+    }
+    }
+*/
     func updateCell() {
         locationWeatherCity()
     }
 }
+

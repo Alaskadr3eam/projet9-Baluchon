@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D1A76F9D4C0B4C3A7552EEF /* Pods_newbaluchon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B436EB6E41E8BA86D0A3FB /* Pods_newbaluchon.framework */; };
 		311C286C22B38B4200BE0EF8 /* WeatherSettingDomicileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C286B22B38B4200BE0EF8 /* WeatherSettingDomicileViewController.swift */; };
 		311C286E22B3931200BE0EF8 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C286D22B3931200BE0EF8 /* WeatherCollectionViewCell.swift */; };
 		311C287022B3950500BE0EF8 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C286F22B3950500BE0EF8 /* Constant.swift */; };
@@ -14,8 +15,17 @@
 		311C287422B3954300BE0EF8 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C287322B3954300BE0EF8 /* WeatherService.swift */; };
 		311C287622B3956100BE0EF8 /* TranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C287522B3956100BE0EF8 /* TranslateService.swift */; };
 		311C287822B3C40A00BE0EF8 /* WeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C287722B3C40900BE0EF8 /* WeatherTableViewController.swift */; };
+		311C28A422B4086200BE0EF8 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 311C28A322B4086200BE0EF8 /* Realm.framework */; };
+		311C28A622B4086500BE0EF8 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 311C28A522B4086500BE0EF8 /* RealmSwift.framework */; };
+		311C28A822B515C400BE0EF8 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C28A722B515C400BE0EF8 /* DBManager.swift */; };
+		311C28AA22B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C28A922B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift */; };
 		316399A0229E829800660E8B /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163999F229E829800660E8B /* Translate.swift */; };
 		316399A4229E980E00660E8B /* TranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316399A3229E980E00660E8B /* TranslateView.swift */; };
+		31A77EAB22B91A2400C47B52 /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */; };
+		31A77EAD22B91A5400C47B52 /* MoneyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAC22B91A5400C47B52 /* MoneyService.swift */; };
+		31A77EAF22B921BD00C47B52 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAE22B921BD00C47B52 /* Money.swift */; };
+		31A77EB122B924F200C47B52 /* DeviseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB022B924F200C47B52 /* DeviseService.swift */; };
+		31A77EB322B9487000C47B52 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB222B9487000C47B52 /* CustomPageControl.swift */; };
 		31C582C422A7C9EE00C7BD68 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C582C322A7C9EE00C7BD68 /* Setting.swift */; };
 		BA0B193E229E5E200063BF8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B193D229E5E200063BF8A /* AppDelegate.swift */; };
 		BA0B1940229E5E200063BF8A /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B193F229E5E200063BF8A /* TranslateViewController.swift */; };
@@ -55,9 +65,19 @@
 		311C287322B3954300BE0EF8 /* WeatherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		311C287522B3956100BE0EF8 /* TranslateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslateService.swift; sourceTree = "<group>"; };
 		311C287722B3C40900BE0EF8 /* WeatherTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewController.swift; sourceTree = "<group>"; };
+		311C28A322B4086200BE0EF8 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		311C28A522B4086500BE0EF8 /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		311C28A722B515C400BE0EF8 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		311C28A922B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityWeatherUIViewController.swift; sourceTree = "<group>"; };
 		3163999F229E829800660E8B /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		316399A3229E980E00660E8B /* TranslateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateView.swift; sourceTree = "<group>"; };
+		31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
+		31A77EAC22B91A5400C47B52 /* MoneyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyService.swift; sourceTree = "<group>"; };
+		31A77EAE22B921BD00C47B52 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
+		31A77EB022B924F200C47B52 /* DeviseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviseService.swift; sourceTree = "<group>"; };
+		31A77EB222B9487000C47B52 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		31C582C322A7C9EE00C7BD68 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		413CDF125D8BE8235DD1F685 /* Pods-newbaluchon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newbaluchon.debug.xcconfig"; path = "Target Support Files/Pods-newbaluchon/Pods-newbaluchon.debug.xcconfig"; sourceTree = "<group>"; };
 		BA0B193A229E5E200063BF8A /* newbaluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newbaluchon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0B193D229E5E200063BF8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA0B193F229E5E200063BF8A /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +95,8 @@
 		BA0B196F229F112E0063BF8A /* LanguageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTableViewController.swift; sourceTree = "<group>"; };
 		BA0B1971229FC94C0063BF8A /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		BA0B1975229FC9CB0063BF8A /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		C068C55AEDB14831EB668333 /* Pods-newbaluchon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newbaluchon.release.xcconfig"; path = "Target Support Files/Pods-newbaluchon/Pods-newbaluchon.release.xcconfig"; sourceTree = "<group>"; };
+		D4B436EB6E41E8BA86D0A3FB /* Pods_newbaluchon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newbaluchon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				311C28A622B4086500BE0EF8 /* RealmSwift.framework in Frameworks */,
+				311C28A422B4086200BE0EF8 /* Realm.framework in Frameworks */,
+				0D1A76F9D4C0B4C3A7552EEF /* Pods_newbaluchon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,11 +127,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		010F2CE48C4D6E74D3C0C899 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				413CDF125D8BE8235DD1F685 /* Pods-newbaluchon.debug.xcconfig */,
+				C068C55AEDB14831EB668333 /* Pods-newbaluchon.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		0D551998FC53497E175B514B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				311C28A522B4086500BE0EF8 /* RealmSwift.framework */,
+				311C28A322B4086200BE0EF8 /* Realm.framework */,
+				D4B436EB6E41E8BA86D0A3FB /* Pods_newbaluchon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		311C28AB22B78AC900BE0EF8 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				BA0B1971229FC94C0063BF8A /* WeatherViewController.swift */,
+				311C286B22B38B4200BE0EF8 /* WeatherSettingDomicileViewController.swift */,
+				311C287722B3C40900BE0EF8 /* WeatherTableViewController.swift */,
+				311C28A922B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
+		311C28AC22B78AF100BE0EF8 /* Translate */ = {
+			isa = PBXGroup;
+			children = (
+				BA0B193F229E5E200063BF8A /* TranslateViewController.swift */,
+				BA0B196F229F112E0063BF8A /* LanguageTableViewController.swift */,
+			);
+			path = Translate;
+			sourceTree = "<group>";
+		};
 		316399A1229E97D500660E8B /* model */ = {
 			isa = PBXGroup;
 			children = (
 				311C287122B3952500BE0EF8 /* ServiceCreateRequest.swift */,
+				311C28A722B515C400BE0EF8 /* DBManager.swift */,
 				31C582C322A7C9EE00C7BD68 /* Setting.swift */,
+				31A77EAC22B91A5400C47B52 /* MoneyService.swift */,
+				31A77EB022B924F200C47B52 /* DeviseService.swift */,
+				31A77EAE22B921BD00C47B52 /* Money.swift */,
 				311C287522B3956100BE0EF8 /* TranslateService.swift */,
 				3163999F229E829800660E8B /* Translate.swift */,
 				311C287322B3954300BE0EF8 /* WeatherService.swift */,
@@ -121,6 +189,7 @@
 			children = (
 				BA0B1941229E5E200063BF8A /* Main.storyboard */,
 				316399A3229E980E00660E8B /* TranslateView.swift */,
+				31A77EB222B9487000C47B52 /* CustomPageControl.swift */,
 				311C286D22B3931200BE0EF8 /* WeatherCollectionViewCell.swift */,
 			);
 			path = view;
@@ -133,6 +202,8 @@
 				BA0B1954229E5E240063BF8A /* newbaluchonTests */,
 				BA0B195F229E5E240063BF8A /* newbaluchonUITests */,
 				BA0B193B229E5E200063BF8A /* Products */,
+				010F2CE48C4D6E74D3C0C899 /* Pods */,
+				0D551998FC53497E175B514B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,11 +253,9 @@
 		BA0B196E229F11080063BF8A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BA0B193F229E5E200063BF8A /* TranslateViewController.swift */,
-				BA0B196F229F112E0063BF8A /* LanguageTableViewController.swift */,
-				BA0B1971229FC94C0063BF8A /* WeatherViewController.swift */,
-				311C286B22B38B4200BE0EF8 /* WeatherSettingDomicileViewController.swift */,
-				311C287722B3C40900BE0EF8 /* WeatherTableViewController.swift */,
+				311C28AC22B78AF100BE0EF8 /* Translate */,
+				311C28AB22B78AC900BE0EF8 /* Weather */,
+				31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -198,9 +267,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA0B1965229E5E240063BF8A /* Build configuration list for PBXNativeTarget "newbaluchon" */;
 			buildPhases = (
+				5373DDAE49AB793222D8CCFB /* [CP] Check Pods Manifest.lock */,
 				BA0B1936229E5E200063BF8A /* Sources */,
 				BA0B1937229E5E200063BF8A /* Frameworks */,
 				BA0B1938229E5E200063BF8A /* Resources */,
+				E10450F8FC4F3D6DD4475EDF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,11 +388,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5373DDAE49AB793222D8CCFB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-newbaluchon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E10450F8FC4F3D6DD4475EDF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-newbaluchon/Pods-newbaluchon-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-newbaluchon/Pods-newbaluchon-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-newbaluchon/Pods-newbaluchon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BA0B1936229E5E200063BF8A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				311C28AA22B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift in Sources */,
+				31A77EB122B924F200C47B52 /* DeviseService.swift in Sources */,
 				311C287422B3954300BE0EF8 /* WeatherService.swift in Sources */,
 				BA0B1970229F112E0063BF8A /* LanguageTableViewController.swift in Sources */,
 				311C287022B3950500BE0EF8 /* Constant.swift in Sources */,
@@ -330,12 +445,17 @@
 				BA0B1940229E5E200063BF8A /* TranslateViewController.swift in Sources */,
 				311C286C22B38B4200BE0EF8 /* WeatherSettingDomicileViewController.swift in Sources */,
 				311C287622B3956100BE0EF8 /* TranslateService.swift in Sources */,
+				31A77EAF22B921BD00C47B52 /* Money.swift in Sources */,
 				BA0B1976229FC9CB0063BF8A /* Weather.swift in Sources */,
+				31A77EAD22B91A5400C47B52 /* MoneyService.swift in Sources */,
 				316399A4229E980E00660E8B /* TranslateView.swift in Sources */,
 				BA0B1946229E5E200063BF8A /* newbaluchon.xcdatamodeld in Sources */,
+				311C28A822B515C400BE0EF8 /* DBManager.swift in Sources */,
 				BA0B1972229FC94C0063BF8A /* WeatherViewController.swift in Sources */,
 				311C287222B3952500BE0EF8 /* ServiceCreateRequest.swift in Sources */,
+				31A77EB322B9487000C47B52 /* CustomPageControl.swift in Sources */,
 				BA0B193E229E5E200063BF8A /* AppDelegate.swift in Sources */,
+				31A77EAB22B91A2400C47B52 /* MoneyViewController.swift in Sources */,
 				316399A0229E829800660E8B /* Translate.swift in Sources */,
 				311C286E22B3931200BE0EF8 /* WeatherCollectionViewCell.swift in Sources */,
 			);
@@ -510,9 +630,11 @@
 		};
 		BA0B1966229E5E240063BF8A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 413CDF125D8BE8235DD1F685 /* Pods-newbaluchon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = newbaluchon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -527,9 +649,11 @@
 		};
 		BA0B1967229E5E240063BF8A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C068C55AEDB14831EB668333 /* Pods-newbaluchon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = newbaluchon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

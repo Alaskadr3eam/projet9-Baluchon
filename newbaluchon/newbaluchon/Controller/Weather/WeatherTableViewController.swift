@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class WeatherTableViewController: UITableViewController {
     
     //var weather: Constant?
+    var realm: Realm!
+    var objectsWeathers = DBManager.sharedInstance.getDataFromDBWeatherHoliday()
     
     var sender: UIButton?
     
@@ -18,7 +21,7 @@ class WeatherTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        realm = try! Realm()
     }
     
     // MARK: - Table view data source
@@ -28,12 +31,12 @@ class WeatherTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Constant.dataWeatherHoliday.count
+        return objectsWeathers.count
     }
     /// Validates the selection of a language
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let weather1 = Constant.dataWeatherHoliday[indexPath.row]
+        let weather1 = objectsWeathers[indexPath.row]
         /*
         if let weather = weather1, let sender = sender {
             delegate?.changeLanguage(language: language)
@@ -59,10 +62,10 @@ class WeatherTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as! WeatherTableViewCell
         
-        let weather = Constant.dataWeatherHoliday[indexPath.row]
+        let weather = objectsWeathers[indexPath.row]
         cell.textLabel?.text = weather.name
         cell.detailTextLabel?.text = "\(weather.temperature)°C"
-        cell.imageCell.image = UIImage(named: weather.image)
+        cell.imageCell.image = UIImage(named: weather.image!)
         //cell.detailTextLabel?.text = language.code
         /*
         if let currentLanguage = self.language, currentLanguage.code == language.code {
@@ -73,6 +76,35 @@ class WeatherTableViewController: UITableViewController {
  */
         return cell
     }
+    
+    @IBAction func saveToWeatherTableViewController (segue: UIStoryboardSegue) {
+        let addCityWeatherViewController = segue.source as! AddCityWeatherUIViewController
+        let city = addCityWeatherViewController.cityNameTextField.text
+        requestNewCity(city: city!)
+        
+      
+        dismiss(animated: true, completion: nil)
+    }
+
+    
+
+    func requestNewCity(city: String) {
+        WeatherService.shared.getWeather(city: city) { (weatherData, error) in
+            if let error = error {
+                //alert
+                return
+            }
+            guard let weatherData = weatherData else {
+                return
+            }
+            DispatchQueue.main.async {
+            DBManager.sharedInstance.addDataWeatherHoliday(weather: weatherData)
+            }
+        }
+     tableView.reloadData()
+    }
+    
+    
     
     
     /*

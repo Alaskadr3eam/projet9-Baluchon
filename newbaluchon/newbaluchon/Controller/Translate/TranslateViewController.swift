@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TranslateViewController: UIViewController {
-  
+
     @IBOutlet weak var languageSource: UIButton!
     @IBOutlet weak var languageTarget: UIButton!
     @IBOutlet weak var textSource: UITextView!
@@ -29,11 +30,12 @@ class TranslateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         initButton(source: languageSource, target: languageTarget)
         customTextViewPlaceholder(textView: textSource)
         customTextView(textView: textTranslated)
         toggleActivityIndicator(shown: false)
-
+      //DBManager.sharedInstance.deleteAllFromDatabase()
         textSource.delegate = self
  
     }

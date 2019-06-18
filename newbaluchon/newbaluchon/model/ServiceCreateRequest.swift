@@ -39,4 +39,37 @@ struct ServiceCreateRequest {
         let request = URLRequest(url: url!)
         return request
     }
+
+    // MARK: - Request Money
+    static func createMoneyRequest() -> URLRequest {
+        
+        var urlComponents = URLComponents(url: Constant.moneyUrl, resolvingAgainstBaseURL: true)
+        var items = [URLQueryItem]()
+        let param = ["access_key":Constant.apiKeyMoney]
+        for (key,value) in param {
+            let queryItem = URLQueryItem(name: key, value: value)
+            items.append(queryItem)
+        }
+        urlComponents?.queryItems = items
+        let url = urlComponents?.url
+        let request = URLRequest(url: url!)
+        return request
+    }
+
+    // MARK: - Request Devise
+    static func createDeviseRequest() -> URLRequest {
+        
+        var urlComponents = URLComponents(url: Constant.deviseUrl, resolvingAgainstBaseURL: true)
+        var items = [URLQueryItem]()
+        let param = ["access_key":Constant.apiKeyMoney]
+        for (key,value) in param {
+            let queryItem = URLQueryItem(name: key, value: value)
+            items.append(queryItem)
+        }
+        urlComponents?.queryItems = items
+        let url = urlComponents?.url
+        let request = URLRequest(url: url!)
+        return request
+    }
+    
 }

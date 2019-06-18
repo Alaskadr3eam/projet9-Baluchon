@@ -1,16 +1,14 @@
 //
-//  WeatherSettingDomicileViewController.swift
+//  MoneyViewController.swift
 //  newbaluchon
 //
-//  Created by Clément Martin on 14/06/2019.
+//  Created by Clément Martin on 18/06/2019.
 //  Copyright © 2019 clement. All rights reserved.
 //
 
 import UIKit
 
-class WeatherSettingDomicileViewController: UIViewController {
-
-    @IBOutlet weak var cityTextField: UITextField!
+class MoneyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,13 +7,13 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct WeatherData: Decodable {
     var weather: [Weathers]
     var main: Main
     var name: String
 }
-
 
 struct Weathers: Codable {
     var id: Int
@@ -35,11 +35,16 @@ struct WeatherDataLocation {
     var country: String
 }
 
-class WeatherHoliday {
-    var name = ""
-    var temperature = 0.0
-    var description = ""
-    var image = ""
+class WeatherHoliday: Object {
+    @objc dynamic var name: String?
+    @objc dynamic var temperature: String?
+    @objc dynamic var descriptionWeather: String?
+    @objc dynamic var image: String?
+
+}
+
+class CityNameDomicile: Object {
+    @objc dynamic var name: String?
 }
 
 /*
