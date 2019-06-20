@@ -137,10 +137,5 @@ struct Language: Codable {
             "Zoulou":"zu"]
  */
 }
-struct TranslationResult: Codable {
-    var translatedText: String
-    init (translatedText: String) {
-        self.translatedText = translatedText
-    }
-}
+
 

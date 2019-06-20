@@ -19,13 +19,14 @@
 		311C28A622B4086500BE0EF8 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 311C28A522B4086500BE0EF8 /* RealmSwift.framework */; };
 		311C28A822B515C400BE0EF8 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C28A722B515C400BE0EF8 /* DBManager.swift */; };
 		311C28AA22B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311C28A922B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift */; };
-		316399A0229E829800660E8B /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163999F229E829800660E8B /* Translate.swift */; };
+		316399A0229E829800660E8B /* TranslateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163999F229E829800660E8B /* TranslateData.swift */; };
 		316399A4229E980E00660E8B /* TranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316399A3229E980E00660E8B /* TranslateView.swift */; };
 		31A77EAB22B91A2400C47B52 /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */; };
 		31A77EAD22B91A5400C47B52 /* MoneyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAC22B91A5400C47B52 /* MoneyService.swift */; };
 		31A77EAF22B921BD00C47B52 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAE22B921BD00C47B52 /* Money.swift */; };
 		31A77EB122B924F200C47B52 /* DeviseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB022B924F200C47B52 /* DeviseService.swift */; };
 		31A77EB322B9487000C47B52 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB222B9487000C47B52 /* CustomPageControl.swift */; };
+		31A77EB822BB878700C47B52 /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB722BB878700C47B52 /* Translate.swift */; };
 		31C582C422A7C9EE00C7BD68 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C582C322A7C9EE00C7BD68 /* Setting.swift */; };
 		BA0B193E229E5E200063BF8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B193D229E5E200063BF8A /* AppDelegate.swift */; };
 		BA0B1940229E5E200063BF8A /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B193F229E5E200063BF8A /* TranslateViewController.swift */; };
@@ -69,13 +70,14 @@
 		311C28A522B4086500BE0EF8 /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		311C28A722B515C400BE0EF8 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		311C28A922B51DF600BE0EF8 /* AddCityWeatherUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityWeatherUIViewController.swift; sourceTree = "<group>"; };
-		3163999F229E829800660E8B /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
+		3163999F229E829800660E8B /* TranslateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateData.swift; sourceTree = "<group>"; };
 		316399A3229E980E00660E8B /* TranslateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateView.swift; sourceTree = "<group>"; };
 		31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
 		31A77EAC22B91A5400C47B52 /* MoneyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyService.swift; sourceTree = "<group>"; };
 		31A77EAE22B921BD00C47B52 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
 		31A77EB022B924F200C47B52 /* DeviseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviseService.swift; sourceTree = "<group>"; };
 		31A77EB222B9487000C47B52 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
+		31A77EB722BB878700C47B52 /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		31C582C322A7C9EE00C7BD68 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		413CDF125D8BE8235DD1F685 /* Pods-newbaluchon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newbaluchon.debug.xcconfig"; path = "Target Support Files/Pods-newbaluchon/Pods-newbaluchon.debug.xcconfig"; sourceTree = "<group>"; };
 		BA0B193A229E5E200063BF8A /* newbaluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newbaluchon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,15 +171,11 @@
 		316399A1229E97D500660E8B /* model */ = {
 			isa = PBXGroup;
 			children = (
-				311C287122B3952500BE0EF8 /* ServiceCreateRequest.swift */,
-				311C28A722B515C400BE0EF8 /* DBManager.swift */,
+				31A77EB622BB874B00C47B52 /* Database */,
+				31A77EB522BB872000C47B52 /* Service-Request */,
+				31A77EB422BB86FF00C47B52 /* Translation */,
 				31C582C322A7C9EE00C7BD68 /* Setting.swift */,
-				31A77EAC22B91A5400C47B52 /* MoneyService.swift */,
-				31A77EB022B924F200C47B52 /* DeviseService.swift */,
 				31A77EAE22B921BD00C47B52 /* Money.swift */,
-				311C287522B3956100BE0EF8 /* TranslateService.swift */,
-				3163999F229E829800660E8B /* Translate.swift */,
-				311C287322B3954300BE0EF8 /* WeatherService.swift */,
 				BA0B1975229FC9CB0063BF8A /* Weather.swift */,
 				311C286F22B3950500BE0EF8 /* Constant.swift */,
 			);
@@ -193,6 +191,35 @@
 				311C286D22B3931200BE0EF8 /* WeatherCollectionViewCell.swift */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		31A77EB422BB86FF00C47B52 /* Translation */ = {
+			isa = PBXGroup;
+			children = (
+				3163999F229E829800660E8B /* TranslateData.swift */,
+				31A77EB722BB878700C47B52 /* Translate.swift */,
+			);
+			path = Translation;
+			sourceTree = "<group>";
+		};
+		31A77EB522BB872000C47B52 /* Service-Request */ = {
+			isa = PBXGroup;
+			children = (
+				311C287122B3952500BE0EF8 /* ServiceCreateRequest.swift */,
+				31A77EAC22B91A5400C47B52 /* MoneyService.swift */,
+				31A77EB022B924F200C47B52 /* DeviseService.swift */,
+				311C287522B3956100BE0EF8 /* TranslateService.swift */,
+				311C287322B3954300BE0EF8 /* WeatherService.swift */,
+			);
+			path = "Service-Request";
+			sourceTree = "<group>";
+		};
+		31A77EB622BB874B00C47B52 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				311C28A722B515C400BE0EF8 /* DBManager.swift */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		BA0B1931229E5E200063BF8A = {
@@ -443,6 +470,7 @@
 				31C582C422A7C9EE00C7BD68 /* Setting.swift in Sources */,
 				311C287822B3C40A00BE0EF8 /* WeatherTableViewController.swift in Sources */,
 				BA0B1940229E5E200063BF8A /* TranslateViewController.swift in Sources */,
+				31A77EB822BB878700C47B52 /* Translate.swift in Sources */,
 				311C286C22B38B4200BE0EF8 /* WeatherSettingDomicileViewController.swift in Sources */,
 				311C287622B3956100BE0EF8 /* TranslateService.swift in Sources */,
 				31A77EAF22B921BD00C47B52 /* Money.swift in Sources */,
@@ -456,7 +484,7 @@
 				31A77EB322B9487000C47B52 /* CustomPageControl.swift in Sources */,
 				BA0B193E229E5E200063BF8A /* AppDelegate.swift in Sources */,
 				31A77EAB22B91A2400C47B52 /* MoneyViewController.swift in Sources */,
-				316399A0229E829800660E8B /* Translate.swift in Sources */,
+				316399A0229E829800660E8B /* TranslateData.swift in Sources */,
 				311C286E22B3931200BE0EF8 /* WeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

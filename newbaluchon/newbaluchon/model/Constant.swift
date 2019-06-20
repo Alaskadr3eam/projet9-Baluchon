@@ -27,4 +27,8 @@ struct Constant {
     // MARK: - properties moneyRecupArrayDevise
     static var deviseUrl = URL(string: "http://data.fixer.io/api/symbols")!
     static var apiKeyDevise = "64c9be90700082a08ab21d1f2cef1132"
+
+    // MARK: - properties Segue
+    static var segueSettingWeather = "enterCity"
+    static var segueLanguageTableView = "choiceLanguage"
 }

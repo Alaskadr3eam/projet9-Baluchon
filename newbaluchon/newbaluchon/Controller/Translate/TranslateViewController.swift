@@ -35,7 +35,7 @@ class TranslateViewController: UIViewController {
         customTextViewPlaceholder(textView: textSource)
         customTextView(textView: textTranslated)
         toggleActivityIndicator(shown: false)
-      //DBManager.sharedInstance.deleteAllFromDatabase()
+     // DBManager.sharedInstance.deleteAllFromDatabase()
         textSource.delegate = self
  
     }
@@ -96,22 +96,19 @@ class TranslateViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "choiceLanguage", let languageVC = segue.destination as? LanguageTableViewController, let sender = sender as? UIButton {
+        if segue.identifier == Constant.segueLanguageTableView {
+            if let languageVC = segue.destination as? LanguageTableViewController {
+                if let sender = sender as? UIButton {
             languageVC.delegate = self
             languageVC.sender = sender
-            if sender == languageSource {
-                
-                //languageVC.language = languageSource
-            }
-            else {
-                //languageVC.language = Settings.Translation.targetLanguage
+                }
             }
         }
     }
 
     /// Go to Language scene when language button is tapped
     @IBAction func languageButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "choiceLanguage", sender: sender)
+        performSegue(withIdentifier: Constant.segueLanguageTableView, sender: sender)
     }
 }
 

@@ -17,7 +17,7 @@ class WeatherSettingDomicileViewController: UIViewController {
     
     @IBOutlet weak var cityTextField: UITextField!
 
-    var delegateSaveCity: SaveCity?
+    weak var delegateSaveCity: SaveCity?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class WeatherSettingDomicileViewController: UIViewController {
 
 }
 
-protocol SaveCity {
+protocol SaveCity: AnyObject {
     func saveCityInRealm(city: String)
 }
 

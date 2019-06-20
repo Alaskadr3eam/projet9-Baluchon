@@ -18,16 +18,17 @@ class WeatherViewController: UIViewController, SaveCity {
     }
     
 
-    var realm: Realm!
+    
     var objectsWeathers = DBManager.sharedInstance.getDataFromDBWeatherHoliday()
     var objectsCity = DBManager.sharedInstance.getDataFromDBCityNameDomicile()
+    var objectCity2: Results<CityNameDomicile>!
 
     @IBOutlet weak var labelDomicileCity: UILabel!
     @IBOutlet weak var labelDomicileTemp: UILabel!
     @IBOutlet weak var labelDomicileDescription: UILabel!
     @IBOutlet weak var imageWeather: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var pageControl: LocationPageControl!
+    @IBOutlet weak var pageControl: UIPageControl!
     var currentPage = 0
     
 
@@ -85,6 +86,14 @@ class WeatherViewController: UIViewController, SaveCity {
             performSegue(withIdentifier: "enterCity", sender: nil)
         }
  */
+    }
+
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "enterCity" {
+            if let vcDestination = segue.destination as? WeatherSettingDomicileViewController {
+                vcDestination.delegateSaveCity = self
+            }
+        }
     }
 
 

@@ -63,9 +63,10 @@ class WeatherTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as! WeatherTableViewCell
         
         let weather = objectsWeathers[indexPath.row]
-        cell.textLabel?.text = weather.name
-        cell.detailTextLabel?.text = "\(weather.temperature)°C"
+        cell.newLabelTitle.text = weather.name
+        cell.newLabelDetail.text = weather.temperature
         cell.imageCell.image = UIImage(named: weather.image!)
+        
         //cell.detailTextLabel?.text = language.code
         /*
         if let currentLanguage = self.language, currentLanguage.code == language.code {
@@ -161,5 +162,7 @@ protocol WeatherTableViewControllerDelegate {
 
 class WeatherTableViewCell: UITableViewCell {
     @IBOutlet var imageCell: UIImageView!
+    @IBOutlet weak var newLabelTitle: UILabel!
+    @IBOutlet weak var newLabelDetail: UILabel!
 }
 
