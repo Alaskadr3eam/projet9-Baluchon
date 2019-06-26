@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "newbaluchon/UtilityExt/Money/protocoleMoneyViewController.swift"
-            timestampString = "583231780.184116"
+            timestampString = "583233738.878536"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
@@ -105,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "newbaluchon/UtilityExt/Weather/ExtWeatherViewController.swift"
-            timestampString = "583231780.184773"
+            filePath = "newbaluchon/UtilityExt/Weather/protocoleWeatherViewController.swift"
+            timestampString = "583245444.318378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "viewIsNotHidden()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -121,13 +121,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "newbaluchon/UtilityExt/Weather/ExtWeatherViewController.swift"
-            timestampString = "583231780.184984"
+            filePath = "newbaluchon/UtilityExt/Weather/protocoleWeatherViewController.swift"
+            timestampString = "583245444.318933"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "scrollViewDidScroll(_:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "viewIsHidden()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "newbaluchon/view/WeatherView.swift"
+            timestampString = "583245444.319357"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "weatherViewOrCellWeather(view:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

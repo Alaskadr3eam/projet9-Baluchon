@@ -16,6 +16,7 @@ class Weather {
     var delegatePerformSegue: PerfomSegueDelegate?
     var delegateAddCityHoliday: AddCityHolidayDelegate?
     var delegateAlertError: AlertDelegate?
+    var delegateViewIsHidden: IsHiddenDelegate?
     
     var weatherCity = [WeatherDataCity]()
 
@@ -106,7 +107,9 @@ class Weather {
         if !domicileOKI {
             return
         }
+        self.delegateViewIsHidden?.viewIsHidden()
         WeatherService.shared.getWeather(q: objectsCity[0].name!) { (weatherData, error) in
+            self.delegateViewIsHidden?.viewIsNotHidden()
             if let error = error {
                 self.delegateAlertError?.alertError(error)
                 return
@@ -139,6 +142,7 @@ class Weather {
     }
 */
     func requestWeatherLocation(city: String) {
+        self.delegateViewIsHidden?.viewIsHidden()
         WeatherService.shared.getWeather(q:city) { (weatherData, error) in
             if let error = error {
                 self.delegateAlertError?.alertError(error)
@@ -202,4 +206,9 @@ protocol PerfomSegueDelegate {
 
 protocol AlertDelegate {
     func alertError(_ error: NetworkError)
+}
+
+protocol IsHiddenDelegate {
+    func viewIsHidden()
+    func viewIsNotHidden()
 }

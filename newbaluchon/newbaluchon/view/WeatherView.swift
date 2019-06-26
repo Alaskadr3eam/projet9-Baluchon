@@ -20,6 +20,8 @@ class WeatherView: UIView {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var buttonList: UIButton!
     @IBOutlet weak var buttonSetting: UIBarButtonItem!
+    @IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
+    @IBOutlet weak var cellWeather: WeatherCollectionViewCell!
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -38,6 +40,30 @@ class WeatherView: UIView {
         default:
             return
         }
+    }
+
+    func toggleActivityIndicator(shown: Bool) {
+        indicatorActivity.isHidden = !shown
+        labelDomicileCity.isHidden = shown
+        labelDomicileTemp.isHidden = shown
+        labelDomicileDescription.isHidden = shown
+        imageWeather.isHidden = shown
+    }
+
+    func toggleActivityIndicatorCell(shown: Bool) {
+        cellWeather.toggleActivityIndicator(shown: shown)
+    }
+    
+
+    func weatherViewOrCellWeather(view: UIView) {
+        if view == self {
+            print("weatherView")
+        } else {
+            print("cell")
+        }
+    }
+
+    func isHidden() {
     }
 
 }

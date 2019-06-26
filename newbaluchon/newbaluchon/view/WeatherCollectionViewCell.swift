@@ -14,5 +14,14 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var labelTemp: UILabel!
     @IBOutlet weak var labelDescription: UILabel!
     @IBOutlet weak var imageWeather: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
+    func toggleActivityIndicator(shown: Bool) {
+        activityIndicator.isHidden = !shown
+        labelTemp.isHidden = shown
+        labelCityName.isHidden = shown
+        labelDescription.isHidden = shown
+        imageWeather.isHidden = shown
+    }
     
 }

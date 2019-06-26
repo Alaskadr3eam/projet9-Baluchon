@@ -13,6 +13,12 @@ class WeatherService {
     //var weatherUrl2 = URL(string: "api.openweathermap.org/data/2.5/weather?APPID=2567298816d0d1f85b5a7edfdc58aa63&units=metric&lang=fr&q=paris")!
     
     static var shared = WeatherService()
+
+    private var weatherSession = URLSession(configuration: .default)
+
+    init(weatherSession: URLSession) {
+        self.weatherSession = weatherSession
+    }
     
    private init () {}
 
@@ -33,9 +39,9 @@ class WeatherService {
         }*/
         var request = ServiceCreateRequest.createRequest(url: Constant.weatherUrl, arguments: arguments)
         request.httpMethod = "GET"
-        let session = URLSession(configuration: .default)
+        //let session = URLSession(configuration: .default)
         task?.cancel()
-        task = session.dataTask(with: request) { (data, response, error) in
+        task = weatherSession.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else {
                 completionHandler(nil, NetworkError.emptyData)
                 print("errorDataWeather")

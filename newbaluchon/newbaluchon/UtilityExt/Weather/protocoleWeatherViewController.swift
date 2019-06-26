@@ -70,3 +70,23 @@ extension WeatherViewController: SaveCity {
 }
 }
 
+extension WeatherViewController: IsHiddenDelegate {
+ 
+    func viewIsNotHidden() {
+        DispatchQueue.main.async {
+            //self.weatherView.weatherViewOrCellWeather(view: )
+            
+            //self.weatherView.toggleActivityIndicator(shown: false)
+        }
+    }
+    
+    func viewIsHidden() {
+        DispatchQueue.main.async {
+            //self.weatherView.weatherViewOrCellWeather(view: self.weatherView)
+            //self.weatherView.toggleActivityIndicator(shown: true)
+        }
+    }
+    
+    
+}
+

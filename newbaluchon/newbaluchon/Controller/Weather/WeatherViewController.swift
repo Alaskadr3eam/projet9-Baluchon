@@ -26,6 +26,7 @@ class WeatherViewController: UIViewController {
         weather.delegateScreenWeather = self
         weather.delegatePerformSegue = self
         weather.delegateAlertError = self
+        weather.delegateViewIsHidden = self
     
         initLocationManager()
         locationWeatherCity()
@@ -103,7 +104,6 @@ class WeatherViewController: UIViewController {
         weather.addNewCity(city: city)
         //DBManager.sharedInstance.addOrUpdateDataFirst(city: city)
     }
-    
 
     
     // MARK: - Navigation

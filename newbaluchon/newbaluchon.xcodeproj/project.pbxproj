@@ -27,6 +27,11 @@
 		31682D4B22C12E8F00216813 /* protocoleMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4A22C12E8F00216813 /* protocoleMoneyViewController.swift */; };
 		31682D4D22C12E9F00216813 /* ExtMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4C22C12E9F00216813 /* ExtMoneyViewController.swift */; };
 		31682D4F22C2183500216813 /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4E22C2183500216813 /* DoubleExt.swift */; };
+		31682D5122C3798B00216813 /* WeatherServiceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D5022C3798B00216813 /* WeatherServiceTestCase.swift */; };
+		31682D5322C37AAF00216813 /* Weather.json in Resources */ = {isa = PBXBuildFile; fileRef = 31682D5222C37AAF00216813 /* Weather.json */; };
+		31682D5522C38D5200216813 /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D5422C38D5200216813 /* URLSessionFake.swift */; };
+		31682D5722C3938200216813 /* ServiceFakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D5622C3938200216813 /* ServiceFakeData.swift */; };
+		31682D5922C39EB700216813 /* TranslateServiceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D5822C39EB700216813 /* TranslateServiceTestCase.swift */; };
 		31A77EAB22B91A2400C47B52 /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */; };
 		31A77EAD22B91A5400C47B52 /* MoneyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAC22B91A5400C47B52 /* MoneyService.swift */; };
 		31A77EAF22B921BD00C47B52 /* MoneyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAE22B921BD00C47B52 /* MoneyData.swift */; };
@@ -93,6 +98,11 @@
 		31682D4A22C12E8F00216813 /* protocoleMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocoleMoneyViewController.swift; sourceTree = "<group>"; };
 		31682D4C22C12E9F00216813 /* ExtMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtMoneyViewController.swift; sourceTree = "<group>"; };
 		31682D4E22C2183500216813 /* DoubleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
+		31682D5022C3798B00216813 /* WeatherServiceTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceTestCase.swift; sourceTree = "<group>"; };
+		31682D5222C37AAF00216813 /* Weather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Weather.json; sourceTree = "<group>"; };
+		31682D5422C38D5200216813 /* URLSessionFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
+		31682D5622C3938200216813 /* ServiceFakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFakeData.swift; sourceTree = "<group>"; };
+		31682D5822C39EB700216813 /* TranslateServiceTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateServiceTestCase.swift; sourceTree = "<group>"; };
 		31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
 		31A77EAC22B91A5400C47B52 /* MoneyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyService.swift; sourceTree = "<group>"; };
 		31A77EAE22B921BD00C47B52 /* MoneyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyData.swift; sourceTree = "<group>"; };
@@ -356,6 +366,11 @@
 			isa = PBXGroup;
 			children = (
 				BA0B1955229E5E240063BF8A /* newbaluchonTests.swift */,
+				31682D5022C3798B00216813 /* WeatherServiceTestCase.swift */,
+				31682D5822C39EB700216813 /* TranslateServiceTestCase.swift */,
+				31682D5622C3938200216813 /* ServiceFakeData.swift */,
+				31682D5422C38D5200216813 /* URLSessionFake.swift */,
+				31682D5222C37AAF00216813 /* Weather.json */,
 				BA0B1957229E5E240063BF8A /* Info.plist */,
 			);
 			path = newbaluchonTests;
@@ -496,6 +511,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31682D5322C37AAF00216813 /* Weather.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +617,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31682D5122C3798B00216813 /* WeatherServiceTestCase.swift in Sources */,
+				31682D5522C38D5200216813 /* URLSessionFake.swift in Sources */,
+				31682D5922C39EB700216813 /* TranslateServiceTestCase.swift in Sources */,
+				31682D5722C3938200216813 /* ServiceFakeData.swift in Sources */,
 				BA0B1956229E5E240063BF8A /* newbaluchonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
