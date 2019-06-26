@@ -12,37 +12,43 @@ class DeviseService {
     
     private var task: URLSessionDataTask?
     static var shared = DeviseService()
+
+    private var arguments: [String: String] =
+        [
+         "access_key":Constant.apiKeyDevise
+        ]
     
     
     private init () {}
     
-    func getMoneyCurrent(completionHandler: @escaping(DeviseData?,Error?) -> Void) {
-        var request = ServiceCreateRequest.createDeviseRequest()
+    func getMoneyDevise(completionHandler: @escaping(DeviseData?,NetworkError?) -> Void) {
+        var request = ServiceCreateRequest.createRequest(url: Constant.deviseUrl, arguments: arguments)
         request.httpMethod = "GET"
         let session = URLSession(configuration: .default)
         task?.cancel()
         task = session.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.emptyData)
                 print("errorData")
                 return
             }
             print(data)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.badResponse)
                 print("error response")
                 return
             }
             print(response)
             
             guard let deviseData = try? JSONDecoder().decode(DeviseData.self, from: data) else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.jsonDecodeFailed)
                 print("error responseJSON")
+                
                 return
             }
+            print(deviseData.success)
+            print(deviseData.symbols.enumerated())
             
-            //print(self.translatedText)
-            print(deviseData.symbol[0])
             completionHandler(deviseData, nil)
         }
         task?.resume()

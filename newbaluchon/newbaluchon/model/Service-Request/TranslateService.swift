@@ -14,34 +14,39 @@ class TranslateService {
     
     private var task: URLSessionDataTask?
     static var shared = TranslateService()
-    
+
+    var arguments: [String: String] =
+        ["q": String(),"key":Constant.apiKeyTranslate,"source":String(),"target":String()]
     //var request: URLRequest!
     
  //   var translatedText = ""
     
     private init () {}
     
-    func getTranslate(text: String, source: String, target: String, completionHandler: @escaping (TranslationData?,Error?) -> Void) {
-        var request = ServiceCreateRequest.createTranslateRequest(text: text, source: source, target: target)
+    func getTranslate(text: String, source: String, target: String, completionHandler: @escaping (TranslationData?,NetworkError?) -> Void) {
+        arguments["q"] = text
+        arguments["source"] = source
+        arguments["target"] = target
+        var request = ServiceCreateRequest.createRequest(url: Constant.translateUrl, arguments: arguments)
         request.httpMethod = "GET"
         let session = URLSession(configuration: .default)
         task?.cancel()
         task = session.dataTask(with: request) { (data, response, error) in
            guard let data = data, error == nil else {
-            completionHandler(nil, error)
+            completionHandler(nil, NetworkError.emptyData)
                 print("errorData")
                 return
             }
  print(data)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.badResponse)
                 print("error response")
                 return
             }
      print(response)
             
             guard let translationData = try? JSONDecoder().decode(TranslationData.self, from: data) else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.jsonDecodeFailed)
                     print("error responseJSON")
                     return
             }

@@ -7,15 +7,28 @@
 //
 
 import UIKit
+import RealmSwift
 
 
-class WeatherSettingDomicileViewController: UIViewController {
 
+class WeatherSettingDomicileViewController: UIViewController, UINavigationBarDelegate {
+
+    let weather = Weather()
 
     @IBOutlet weak var navigationBar: UINavigationBar!
-    @IBOutlet weak var buttonSave: UIButton!
+    @IBOutlet weak var buttonSave: UIBarButtonItem!
+    @IBOutlet weak var buttonAnnulate: UIBarButtonItem!
     
     @IBOutlet weak var cityTextField: UITextField!
+
+
+    var cityTextIsEmpty: Bool {
+        guard cityTextField.text?.isEmpty != true else {
+            //alerte
+            return false
+        }
+        return true
+    }
 
     weak var delegateSaveCity: SaveCity?
 
@@ -25,16 +38,15 @@ class WeatherSettingDomicileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    func initButtonSave() {
-        if cityTextField.text?.isEmpty == true {
-            buttonSave.isHidden = true
-        } else {
-            buttonSave.isHidden = false
+    @IBAction func saveCity(view: WeatherView) {
+        if !cityTextIsEmpty {
+            return
         }
+        delegateSaveCity?.saveCityInRealm(city: cityTextField.text!, view: view)
     }
 
-    @IBAction func saveCity() {
-        delegateSaveCity?.saveCityInRealm(city: cityTextField.text!)
+    @IBAction func annulate() {
+        dismiss(animated: true, completion: nil)
     }
 
 
@@ -42,6 +54,6 @@ class WeatherSettingDomicileViewController: UIViewController {
 }
 
 protocol SaveCity: AnyObject {
-    func saveCityInRealm(city: String)
+    func saveCityInRealm(city: String, view: WeatherView)
 }
 

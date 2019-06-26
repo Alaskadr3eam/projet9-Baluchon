@@ -10,15 +10,22 @@ import RealmSwift
 
 class DBManager {
     
-    private var   database:Realm
+    
+    var   database: Realm
+    
+   
     
     static let   sharedInstance = DBManager()
+    
+    //var Object1: Results<CityNameDomcile>? = nil
     
     private init() {
         
         database = try! Realm()
         
     }
+    
+
 
     func deleteAllFromDatabase()  {
         
@@ -27,13 +34,33 @@ class DBManager {
             database.deleteAll()
             
         }
+        print("all deleted")
+    }
+
+    //MARK: -Function for DBMoneyAndDevise
+/*
+    func getDataFromDBDeviseDataRealm() ->   Results<DeviseDataRealm> {
+        
+        let results = database.objects(DeviseDataRealm.self)
+        
+        return results
         
     }
-    
-    
+
+    func addDataDeviseData(object: DeviseDataRealm)   {
+        
+        try! database.write {
+            
+            database.add(object)
+            
+            print("Added / Update new object")
+            
+        }
+        
+    }
+*/
     //MARK: -Function for DBCityNameDomicile
 
-    
     func getDataFromDBCityNameDomicile() ->   Results<CityNameDomicile> {
         
         let results = database.objects(CityNameDomicile.self)
@@ -41,7 +68,7 @@ class DBManager {
         return results
         
     }
-
+   
     func addDataCityNameDomicile(object: CityNameDomicile)   {
         
         try! database.write {
@@ -53,7 +80,7 @@ class DBManager {
         }
         
     }
-
+    
     func deleteFromDbCityNameDomicile(object: CityNameDomicile)   {
         
         try!   database.write {
@@ -63,17 +90,17 @@ class DBManager {
         }
         
     }
-
-    func updateDataCity(city: String) {
-        if let newCity = DBManager.sharedInstance.getDataFromDBCityNameDomicile().first {
+    
+    func updateDataCity(city: String, object: CityNameDomicile) {
+       
             try! database.write {
-                newCity.name = city
+                object.name = city
             }
-        }
+        
     }
 
+/*
     func addOrUpdateDataFirst(city: String) {
-        if DBManager.sharedInstance.getDataFromDBCityNameDomicile().count == 0 {
             let cityRealm = CityNameDomicile()
             cityRealm.name = city
             addDataCityNameDomicile(object: cityRealm)
@@ -81,6 +108,10 @@ class DBManager {
             updateDataCity(city: city)
         }
     }
+}
+    
+*/
+  
 
     //MARK: -Function for DBWeatherHoliday
 
@@ -130,4 +161,52 @@ class DBManager {
     }
     
 }
+/*
+func getDataFromDBCityNameDomicile() ->   Results<CityNameDomicile> {
+ 
+    let results = database.objects(CityNameDomicile.self)
+ 
+    return results
+ 
+}
 
+func addDataCityNameDomicile(object: CityNameDomicile)   {
+ 
+    try! database.write {
+ 
+        database.add(object)
+ 
+        print("Added / Update new object")
+ 
+    }
+ 
+}
+
+func deleteFromDbCityNameDomicile(object: CityNameDomicile)   {
+ 
+    try!   database.write {
+ 
+        database.delete(object)
+ 
+    }
+ 
+}
+
+func updateDataCity(city: String) {
+    if let newCity = weather.objectsCity?.first {
+        try! database.write {
+            newCity.name = city
+        }
+    }
+}
+
+func addOrUpdateDataFirst(city: String) {
+    if DBManager.sharedInstance.getDataFromDBCityNameDomicile().count == 0 {
+        let cityRealm = CityNameDomicile()
+        cityRealm.name = city
+        addDataCityNameDomicile(object: cityRealm)
+    } else {
+        updateDataCity(city: city)
+    }
+}
+*/

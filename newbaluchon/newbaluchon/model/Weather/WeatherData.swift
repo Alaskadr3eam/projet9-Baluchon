@@ -35,6 +35,16 @@ struct WeatherDataLocation {
     var country: String
 }
 
+struct WeatherDataCity: Codable {
+    var city: [City]
+}
+
+struct City: Codable {
+    var id: Int
+    var name: String
+    var country: String
+}
+
 class WeatherHoliday: Object {
     @objc dynamic var name: String?
     @objc dynamic var temperature: String?

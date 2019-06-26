@@ -12,37 +12,39 @@ class MoneyService {
 
     private var task: URLSessionDataTask?
     static var shared = MoneyService()
+
+    private var arguments: [String: String] =
+        [
+            "access_key":Constant.apiKeyMoney
+    ]
     
 
     private init () {}
 
-    func getMoneyCurrent(completionHandler: @escaping(MoneyData?,Error?) -> Void) {
-        var request = ServiceCreateRequest.createMoneyRequest()
+    func getMoneyCurrent(completionHandler: @escaping(MoneyData?,NetworkError?) -> Void) {
+        var request = ServiceCreateRequest.createRequest(url: Constant.moneyUrl, arguments: arguments)
         request.httpMethod = "GET"
         let session = URLSession(configuration: .default)
         task?.cancel()
         task = session.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else {
-                completionHandler(nil, error)
-                print("errorData")
+                completionHandler(nil, NetworkError.emptyData)
                 return
             }
-            print(data)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.badResponse)
                 print("error response")
                 return
             }
             print(response)
             
             guard let moneyData = try? JSONDecoder().decode(MoneyData.self, from: data) else {
-                completionHandler(nil, error)
+                completionHandler(nil, NetworkError.jsonDecodeFailed)
                 print("error responseJSON")
                 return
             }
             
-            //print(self.translatedText)
-            print(moneyData.rate[0])
+            print(moneyData.success)
             completionHandler(moneyData, nil)
         }
         task?.resume()

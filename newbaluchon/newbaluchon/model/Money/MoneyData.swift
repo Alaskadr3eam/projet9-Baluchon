@@ -7,21 +7,33 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct MoneyData : Codable {
     var timestamp: Int
-    var base: Int
-    var rate: [Rates]
-}
-
-struct Rates: Codable {
+    var base: String
+    var date: String
+    let success: Bool
     var rate: [String:Double]
+}
+struct Rates: Codable {
+    var AED: Double
+    
 }
 
 struct DeviseData: Codable {
-    var symbol: [Symbols]
+    var success: Bool
+    let symbols: [String: String]
 }
-
+/*
 struct Symbols: Codable {
     var symbol: [String: String]
 }
+*/
+/*
+class DeviseDataRealm: Object {
+    var symbols = List<String>()
+}
+*/
+
+
