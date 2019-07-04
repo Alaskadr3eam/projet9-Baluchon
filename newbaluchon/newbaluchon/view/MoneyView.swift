@@ -10,7 +10,7 @@ import UIKit
 
 class MoneyView: UIView {
 
-    var delegateConvert: WhenButtonIsClickedDelegateInMoneyView?
+
     
     @IBOutlet weak var moneyTextFieldSource: UITextField!
     @IBOutlet weak var devisePickerViewSource: UIPickerView!
@@ -25,14 +25,12 @@ class MoneyView: UIView {
     override func draw(_ rect: CGRect) {
         // Drawing code
     }
-    */
+    *//*
     @IBAction func buttonIsClicked(_ Sender: UIButton) {
+        let chosenCurrencySource = devisePickerViewSource.selectedRow(inComponent: 0)
         
         delegateConvert?.buttonConvertIsClicked(value: moneyTextFieldSource.text!)
     }
-
+*/
 }
 
-protocol WhenButtonIsClickedDelegateInMoneyView {
-    func buttonConvertIsClicked(value: String)
-}

@@ -40,12 +40,6 @@ class Translate {
             }
             print(translationData.data.translations[0].translatedText)
             self.delegateScreen?.itIsResultTranslation(text: translationData.data.translations[0].translatedText)
-          /*  DispatchQueue.main.async {
-                self.delegateScreen?.itIsResultTranslation(text: translationData.data.translations[0].translatedText)
-                //self.translatedText = translationData.data.translations[0].translatedText
-                //self.indicatorActivity.isHidden = true
-            }
- */
         }
         
     }

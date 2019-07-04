@@ -14,17 +14,17 @@ import XCTest
 class TranslateServiceTestCase: XCTestCase {
     //let expectation = XCTestExpectation(description: "Wait for queue change")
     
-    func testGetQuoteShouldPostFailedCallbackIfError() {
+    func testGetTranslateShouldPostFailedCallbackIfError() {
         // Given
         //let session = URLSessionFake(data: nil, response: nil, error: WeatherError.error)
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: nil, response: nil, error: WeatherError.error))
+        let translateService = TranslateService(translateSession: URLSessionFake(data: nil, response: nil, error: TestError.error))
         
         //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        translateService.getTranslate(text: "Bonjour", source:"FR", target:"EN") { (translateData,error) in
             // Then
             XCTAssertEqual(error, NetworkError.emptyData)
-            XCTAssertNil(weatherData)
+            XCTAssertNil(translateData)
             expectation.fulfill()
         }
         
@@ -33,15 +33,14 @@ class TranslateServiceTestCase: XCTestCase {
     
     func testGetWeatherShouldPostFailedCallbackIfNoData() {
         // Given
-        let weatherService = WeatherService(
-            weatherSession: URLSessionFake(data: nil, response: nil, error: nil))
+        let translateService = TranslateService(translateSession: URLSessionFake(data: nil, response: nil, error: nil))
         
         //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        translateService.getTranslate(text: "Bonjour", source:"FR", target:"EN") { (translateData,error) in
             // Then
             XCTAssertEqual(error, NetworkError.emptyData)
-            XCTAssertNil(weatherData)
+            XCTAssertNil(translateData)
             expectation.fulfill()
         }
         
@@ -50,13 +49,15 @@ class TranslateServiceTestCase: XCTestCase {
     
     func testGetWeatherShouldPostFailedCallbackIfIncorrectResponse() {
         // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeResponseData.weatherCorrectData,response: FakeResponseData.responseKO,error: nil))
+        // Given
+        let translateService = TranslateService(translateSession: URLSessionFake(data: FakeResponseData.translateCorrectData, response: FakeResponseData.responseKO, error: nil))
         
+        //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        translateService.getTranslate(text: "Bonjour", source:"FR", target:"EN") { (translateData,error) in
             // Then
-            XCTAssertEqual(error,NetworkError.badResponse)
-            XCTAssertNil(weatherData)
+            XCTAssertEqual(error, NetworkError.badResponse)
+            XCTAssertNil(translateData)
             expectation.fulfill()
         }
         
@@ -65,13 +66,14 @@ class TranslateServiceTestCase: XCTestCase {
     
     func testGetWeatherShouldPostFailedCallbackIfIncorrectData() {
         // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeResponseData.weatherIncorrectData,response: FakeResponseData.responseOK,error: nil))
+        let translateService = TranslateService(translateSession: URLSessionFake(data: FakeResponseData.translateIncorrectData, response: FakeResponseData.responseOK, error: nil))
         
+        //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        translateService.getTranslate(text: "Bonjour", source:"FR", target:"EN") { (translateData,error) in
             // Then
             XCTAssertEqual(error, NetworkError.jsonDecodeFailed)
-            XCTAssertNil(weatherData)
+            XCTAssertNil(translateData)
             expectation.fulfill()
         }
         
@@ -80,17 +82,17 @@ class TranslateServiceTestCase: XCTestCase {
     
     func testGetWeatherShouldPostSuccessCallbackIfNoErrorAndCorrectData() {
         // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeResponseData.weatherCorrectData,response: FakeResponseData.responseOK,error: nil))
+        let translateService = TranslateService(translateSession: URLSessionFake(data: FakeResponseData.translateCorrectData, response: FakeResponseData.responseOK, error: nil))
         
+        //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
-            
-            //XCTAssertEqual(FakeResponseData.weatherCorrectData, weatherData)
+        translateService.getTranslate(text: "Bonjour", source:"FR", target:"EN") { (translateData,error) in
+            // Then
             XCTAssertNil(error)
-            XCTAssertEqual(weatherData!.name, "Paris")
-            XCTAssertEqual(weatherData!.main.temp, 301.34)
+            XCTAssertEqual(translateData?.data.translations[0].translatedText, "Hello")
             expectation.fulfill()
         }
+        
         wait(for: [expectation], timeout: 0.01)
     }
     

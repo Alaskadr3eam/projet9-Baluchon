@@ -58,23 +58,14 @@ class WeatherTableViewController: UITableViewController {
     /// Validates the selection of a language
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let weather1 = weather.objectsWeathers[indexPath.row]
-        /*
-        if let weather = weather1, let sender = sender {
-            delegate?.changeLanguage(language: language)
-        }
- */
+        let cell = tableView.cellForRow(at: indexPath)
+        delegate?.changeWeather(index: indexPath)
+        
+        
+ 
         dismiss(animated: true, completion: nil)
     }
-/*
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
 
-    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    */
 
     @objc func swipeForEditing(_ sender: UISwipeGestureRecognizer?) {
         if tableView.isEditing == true {
@@ -92,9 +83,13 @@ class WeatherTableViewController: UITableViewController {
  
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard indexPath.row != 0 else {
+            print("impossible")
+            return
+        }
         if editingStyle == .delete {
             guard indexPath.row != 0 else {
-                print("impossible")//alerte
+                alertVC(title: "Attention", message: "Cette cellule est celle de la localisation on ne peut pas la supprimer")
                 return
             }
             let weatherDelete = weather.objectsWeathers[indexPath.row]
@@ -104,29 +99,16 @@ class WeatherTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
- 
-    /*
-     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     tableView.deselectRow(at: indexPath, animated: true)
-     //print("Company Name : " + names[indexPath.row])
-     
-     language = Language.list[indexPath.row]
-     
-     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-     let newViewController = storyBoard.instantiateViewController(withIdentifier: "TranslateViewController") as! TranslateViewController
-     self.present(newViewController, animated: true, completion: nil)
-     
-     }
-     */
-    
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as! WeatherTableViewCell
         
         let weather = self.weather.objectsWeathers[indexPath.row]
+        cell.imageCell.contentMode = .scaleAspectFit
         cell.newLabelTitle.text = weather.name
         cell.newLabelDetail.text = weather.temperature
         cell.imageCell.image = UIImage(named: weather.image!)
+        changeBackground(index: indexPath.row, cell: cell)
         
         //cell.detailTextLabel?.text = language.code
         /*
@@ -138,61 +120,16 @@ class WeatherTableViewController: UITableViewController {
  */
         return cell
     }
-   /*
-    @IBAction func saveToWeatherTableViewController (segue: UIStoryboardSegue) {
-        let addCityWeatherViewController = segue.source as! AddCityWeatherUIViewController
-        let city = addCityWeatherViewController.cityNameTextField.text
-        requestNewCity(city: city!)
-        
-      
-        dismiss(animated: true, completion: nil)
-    }
 
-   */
-/*
-    func requestNewCity(city: String) {
-        weather.requestNewCity(city: city)
-     tableView.reloadData()
+    func changeBackground(index: Int, cell: WeatherTableViewCell) {
+        let letters = CharacterSet.init(charactersIn: "n")
+        let range = weather.objectsWeathers[index].image?.rangeOfCharacter(from: letters)
+        if range != nil  {
+            cell.imageBackground.image = UIImage(named: "ciel nuit")
+        } else {
+            cell.imageBackground.image = UIImage(named: "ciel jour")
+        }
     }
- */
-    
-    
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
     
     // MARK: - Navigation
     
@@ -200,23 +137,25 @@ class WeatherTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constant.segueSettingHolidayWeather {
-            if let vcDestination = segue.destination as? AddCityWeatherUIViewController {
+            if let vcDestination = segue.destination as? SettingTableViewController {
                 vcDestination.delegateSaveCityHoliday = self
             }
         }
     }
     
 }
-protocol WeatherTableViewControllerDelegate {
+protocol WeatherTableViewControllerDelegate: AnyObject {
     /// Change the source or target language
-    func changeWeather()
+    func changeWeather(index: IndexPath)
 }
 
 extension WeatherTableViewController: SaveCityHolidayDelegate {
     func saveCityHolidayRealm(city: String) {
         weather.requestNewCity(city: city)
         dismiss(animated: true, completion: nil)
+        tableViewWeather.reloadData()
     }
+    
 }
 
 extension WeatherTableViewController: AddCityHolidayDelegate {
@@ -234,8 +173,10 @@ extension WeatherTableViewController: AddCityHolidayDelegate {
 
 class WeatherTableViewCell: UITableViewCell {
     @IBOutlet var imageCell: UIImageView!
+    @IBOutlet var imageBackground: UIImageView!
     @IBOutlet weak var newLabelTitle: UILabel!
     @IBOutlet weak var newLabelDetail: UILabel!
     @IBOutlet weak var swipeDelete: UISwipeGestureRecognizer!
+    @IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
 }
 

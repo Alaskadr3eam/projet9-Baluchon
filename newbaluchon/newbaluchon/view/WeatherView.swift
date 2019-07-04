@@ -22,6 +22,9 @@ class WeatherView: UIView {
     @IBOutlet weak var buttonSetting: UIBarButtonItem!
     @IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
     @IBOutlet weak var cellWeather: WeatherCollectionViewCell!
+    @IBOutlet weak var viewCollectionView: UIView!
+    @IBOutlet weak var collectionLayoutFlow: UICollectionViewFlowLayout!
+    @IBOutlet weak var imageBackground: UIImageView!
 
     /*
     // Only override draw() if you perform custom drawing.

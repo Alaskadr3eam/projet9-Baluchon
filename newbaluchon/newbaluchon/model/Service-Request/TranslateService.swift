@@ -8,20 +8,22 @@
 
 import Foundation
 class TranslateService {
-    
-    
-   // private var translateUrl = URL(string: "https://translation.googleapis.com/language/translate/v2")!
-    
-    private var task: URLSessionDataTask?
+
     static var shared = TranslateService()
+
+    private var translateSession = URLSession(configuration: .default)
+
+    init(translateSession: URLSession) {
+        self.translateSession = translateSession
+    }
+
+    private init () {}
+
+    private var task: URLSessionDataTask?
 
     var arguments: [String: String] =
         ["q": String(),"key":Constant.apiKeyTranslate,"source":String(),"target":String()]
-    //var request: URLRequest!
-    
- //   var translatedText = ""
-    
-    private init () {}
+
     
     func getTranslate(text: String, source: String, target: String, completionHandler: @escaping (TranslationData?,NetworkError?) -> Void) {
         arguments["q"] = text
@@ -29,9 +31,9 @@ class TranslateService {
         arguments["target"] = target
         var request = ServiceCreateRequest.createRequest(url: Constant.translateUrl, arguments: arguments)
         request.httpMethod = "GET"
-        let session = URLSession(configuration: .default)
+       // let session = URLSession(configuration: .default)
         task?.cancel()
-        task = session.dataTask(with: request) { (data, response, error) in
+        task = translateSession.dataTask(with: request) { (data, response, error) in
            guard let data = data, error == nil else {
             completionHandler(nil, NetworkError.emptyData)
                 print("errorData")

@@ -17,6 +17,14 @@ class MoneyService {
         [
             "access_key":Constant.apiKeyMoney
     ]
+
+    private var moneySession = URLSession(configuration: .default)
+    
+    init(moneySession: URLSession) {
+        self.moneySession = moneySession
+    }
+    
+    
     
 
     private init () {}

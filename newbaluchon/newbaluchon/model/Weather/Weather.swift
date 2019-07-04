@@ -24,123 +24,38 @@ class Weather {
     var objectsWeathers = DBManager.sharedInstance.getDataFromDBWeatherHoliday()
     var objectsCity = DBManager.sharedInstance.getDataFromDBCityNameDomicile()
 
-    //var objectCity2: Results<CityNameDomicile>? = nil
 
-    enum TotalCaculError: Error {
-        case calculImpossible
-        
-        var displayString: String {
-            switch self {
-            case .calculImpossible:
-                return "Erreur calcul impossible en informatique sinon = 0"
-            }
-        }
-    }
-
-    func requestIsPossible() throws {
-        guard objectsCity.count != 0 else {
-        throw
-    TotalCaculError.calculImpossible
-            
-        }
-    }
-
-    var domicileOKI: Bool {
-       let reponse = dityDomicileOK()
-        return reponse
-    }
-    
-    func dityDomicileOK() -> Bool{
-        do {
-            try requestIsPossible()
-        } catch {
-            delegatePerformSegue?.perfomSegueIsCalled()
-            return false
-        }
-        return true
-        
-        /*
-        if objectsCity == nil {
-            delegatePerformSegue?.perfomSegueIsCalled()
-        } else {
-            return
-        }
- */
+    var requestIsOk: Bool {
+        return objectsCity.count == 0
     }
 
     func addDataCityNameDomicile(object: CityNameDomicile)   {
        DBManager.sharedInstance.addDataCityNameDomicile(object: object)
     }
 
-    func addNewCity(city: String) {
-        do {
-            try requestIsPossible()
-        } catch {
-            let cityRealm = CityNameDomicile()
-            cityRealm.name = city
-            DBManager.sharedInstance.addDataCityNameDomicile(object: cityRealm)
-            return
-           
-        }
-            if let newCity = objectsCity.first {
-                DBManager.sharedInstance.updateDataCity(city: city, object: newCity)
-    }
-    }
-/*
     func requestWeather() {
-        if !domicileOKI {
+        if requestIsOk {
+            delegatePerformSegue?.perfomSegueIsCalled()
             return
-        }
-        WeatherService.shared.getWeather(city: objectsCity[0].name!) { (weatherData, error) in
-            if let error = error {
-                self.delegateAlertError?.alertError(error)
-                return
+        } else {
+           self.delegateViewIsHidden?.viewIsHidden()
+            WeatherService.shared.getWeather(q: objectsCity[0].name!) { [weak self] (weatherData, error) in
+                guard let self = self else {
+                    return
+                }
+              self.delegateViewIsHidden?.viewIsNotHidden()
+                if let error = error {
+                    self.delegateAlertError?.alertError(error)
+                    return
+                }
+                guard let weatherData = weatherData else {
+                    return
+                }
+                self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
             }
-            guard let weatherData = weatherData else {
-                return
-            }
-            self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
-        }
-    }
-*/
-    func requestWeather() {
-        if !domicileOKI {
-            return
-        }
-        self.delegateViewIsHidden?.viewIsHidden()
-        WeatherService.shared.getWeather(q: objectsCity[0].name!) { (weatherData, error) in
-            self.delegateViewIsHidden?.viewIsNotHidden()
-            if let error = error {
-                self.delegateAlertError?.alertError(error)
-                return
-            }
-            guard let weatherData = weatherData else {
-                return
-            }
-            self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
         }
     }
-    /*
-    func requestWeatherLocation(city: String, country: String) {
-        
-        WeatherService.shared.getWeatherLocation(city: "\(city),\(country)") { (weatherData, error) in
-            if let error = error {
-                //alert
-                return
-            }
-            guard let weatherData = weatherData else {
-                return
-            }
-            /*
-            DispatchQueue.main.async {
-                DBManager.sharedInstance.addOrUpdateDataWeatherHolidayFirst(weather: weatherData)
-            }
-           */
-            self.delegateScreenWeather?.itISResultRequestLocation(weatherData: weatherData)
-        }
-        delegateScreenWeather?.itIsResultRequestLocationInCollectionView()
-    }
-*/
+
     func requestWeatherLocation(city: String) {
         self.delegateViewIsHidden?.viewIsHidden()
         WeatherService.shared.getWeather(q:city) { (weatherData, error) in
@@ -154,6 +69,26 @@ class Weather {
             self.delegateScreenWeather?.itISResultRequestLocation(weatherData: weatherData)
         }
         delegateScreenWeather?.itIsResultRequestLocationInCollectionView()
+    }
+
+    func requestNewCityDomicile(city: String) {
+        WeatherService.shared.getWeather(q: city) { (weatherData, error) in
+            if let error = error {
+                
+                return
+            }
+            guard let weatherData = weatherData else {
+                return
+            }
+           /* DispatchQueue.main.async {
+                DBManager.sharedInstance.addOrUpdateDataCityName(weather: weatherdata)
+            }*/
+           // self.delegateAddCityHoliday?.itISResultRequestNewCityHoliday(weatherData: weatherData)
+            self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
+        }
+        
+       //self.delegateAddCityHoliday?.updateTableViewWeather()
+        //tableView.reloadData()
     }
 
     func requestNewCity(city: String) {
@@ -171,9 +106,8 @@ class Weather {
         //tableView.reloadData()
     }
 
-    /*
-    func requestNewCity(city: String) {
-        WeatherService.shared.getWeather(city: city) { (weatherData, error) in
+    func requestNewCityReload(city: String, newWeather: WeatherHoliday, index: Int) {
+        WeatherService.shared.getWeather(q: city) { (weatherData, error) in
             if let error = error {
                 
                 return
@@ -181,12 +115,15 @@ class Weather {
             guard let weatherData = weatherData else {
                 return
             }
-            self.delegateAddCityHoliday?.itISResultRequestNewCityHoliday(weatherData: weatherData)
+            DispatchQueue.main.async {
+                DBManager.sharedInstance.update(newweather1: self.objectsWeathers[index], weatherData: weatherData)
+            }
+            //self.delegateAddCityHoliday?.itISResultRequestNewCityHoliday(weatherData: weatherData)
         }
         self.delegateAddCityHoliday?.updateTableViewWeather()
         //tableView.reloadData()
     }
-    */
+
 }
 
 protocol UpdateWeatherViewDelegate {

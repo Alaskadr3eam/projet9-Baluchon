@@ -30,7 +30,7 @@ class WeatherSettingDomicileViewController: UIViewController, UINavigationBarDel
         return true
     }
 
-    weak var delegateSaveCity: SaveCity?
+    //weak var delegateSaveCity: SaveCity?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,18 +42,22 @@ class WeatherSettingDomicileViewController: UIViewController, UINavigationBarDel
         if !cityTextIsEmpty {
             return
         }
-        delegateSaveCity?.saveCityInRealm(city: cityTextField.text!, view: view)
+     //  delegateSaveCity?.saveCityInRealm(city: cityTextField.text!, view: view)
     }
 
     @IBAction func annulate() {
+        if !cityTextIsEmpty {
+            alertVC(title: "Attention", message: "Il faut absolument entre une ville d'origine")
+            return
+        }
         dismiss(animated: true, completion: nil)
     }
 
 
 
 }
-
+/*
 protocol SaveCity: AnyObject {
     func saveCityInRealm(city: String, view: WeatherView)
 }
-
+*/

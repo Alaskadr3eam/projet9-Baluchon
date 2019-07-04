@@ -13,15 +13,43 @@ class DBManager {
     
     var   database: Realm
     
-   
-    
     static let   sharedInstance = DBManager()
     
     //var Object1: Results<CityNameDomcile>? = nil
     
     private init() {
+    
+      var configuration = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    
+                    
+                    // if you want to fill a new property with some values you have to enumerate
+                    // the existing objects and set the new value
+                    migration.enumerateObjects(ofType: CityNameDomicile.className()) { oldObject, newObject in
+                        newObject!["temperature"] = String()
+                        newObject!["desctiptionWeather"] = String()
+                        newObject!["temperature"] = String()
+                        newObject!["image"] = String()
+                    }
+                    
+                    migration.enumerateObjects(ofType: MoneyDataRealm.className()) { oldObject, newObject in
+                        newObject!["date"] = String()
+                    }
+                    
+                    // if you added a new property or removed a property you don't
+                    // have to do anything because Realm automatically detects that
+                }
+        }
+        )
+        Realm.Configuration.defaultConfiguration = configuration
+        
+        // opening the Realm file now makes sure that the migration is performed
+       // let realm = try! Realm()
         
         database = try! Realm()
+    
         
     }
     
@@ -38,16 +66,83 @@ class DBManager {
     }
 
     //MARK: -Function for DBMoneyAndDevise
-/*
-    func getDataFromDBDeviseDataRealm() ->   Results<DeviseDataRealm> {
+
+    func getDataFromDBMoneyDataRealm() ->   Results<MoneyDataRealm> {
         
-        let results = database.objects(DeviseDataRealm.self)
+        let results = database.objects(MoneyDataRealm.self)
         
         return results
         
     }
 
-    func addDataDeviseData(object: DeviseDataRealm)   {
+    func getDataFromDBSymbolsDataRealm() ->   Results<SymbolsDataRealm> {
+        
+        let results = database.objects(SymbolsDataRealm.self)
+        
+        return results
+        
+    }
+
+    func addDataSymbolsDataRealm(symbols: DeviseData) {
+        
+        for (key,value) in symbols.symbols {
+            let symbolsDataRealm = SymbolsDataRealm()
+            symbolsDataRealm.code = key
+            symbolsDataRealm.name = value
+            try! database.write {
+                database.add(symbolsDataRealm)
+                print("Added / Update new object")
+            }
+        }
+    }
+
+    func deleteFromDbSymbolsDataRealm(object: SymbolsDataRealm)   {
+        
+        try!   database.write {
+            
+            database.delete(object)
+            
+        }
+        
+    }
+
+    func addDataMoneyDataRealm(money: MoneyData)   {
+        let moneyDataRealm = MoneyDataRealm()
+        moneyDataRealm.timestamps = money.timestamp
+       // moneyDataRealm.date = money.date
+            var i = 0
+            for (key,value) in money.rates {
+                let rate = Rate()
+           rate.symbols = key
+                rate.currencyValue = value
+                moneyDataRealm.symbols.append(rate)
+                i += 1
+            }
+        try! database.write {
+            database.add(moneyDataRealm)
+            print("Added / Update new object")
+        }
+    }
+
+    func deleteFromDbMoneyData(object: MoneyDataRealm)   {
+        
+        try!   database.write {
+            
+            database.delete(object)
+            
+        }
+        
+    }
+/*
+    func getDataFromDBRateDataRealm() ->   Results<Rate> {
+        
+        let results = database.objects(Rate.self)
+        
+        return results
+        
+    }
+*/
+    func addDataDeviseData(object: MoneyDataRealm)   {
         
         try! database.write {
             
@@ -58,7 +153,7 @@ class DBManager {
         }
         
     }
-*/
+
     //MARK: -Function for DBCityNameDomicile
 
     func getDataFromDBCityNameDomicile() ->   Results<CityNameDomicile> {
@@ -80,6 +175,18 @@ class DBManager {
         }
         
     }
+
+    func addDataCityNameDomicile(weather: WeatherData)   {
+        let weatherCityName = CityNameDomicile()
+        weatherCityName.name = weather.name
+        weatherCityName.temperature = "\(weather.main.temp)°C"
+        weatherCityName.desctiptionWeather = weather.weather[0].description
+        weatherCityName.image = weather.weather[0].icon
+        try! database.write {
+            database.add(weatherCityName)
+            print("Added / Update new object")
+        }
+    }
     
     func deleteFromDbCityNameDomicile(object: CityNameDomicile)   {
         
@@ -97,6 +204,25 @@ class DBManager {
                 object.name = city
             }
         
+    }
+
+    func updateDataCityNameDomicile(weather: WeatherData) {
+        if let newWeather = DBManager.sharedInstance.getDataFromDBCityNameDomicile().first {
+            try! database.write {
+                newWeather.name = weather.name
+                newWeather.temperature = String(weather.main.temp)
+                newWeather.desctiptionWeather = weather.weather[0].description
+                newWeather.image = weather.weather[0].icon
+            }
+        }
+    }
+
+    func addOrUpdateDataCityName(weather: WeatherData) {
+        if DBManager.sharedInstance.getDataFromDBCityNameDomicile().count == 0 {
+            addDataCityNameDomicile(weather: weather)
+        } else {
+            updateDataCityNameDomicile(weather: weather)
+        }
     }
 
 /*
@@ -138,6 +264,16 @@ class DBManager {
     func deleteFromDbWeatherHoliday(object: WeatherHoliday)   {
         try!   database.write {
             database.delete(object)
+        }
+    }
+
+    func update(newweather1: WeatherHoliday, weatherData: WeatherData) {
+        let newWeather = newweather1
+        try! database.write {
+            newWeather.name = weatherData.name
+            newWeather.temperature = String(weatherData.main.temp)
+            newWeather.descriptionWeather = weatherData.weather[0].description
+            newWeather.image = weatherData.weather[0].icon
         }
     }
     

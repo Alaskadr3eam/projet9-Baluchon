@@ -10,7 +10,7 @@ import UIKit
 
 class AddCityWeatherUIViewController: UIViewController {
 
-    var delegateSaveCityHoliday: SaveCityHolidayDelegate?
+    //var delegateSaveCityHoliday: SaveCityHolidayDelegate?
     
     
     @IBOutlet weak var cityNameTextField: UITextField!
@@ -34,7 +34,7 @@ class AddCityWeatherUIViewController: UIViewController {
         if !cityTextIsEmpty {
             return
         }
-        delegateSaveCityHoliday?.saveCityHolidayRealm(city: cityNameTextField.text!)
+        //delegateSaveCityHoliday?.saveCityHolidayRealm(city: cityNameTextField.text!)
     }
     
     @IBAction func annulate() {
@@ -51,8 +51,8 @@ class AddCityWeatherUIViewController: UIViewController {
     */
 
 }
-
+/*
 protocol SaveCityHolidayDelegate {
     func saveCityHolidayRealm(city: String)
 }
-
+*/

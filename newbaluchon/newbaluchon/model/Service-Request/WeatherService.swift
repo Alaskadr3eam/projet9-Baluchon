@@ -8,9 +8,6 @@
 
 import Foundation
 class WeatherService {
-
-    //var weatherUrl = URL(string: "http://api.openweathermap.org/data/2.5/weather")!
-    //var weatherUrl2 = URL(string: "api.openweathermap.org/data/2.5/weather?APPID=2567298816d0d1f85b5a7edfdc58aa63&units=metric&lang=fr&q=paris")!
     
     static var shared = WeatherService()
 

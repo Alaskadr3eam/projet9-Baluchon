@@ -14,6 +14,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var labelTemp: UILabel!
     @IBOutlet weak var labelDescription: UILabel!
     @IBOutlet weak var imageWeather: UIImageView!
+    @IBOutlet weak var imageBackgound: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     func toggleActivityIndicator(shown: Bool) {
@@ -22,6 +23,10 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         labelCityName.isHidden = shown
         labelDescription.isHidden = shown
         imageWeather.isHidden = shown
+    }
+
+    func initImage() {
+        imageWeather.contentMode = .scaleAspectFit
     }
     
 }

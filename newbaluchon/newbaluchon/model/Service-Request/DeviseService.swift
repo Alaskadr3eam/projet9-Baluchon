@@ -20,7 +20,7 @@ class DeviseService {
     
     
     private init () {}
-    
+ 
     func getMoneyDevise(completionHandler: @escaping(DeviseData?,NetworkError?) -> Void) {
         var request = ServiceCreateRequest.createRequest(url: Constant.deviseUrl, arguments: arguments)
         request.httpMethod = "GET"
@@ -46,9 +46,7 @@ class DeviseService {
                 
                 return
             }
-            print(deviseData.success)
             print(deviseData.symbols.enumerated())
-            
             completionHandler(deviseData, nil)
         }
         task?.resume()

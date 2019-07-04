@@ -50,11 +50,13 @@ class WeatherHoliday: Object {
     @objc dynamic var temperature: String?
     @objc dynamic var descriptionWeather: String?
     @objc dynamic var image: String?
-
 }
 
 class CityNameDomicile: Object {
     @objc dynamic var name: String?
+    @objc dynamic var temperature: String?
+    @objc dynamic var desctiptionWeather: String?
+    @objc dynamic var image: String?
 }
 
 /*

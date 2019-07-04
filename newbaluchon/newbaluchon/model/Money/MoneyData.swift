@@ -14,26 +14,34 @@ struct MoneyData : Codable {
     var base: String
     var date: String
     let success: Bool
-    var rate: [String:Double]
+    let rates: [String:Double]
 }
-struct Rates: Codable {
-    var AED: Double
-    
+
+
+
+class MoneyDataRealm: Object {
+    @objc dynamic var timestamps = 0
+    //@objc dynamic var date = String()
+    var symbols = List<Rate>()
+}
+
+class Rate: Object {
+    @objc dynamic var symbols = ""
+    @objc dynamic var currencyValue = 0.0
 }
 
 struct DeviseData: Codable {
-    var success: Bool
-    let symbols: [String: String]
+    let symbols: [String:String]
 }
-/*
-struct Symbols: Codable {
-    var symbol: [String: String]
+
+class SymbolsDataRealm: Object {
+    @objc dynamic var code = ""
+    @objc dynamic var name = ""
 }
-*/
-/*
-class DeviseDataRealm: Object {
-    var symbols = List<String>()
+
+struct DeviseSource {
+    let code = "EUR"
+    let name = "Europe"
 }
-*/
 
 
