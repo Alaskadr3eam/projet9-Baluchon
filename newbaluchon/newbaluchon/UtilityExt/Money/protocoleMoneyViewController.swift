@@ -57,7 +57,8 @@ extension MoneyViewController: WhenButtonIsClickedDelegateInMoneyView {
     }
     
     func buttonConvertIsClicked() {
-        interchangerButtonTaped()
+        exchangeDataSource()
+        //interchangerButtonTaped()
         /*
         let currentSourceCurrency = moneyView.pickerViewSource.selectedRow(inComponent: 0)
         let currentTargetCurrency = moneyView.pickerViewTarget.selectedRow(inComponent: 0)

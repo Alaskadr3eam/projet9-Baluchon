@@ -29,6 +29,7 @@ class WeatherTableViewController: UITableViewController {
         initSwipeGesture()
         weather.delegateAddCityHoliday = self
         //tableView.reloadData()
+      //  realoadrequest()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,17 +56,23 @@ class WeatherTableViewController: UITableViewController {
         //tableView.reloadData()
         return weather.objectsWeathers.count
     }
-    /// Validates the selection of a language
+    /// Validates the weatherSelection
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let cell = tableView.cellForRow(at: indexPath)
         delegate?.changeWeather(index: indexPath)
         
         
  
         dismiss(animated: true, completion: nil)
     }
-
+/*
+    func realoadrequest() {
+        for i in 0...weather.objectsWeathers.count - 1 {
+            weather.requestNewCityReload(city: weather.objectsWeathers[i].name!, newWeather: weather.objectsWeathers[i], index: i)
+            tableViewWeather.reloadData()
+        }
+    }
+*/
 
     @objc func swipeForEditing(_ sender: UISwipeGestureRecognizer?) {
         if tableView.isEditing == true {
@@ -106,7 +113,7 @@ class WeatherTableViewController: UITableViewController {
         let weather = self.weather.objectsWeathers[indexPath.row]
         cell.imageCell.contentMode = .scaleAspectFit
         cell.newLabelTitle.text = weather.name
-        cell.newLabelDetail.text = weather.temperature
+        cell.newLabelDetail.text = ("\(weather.temperature!)°C")
         cell.imageCell.image = UIImage(named: weather.image!)
         changeBackground(index: indexPath.row, cell: cell)
         

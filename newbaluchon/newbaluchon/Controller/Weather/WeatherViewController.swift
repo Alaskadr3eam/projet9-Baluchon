@@ -21,7 +21,7 @@ class WeatherViewController: UIViewController {
                                              bottom: 0.0,
                                              right: 0.0)
     let itemsPerRow: CGFloat = 1
-
+    
     var locationManager = CLLocationManager()
 
     override func viewDidLoad() {
@@ -36,11 +36,13 @@ class WeatherViewController: UIViewController {
         
         
         initLocationManager()
+        locationWeatherCity()
         //locationWeatherCity()
-        
+       
         weatherView.collectionView.delegate = self
         weatherView.collectionView.dataSource = self
         weatherView.pageControl.hidesForSinglePage = true
+        //reloadAllCollectionView()
         
         //weather.requestWeather()
         
@@ -50,9 +52,9 @@ class WeatherViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        weather.requestWeather()
-        locationWeatherCity()
-        realoadrequest()
+        
+        // weather.requestWeather()
+        //realoadrequest()
         weatherView.collectionView.reloadData()
        // initLocationManager()
         
@@ -68,6 +70,7 @@ class WeatherViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
     }
+    
 
     func updateViewDomicile(city: CityNameDomicile, view: WeatherView) {
         changeBackgroundWeatherDomicile(city, view)
@@ -78,13 +81,22 @@ class WeatherViewController: UIViewController {
         
     }
 
-    func realoadrequest() {
-     for i in 0...weather.objectsWeathers.count - 1 {
-            weather.requestNewCityReload(city: weather.objectsWeathers[i].name!, newWeather: weather.objectsWeathers[i], index: i)
-            weatherView.collectionView.reloadData()
+    func reloadAllCollectionView() {
+        for i in 0...weather.objectsWeathers.count - 1 {
+            if i != 0 {
+                weather.requestNewCityReload(city: weather.objectsWeathers[i].name!, newWeather: weather.objectsWeathers[i], index: i)
+            }
+        }
+        weatherView.collectionView.reloadData()
+    }
+
+    func realoadRequest(city: String, index: Int, newWeather: WeatherHoliday) {
+        if index != 0 {
+        weather.requestNewCityReload(city: city, newWeather: newWeather, index: index)
+        weatherView.collectionView.reloadData()
         }
     }
-    
+ 
     func changeBackgroundWeatherDomicile(_ cityData: CityNameDomicile, _ view: WeatherView) {
         let letters = CharacterSet.init(charactersIn: "n")
         let range = cityData.image?.rangeOfCharacter(from: letters)

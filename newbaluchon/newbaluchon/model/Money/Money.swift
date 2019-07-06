@@ -28,19 +28,22 @@ class Money {
         return objectsMoney.count == 0
     }
     
+    var timestampIsOk: Bool {
+        let timestampOfDay = timeStampOfDay()
+        return objectsMoney[0].timestamps + 86400 < timestampOfDay
+    }
+
     func allRequest() {
         if requestIsOk {
             requestCurrency()
-            requestDevise()
             return
-        } else /*if date == date*/{
-            DBManager.sharedInstance.deleteFromDbSymbolsDataRealm(object: objectsDevise[0])
-            requestDevise()
+        } else if timestampIsOk {
              DBManager.sharedInstance.deleteFromDbMoneyData(object: objectsMoney[0])
             requestCurrency()
+            return
         }
     }
-
+/*
     func requestDevise() {
        // DBManager.sharedInstance.deleteFromDbSymbolsDataRealm(object: objectsDevise[0])
         DeviseService.shared.getMoneyDevise { (deviseData, error) in
@@ -57,7 +60,7 @@ class Money {
             //self.delegateMoneyDelegate?.itIsResultRequestDevise(deviseData: deviseData)
         }
     }
-
+*/
     func requestCurrency() {
        // date = dateOfDay()
        // if date == objectsMoney[0]{
@@ -81,16 +84,11 @@ class Money {
         }
         //}
     }
+ 
 
-    func dateOfDay() -> String {
-        let aujourdHui = Date()
-        let formatDate = DateFormatter()
-        formatDate.dateFormat = "yyyy-MM-dd"
-        formatDate.locale = Locale(identifier: "FR.fr")
-        print ( "aujourd'hui : ",formatDate.string(from:aujourdHui))
-        formatDate.locale = Locale.autoupdatingCurrent
-        print ( "aujourd'hui : ",formatDate.string(from:aujourdHui))
-        return formatDate.string(from:aujourdHui)
+    func timeStampOfDay() -> Int64 {
+        let timestamp = Date().currentTimeMillis()
+        return timestamp
     }
 /*
     func resultConversion(value: String, targetDevise: Double) -> String {

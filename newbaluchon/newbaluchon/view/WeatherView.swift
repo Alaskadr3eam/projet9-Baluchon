@@ -15,12 +15,14 @@ class WeatherView: UIView {
     @IBOutlet weak var labelDomicileCity: UILabel!
     @IBOutlet weak var labelDomicileTemp: UILabel!
     @IBOutlet weak var labelDomicileDescription: UILabel!
+    @IBOutlet weak var stackViewLabelDomicile: UIStackView!
     @IBOutlet weak var imageWeather: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var buttonList: UIButton!
     @IBOutlet weak var buttonSetting: UIBarButtonItem!
     @IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorActivityCollectionView: UIActivityIndicatorView!
     @IBOutlet weak var cellWeather: WeatherCollectionViewCell!
     @IBOutlet weak var viewCollectionView: UIView!
     @IBOutlet weak var collectionLayoutFlow: UICollectionViewFlowLayout!
@@ -47,16 +49,15 @@ class WeatherView: UIView {
 
     func toggleActivityIndicator(shown: Bool) {
         indicatorActivity.isHidden = !shown
-        labelDomicileCity.isHidden = shown
-        labelDomicileTemp.isHidden = shown
-        labelDomicileDescription.isHidden = shown
+        stackViewLabelDomicile.isHidden = shown
         imageWeather.isHidden = shown
     }
 
-    func toggleActivityIndicatorCell(shown: Bool) {
-        cellWeather.toggleActivityIndicator(shown: shown)
+    func toggleActivityIndicatorCollectionView(shown: Bool) {
+      viewCollectionView.isHidden = shown
+        indicatorActivityCollectionView.isHidden = !shown
     }
-    
+
 
     func weatherViewOrCellWeather(view: UIView) {
         if view == self {

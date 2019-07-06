@@ -33,9 +33,11 @@ extension WeatherViewController: CLLocationManagerDelegate {
                     if error != nil {
                         return
                     } else if let country = placemarks?.first?.country, let city = placemarks?.first?.locality {
+                        self.weather.cityLocation = city
+                        self.weather.countryLocation = country
                         print(city)
                         print(country)
-                        self.weather.requestWeatherLocation(city: "\(city), \(country)")
+                        self.weather.requestWeather()
                     }
                 })
                 break
@@ -68,9 +70,11 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseIdentifier", for: indexPath) as! WeatherCollectionViewCell
         weatherView.collectionView.contentMode = .scaleAspectFit
         weatherView.pageControl.numberOfPages = weather.objectsWeathers.count
+       // weather.requestNewCityReload(city: weather.objectsWeathers[indexPath.row].name, newWeather: weather.objectsWeathers[indexPath.row], index: indexPath.row)
+      //  realoadRequest(city: weather.objectsWeathers[indexPath.row].name!, index: indexPath.row, newWeather: weather.objectsWeathers[indexPath.row])
         cell.imageWeather.contentMode = .scaleAspectFit
         cell.labelCityName.text = weather.objectsWeathers[indexPath.row].name
-        cell.labelTemp.text = weather.objectsWeathers[indexPath.row].temperature
+        cell.labelTemp.text = ("\(weather.objectsWeathers[indexPath.row].temperature!)°C")
         cell.labelDescription.text = weather.objectsWeathers[indexPath.row].descriptionWeather
         cell.imageWeather.image = UIImage(named: weather.objectsWeathers[indexPath.row].image!)
         changeBackground(index: indexPath.row, cell: cell)
@@ -78,10 +82,27 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //print(indexPath.row)
+       // realoadRequest(city: weather.objectsWeathers[indexPath.row].name!, index: indexPath.row, newWeather: weather.objectsWeathers[indexPath.row])
+    }
+    
+    
+
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        weatherView.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.width
         self.currentPage = Int((scrollView.contentOffset.x + pageWidth / 2) / pageWidth)
         weatherView.pageControl.currentPage = self.currentPage
+        //let index = weatherView.pageControl.currentPage
+        //realoadRequest(city: weather.objectsWeathers[index].name!, index: index, newWeather: weather.objectsWeathers[index])
+       /* weather.requestNewCityReload(city: weather.objectsWeathers[currentPage].name!, newWeather: weather.objectsWeathers[currentPage], index: currentPage)
+        weatherView.collectionView.reloadData()*/
+       
         
     }
 
@@ -91,15 +112,22 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         snapToNearestCell(weatherView.collectionView)
+        //print(weatherView.pageControl.currentPage)
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let index = weatherView.pageControl.currentPage
+       // weatherView.viewCollectionView.isHidden = true
+        realoadRequest(city: weather.objectsWeathers[index].name!, index: index, newWeather: weather.objectsWeathers[index])
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+       
         snapToNearestCell(weatherView.collectionView)
     }
+    
 
-    func collec() {
-        weatherView.collectionView.visibleCells
-    }
+
     
 }
 
@@ -135,12 +163,14 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
         return sectionInsets.left
     }
 
-  
+
     func snapToNearestCell(_ collectionView: UICollectionView) {
         for i in 0..<collectionView.numberOfItems(inSection: 0) {
             
             let itemWithSpaceWidth = weatherView.collectionLayoutFlow.itemSize.width + weatherView.collectionLayoutFlow.minimumLineSpacing
             let itemWidth = weatherView.collectionLayoutFlow.itemSize.width
+            
+          //  realoadRequest(city: weather.objectsWeathers[i].name!, index: i, newWeather: weather.objectsWeathers[i])
             
             if collectionView.contentOffset.x <= CGFloat(i) * itemWithSpaceWidth + itemWidth / 2 {
                 let indexPath = IndexPath(item: i, section: 0)

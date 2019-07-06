@@ -15,10 +15,11 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var labelDescription: UILabel!
     @IBOutlet weak var imageWeather: UIImageView!
     @IBOutlet weak var imageBackgound: UIImageView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var stackViewHoliday: UIStackView!
+
 
     func toggleActivityIndicator(shown: Bool) {
-        activityIndicator.isHidden = !shown
+
         labelTemp.isHidden = shown
         labelCityName.isHidden = shown
         labelDescription.isHidden = shown

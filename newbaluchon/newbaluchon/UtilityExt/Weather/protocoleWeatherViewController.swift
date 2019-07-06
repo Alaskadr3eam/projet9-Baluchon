@@ -31,26 +31,36 @@ extension WeatherViewController: WeatherViewDelegate {
     }
     
     func whenButtonListIsClicked() {
+        //performSegue(withIdentifier: Constant.segueListeTableView, sender: nil)
     }
     
 }
 
 extension WeatherViewController: UpdateWeatherViewDelegate {
+    func itIsResultRequestReloadCell(weatherdata: WeatherData, newWeather: WeatherHoliday, index: Int) {
+        DispatchQueue.main.async {
+            DBManager.sharedInstance.update(newweather1: self.weather.objectsWeathers[index], weatherData: weatherdata)
+            self.updateCollectionView(view: self.weatherView)
+        }
+    }
+    
     func itISResultRequestLocation(weatherData: WeatherData) {
         DispatchQueue.main.async {
             DBManager.sharedInstance.addOrUpdateDataWeatherHolidayFirst(weather: weatherData)
+             self.updateCollectionView(view: self.weatherView)
         }
     }
     
     func itIsResultRequestLocationInCollectionView() {
-        self.updateCollectionView(view: self.weatherView)
+        DispatchQueue.main.async {
+       self.updateCollectionView(view: self.weatherView)
+        }
     }
     
     func itIsResultRequest(weatherData: WeatherData) {
         DispatchQueue.main.async {
            DBManager.sharedInstance.addOrUpdateDataCityName(weather: weatherData)
             self.updateViewDomicile(city: self.weather.objectsCity[0], view: self.weatherView)
-          
         }
     }
     
@@ -68,21 +78,28 @@ extension WeatherViewController: SaveCity {
 }
 
 extension WeatherViewController: IsHiddenDelegate {
- 
-    func viewIsNotHidden() {
+    func viewDomicileIsHidden() {
         DispatchQueue.main.async {
-            //self.weatherView.weatherViewOrCellWeather(view: )
-            //self.weatherView.toggleActivityIndicator(shown: true)
-            
+            self.weatherView.toggleActivityIndicator(shown: true)
         }
     }
     
-    func viewIsHidden() {
+    func viewDomicileIsNotHidden() {
         DispatchQueue.main.async {
-            //self.weatherView.weatherViewOrCellWeather(view: self.weatherView)
-            //self.weatherView.toggleActivityIndicator(shown: false)
-            //self.weatherView.toggleActivityIndicator(shown: true)
-            
+            self.weatherView.toggleActivityIndicator(shown: false)
+        }
+    }
+    
+    func cellIsHidden() {
+        DispatchQueue.main.async {
+            self.weatherView.toggleActivityIndicatorCollectionView(shown: true)
+        }
+     
+    }
+    
+    func cellIsNotHidden() {
+        DispatchQueue.main.async {
+            self.weatherView.toggleActivityIndicatorCollectionView(shown: false)
         }
     }
     
@@ -91,9 +108,12 @@ extension WeatherViewController: IsHiddenDelegate {
 
 extension WeatherViewController: WeatherTableViewControllerDelegate {
     func changeWeather(index: IndexPath) {
-       let cell = weatherView.collectionView.cellForItem(at: index)
-        
         weatherView.collectionView.reloadData()
+       // weatherView.pageControl.reloadInputViews()
+      weatherView.collectionView.scrollToItem(at: index, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true) 
+            
+        
+        
     }
     
 }

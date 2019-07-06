@@ -252,7 +252,7 @@ class DBManager {
     func addDataWeatherHoliday(weather: WeatherData)   {
         let weatherHoliday = WeatherHoliday()
         weatherHoliday.name = weather.name
-        weatherHoliday.temperature = "\(weather.main.temp)°C"
+        weatherHoliday.temperature = "\(weather.main.temp)"
         weatherHoliday.descriptionWeather = weather.weather[0].description
         weatherHoliday.image = weather.weather[0].icon
         try! database.write {

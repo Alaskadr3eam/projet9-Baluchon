@@ -21,7 +21,7 @@ class TranslateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        money.allRequest()
+        //money.allRequest()
         
         //DBManager.sharedInstance.deleteAllFromDatabase()
 

@@ -40,8 +40,8 @@ class SymbolsDataRealm: Object {
 }
 
 struct DeviseSource {
-    let code = "EUR"
-    let name = "Europe"
+    var code = String()
+    var name = String()
 }
 
 

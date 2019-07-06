@@ -7,14 +7,19 @@
 //
 
 import UIKit
-
+class Devise {
+    var name = String()
+    var code = String()
+}
 class MoneyViewController: UIViewController {
 
     let money = Money()
     //let deviseSource = DeviseSource()
 
     
-/*
+    var dataSource1 = [DeviseSource]()
+    var dataSource2 = [DeviseSource]()
+    var isSwitch = false
     let dataSourceAll = ["AED": "United Arab Emirates Dirham",
                           "AFN": "Afghan Afghani",
                           "ALL": "Albanian Lek",
@@ -25,34 +30,29 @@ class MoneyViewController: UIViewController {
                           "AUD": "Australian Dollar",
                           "AWG": "Aruban Florin",
                           "AZN": "Azerbaijani Manat"]
-    let dataSourceEuro = ["EUR":"Europe"]
-    */
+   
+    
 
     var deviseSource = String()
     var deviseTarget = String()
-/*
-    func exchangeDataSource() {
-        moneyView.pickerViewSource.dataSource = dataSourceAll.count as? UIPickerViewDataSource
-        moneyView.pickerViewTarget.dataSource = dataSourceEuro.count as? UIPickerViewDataSource
-        
-        moneyView.pickerViewTarget.reloadComponent(dataSourceEuro.count)
-        moneyView.pickerViewSource.reloadComponent(dataSourceAll.count)
-    }
-*/
+
+
     @IBOutlet weak var moneyView: MoneyView2!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //money.allRequest()
+        tableRate()
+        money.allRequest()
         //money.delegateMoneyDelegate = self
         
         // Do any additional setup after loading the view.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { self.initView(view: self.moneyView) }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         money.delegateAlerte = self
         moneyView.delegateConvert = self
-        initView(view: moneyView)
+        //initView(view: moneyView)
         moneyView.pickerViewSource.dataSource = self
         moneyView.pickerViewSource.delegate = self
         
@@ -62,19 +62,40 @@ class MoneyViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
     }
+
+   
     @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         moneyView.sourceValueTextField.resignFirstResponder()
+    }
+    func tableRate() {
+       
+        for (key,value) in Constant.arrayDeviseSymbols {
+            var deviseSource = DeviseSource()
+            deviseSource.code = key
+            deviseSource.name = value
+            Constant.deviseSymbols.append(deviseSource)
+        }
+        print(Constant.deviseSymbols.enumerated())
+ 
+        for (key,value) in Constant.arrayDeviseSymbolEuro {
+            var deviseSource = DeviseSource()
+            deviseSource.code = key
+            deviseSource.name = value
+            Constant.deviseSymbolsEuro.append(deviseSource)
+          
+        }
+        dataSource1 = Constant.deviseSymbolsEuro
+        dataSource2 = Constant.deviseSymbols
     }
 
     /// Update the short name of the currency near the value
      func updateCurrencyLabel(pickerView: UIPickerView, row: Int) {
-        let currency = money.objectsDevise[row]
         if pickerView == moneyView.pickerViewSource {
-            //let currency = money.objectsDevise[row]
-            moneyView.sourceDeviseLabel.text = currency.code
+            dataSource1 = isSwitch ? Constant.deviseSymbols : Constant.deviseSymbolsEuro
+            moneyView.sourceDeviseLabel.text = dataSource1[row].code
         } else {
-            
-            moneyView.targetDeviseLabel.text = currency.code
+            dataSource2 = isSwitch ? Constant.deviseSymbolsEuro : Constant.deviseSymbols
+            moneyView.targetDeviseLabel.text = dataSource2[row].code
         }
     }
 
@@ -82,19 +103,20 @@ class MoneyViewController: UIViewController {
 
     func initView(view: MoneyView2) {
         view.sourceValueTextField.text = "1"
-        view.pickerViewSource.selectRow(130, inComponent: 0, animated: true)
-        view.pickerViewTarget.selectRow(35, inComponent: 0, animated: true)
-        view.sourceDeviseLabel.text = money.objectsDevise[130].code
-        view.targetDeviseLabel.text = money.objectsDevise[35].code
+        view.pickerViewSource.selectRow(0, inComponent: 0, animated: true)
+        view.pickerViewTarget.selectRow(0, inComponent: 0, animated: true)
+        view.sourceDeviseLabel.text = dataSource1[0].code
+        view.targetDeviseLabel.text = dataSource2[0].code
+        convert()
     }
 
-    fileprivate func reloadPickerViews() {
+ /*   fileprivate func reloadPickerViews() {
         moneyView.pickerViewSource.reloadComponent(0)
         moneyView.pickerViewTarget.reloadComponent(0)
         moneyView.pickerViewTarget.selectRow(1, inComponent: 0, animated: false)
-    }
+    }*/
 
-    func interchangerButtonTaped() {
+  /*  func interchangerButtonTaped() {
         let currentSourceCurrency = moneyView.pickerViewSource.selectedRow(inComponent: 0)
         let currentTargetCurrency = moneyView.pickerViewTarget.selectedRow(inComponent: 0)
         
@@ -105,11 +127,27 @@ class MoneyViewController: UIViewController {
         updateCurrencyLabel(pickerView: moneyView.pickerViewTarget, row: currentSourceCurrency)
         
         convert()
+    }*/
+
+    func searchDevise(deviseSearch: String) -> Double {
+        var devise = Double()// let letters = CharacterSet.init(charactersIn: deviseSearch)
+        for i in money.objectsMoney[0].symbols {
+            let range = i.symbols.lowercased().range(of: deviseSearch, options: .caseInsensitive, range: nil, locale: nil)
+            if range != nil {
+                devise = i.currencyValue
+                print(devise)
+            }
+        }
+        return devise
     }
 
     func convert() {
-        let sourceCurrency = moneyView.pickerViewSource.selectedRow(inComponent: 0)
-        let targetCurrency = moneyView.pickerViewTarget.selectedRow(inComponent: 0)
+       
+            let sourceCurrency = moneyView.pickerViewSource.selectedRow(inComponent: 0)
+            let targetCurrency = moneyView.pickerViewTarget.selectedRow(inComponent: 0)
+            let deviseSource = dataSource1[sourceCurrency].code
+            let deviseTarget = dataSource2[targetCurrency].code
+        
      
         print(sourceCurrency)
         print(targetCurrency)
@@ -117,17 +155,25 @@ class MoneyViewController: UIViewController {
             return
         }
         
-        let sourceCurrencyRate = money.objectsMoney[0].symbols[sourceCurrency].currencyValue
-    
-         let targetCurrencyRate = money.objectsMoney[0].symbols[targetCurrency].currencyValue
-        
-        let euroValue = (sourceValue as NSString).doubleValue / sourceCurrencyRate
+        let sourceCurrencyRate = searchDevise(deviseSearch: deviseSource)
+        let targetCurrencyRate = searchDevise(deviseSearch: deviseTarget)
+        if !isSwitch {
+        let euroValue = (sourceValue as NSString).doubleValue// * targetCurrencyRate
         
         let targetValue = euroValue * targetCurrencyRate
-        if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
-            moneyView.targetValueTextField.text = String(Int(targetValue))
+            if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
+                moneyView.targetValueTextField.text = String(Int(targetValue))
+            } else {
+                moneyView.targetValueTextField.text = String(targetValue)
+            }
         } else {
-            moneyView.targetValueTextField.text = String(targetValue)
+            let deviseValue = (sourceValue as NSString).doubleValue
+            let targetValue = deviseValue / sourceCurrencyRate
+            if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
+                moneyView.targetValueTextField.text = String(Int(targetValue))
+            } else {
+                moneyView.targetValueTextField.text = String(targetValue)
+            }
         }
     }
     
