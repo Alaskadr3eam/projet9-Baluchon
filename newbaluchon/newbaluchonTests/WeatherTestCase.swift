@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import newbaluchon
+//import RealmSwift
 
 class WeatherTestCase: XCTestCase {
 
@@ -31,7 +32,6 @@ class WeatherTestCase: XCTestCase {
     }
 
     func testRequestIsOk() {
-        //var objet = weather.objectsCity
         
         let result = weather.requestIsOk
     
@@ -39,16 +39,19 @@ class WeatherTestCase: XCTestCase {
     }
 
     func testRequest() {
-        requestWeather(q: "Paris")
+       // weather.objectsCity[0].name = "Paris"
+        weather.requestWeather()
         
     }
 
     func testRequestLocation() {
-        requestWeatherLocation(q: "Paris")
+        weather.requestWeatherLocation(city: "Paris")
     }
 
     func testNewCity() {
-        requestWeatherNewCity(q: "Paris")
+        weather.requestNewCityDomicile(city: "paris")
+        
+   
     }
 
     override func tearDown() {

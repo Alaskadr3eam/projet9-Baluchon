@@ -59,25 +59,3 @@ class CityNameDomicile: Object {
     @objc dynamic var image: String?
 }
 
-/*
-class WeatherDomicile: Object {
-    @objc dynamic var name = ""
-    @objc dynamic var temperature = ""
-    @objc dynamic var description = ""
-    @objc dynamic var image: Data? = nil
-}
-
-class WeatherHoliday: Object {
-    @objc dynamic var name = ""
-    @objc dynamic var temperature = ""
-    @objc dynamic var description = ""
-    @objc dynamic var image: Data? = nil
-}
-
-class WeatherLocation: Object {
-    @objc dynamic var name = ""
-    @objc dynamic var temperature = ""
-    @objc dynamic var description = ""
-    @objc dynamic var image: Data? = nil
-}
-*/

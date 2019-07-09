@@ -17,8 +17,6 @@ struct MoneyData : Codable {
     let rates: [String:Double]
 }
 
-
-
 class MoneyDataRealm: Object {
     @objc dynamic var timestamps = 0
     //@objc dynamic var date = String()
@@ -28,15 +26,6 @@ class MoneyDataRealm: Object {
 class Rate: Object {
     @objc dynamic var symbols = ""
     @objc dynamic var currencyValue = 0.0
-}
-
-struct DeviseData: Codable {
-    let symbols: [String:String]
-}
-
-class SymbolsDataRealm: Object {
-    @objc dynamic var code = ""
-    @objc dynamic var name = ""
 }
 
 struct DeviseSource {

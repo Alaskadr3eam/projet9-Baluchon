@@ -16,40 +16,21 @@ extension MoneyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     /// Give the number of rows in the a pickerView's component
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerView == moneyView.pickerViewSource ? dataSource1.count : dataSource2.count
+        return pickerView == moneyView.pickerViewSource ? money.dataSource1.count : money.dataSource2.count
     }
     
     /// Give the content of a row
-   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    return pickerView == moneyView.pickerViewSource ? dataSource1[row].name : dataSource2[row].name
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerView == moneyView.pickerViewSource ? money.dataSource1[row].name : money.dataSource2[row].name
     }
-   
- 
+    
+    
     /// Launch actions each time selected row changes
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        updateCurrencyLabel(pickerView: pickerView, row: row)
-        convert()
-    }
-    
-    func exchangeDataSource() {
-        dataSource1 = isSwitch ? Constant.deviseSymbolsEuro : Constant.deviseSymbols
-        dataSource2 = isSwitch ? Constant.deviseSymbols : Constant.deviseSymbolsEuro
-        isSwitch = !isSwitch
-        moneyView.pickerViewSource.reloadAllComponents()
-        moneyView.pickerViewTarget.reloadAllComponents()
-        updateCurrencyLabel(pickerView: moneyView.pickerViewSource, row: 0)
-        updateCurrencyLabel(pickerView: moneyView.pickerViewTarget, row: 0)
-        convert()
+        moneyView.updateCurrencyLabel(pickerView: pickerView, row: row, money: money)
+        money.convert(view: moneyView)
     }
     
     
-   /* /// Reload data in the pickerviews
-    fileprivate func reloadPickerViews() {
-        moneyView.pickerViewSource.reloadComponent(0)
-        moneyView.pickerViewTarget.reloadComponent(0)
-        moneyView.pickerViewTarget.selectRow(1, inComponent: 0, animated: false)
-    }*/
-    
-  
 }
 

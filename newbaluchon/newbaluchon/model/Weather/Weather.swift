@@ -11,7 +11,7 @@ import RealmSwift
 
 
 class Weather {
-
+    
     var delegateScreenWeather: UpdateWeatherViewDelegate?
     var delegatePerformSegue: PerfomSegueDelegate?
     var delegateAddCityHoliday: AddCityHolidayDelegate?
@@ -22,31 +22,31 @@ class Weather {
     var cityLocation = String()
     var countryLocation = String()
     
-
+    
     
     var objectsWeathers = DBManager.sharedInstance.getDataFromDBWeatherHoliday()
     var objectsCity = DBManager.sharedInstance.getDataFromDBCityNameDomicile()
-
-
+    
+    
     var requestIsOk: Bool {
         return objectsCity.count == 0
     }
-
+    
     func addDataCityNameDomicile(object: CityNameDomicile)   {
-       DBManager.sharedInstance.addDataCityNameDomicile(object: object)
+        DBManager.sharedInstance.addDataCityNameDomicile(object: object)
     }
-
+    
     func requestWeather() {
         if requestIsOk {
             delegatePerformSegue?.perfomSegueIsCalled()
             return
         } else {
-           self.delegateViewIsHidden?.viewDomicileIsHidden()
+            self.delegateViewIsHidden?.viewDomicileIsHidden()
             WeatherService.shared.getWeather(q: objectsCity[0].name!) { [weak self] (weatherData, error) in
                 guard let self = self else {
                     return
                 }
-              self.delegateViewIsHidden?.viewDomicileIsNotHidden()
+                self.delegateViewIsHidden?.viewDomicileIsNotHidden()
                 if let error = error {
                     self.delegateAlertError?.alertError(error)
                     return
@@ -60,9 +60,9 @@ class Weather {
             }
         }
     }
-
+    
     func requestWeatherLocation(city: String) {
-       self.delegateViewIsHidden?.cellIsHidden()
+        self.delegateViewIsHidden?.cellIsHidden()
         WeatherService.shared.getWeather(q:city) { [weak self] (weatherData, error) in
             guard let self = self else {
                 return
@@ -76,17 +76,17 @@ class Weather {
                 self.delegateAlertError?.alertError(NetworkError.emptyData)
                 return
             }
-            
             self.delegateScreenWeather?.itISResultRequestLocation(weatherData: weatherData)
         }
         delegateScreenWeather?.itIsResultRequestLocationInCollectionView()
     }
-
+    
     func requestNewCityDomicile(city: String) {
         WeatherService.shared.getWeather(q: city) { [weak self] (weatherData, error) in
             guard let self = self else {
                 return
             }
+            self.delegateViewIsHidden?.viewDomicileIsNotHidden()
             if let error = error {
                 self.delegateAlertError?.alertError(error)
                 return
@@ -95,17 +95,12 @@ class Weather {
                 self.delegateAlertError?.alertError(NetworkError.emptyData)
                 return
             }
-           /* DispatchQueue.main.async {
-                DBManager.sharedInstance.addOrUpdateDataCityName(weather: weatherdata)
-            }*/
-           // self.delegateAddCityHoliday?.itISResultRequestNewCityHoliday(weatherData: weatherData)
             self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
+            self.requestWeatherLocation(city: ("\(self.cityLocation), \(self.countryLocation)"))
         }
         
-       //self.delegateAddCityHoliday?.updateTableViewWeather()
-        //tableView.reloadData()
     }
-
+    
     func requestNewCity(city: String) {
         WeatherService.shared.getWeather(q: city) { [weak self] (weatherData, error) in
             guard let self = self else {
@@ -123,9 +118,9 @@ class Weather {
         }
         self.delegateAddCityHoliday?.updateTableViewWeather()
     }
-
+    
     func requestNewCityReload(city: String, newWeather: WeatherHoliday, index: Int) {
-         self.delegateViewIsHidden?.cellIsHidden()
+        self.delegateViewIsHidden?.cellIsHidden()
         WeatherService.shared.getWeather(q: city) { [weak self] (weatherData, error) in
             guard let self = self else {
                 return
@@ -140,15 +135,10 @@ class Weather {
                 return
             }
             DispatchQueue.main.async {
-            self.delegateScreenWeather?.itIsResultRequestReloadCell(weatherdata: weatherData, newWeather: self.objectsWeathers[index], index: index)
+                self.delegateScreenWeather?.itIsResultRequestReloadCell(weatherdata: weatherData, newWeather: self.objectsWeathers[index], index: index)
             }
-          /*  DispatchQueue.main.async {
-                DBManager.sharedInstance.update(newweather1: self.objectsWeathers[index], weatherData: weatherData)
-            }*/
         }
-       // self.delegateAddCityHoliday?.updateTableViewWeather()
     }
-
 }
 
 protocol UpdateWeatherViewDelegate {

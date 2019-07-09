@@ -8,84 +8,84 @@
 import XCTest
 @testable import newbaluchon
 
-class WeatherServiceTestCase: XCTestCase {
+class MoneyServiceTestCase: XCTestCase {
     //let expectation = XCTestExpectation(description: "Wait for queue change")
     
-    func testGetWeatherShouldPostFailedCallbackIfError() {
+    func testGetMoneyShouldPostFailedCallbackIfError() {
         // Given
         //let session = URLSessionFake(data: nil, response: nil, error: WeatherError.error)
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: nil, response: nil, error: TestError.error))
+        let moneyService = MoneyService(moneySession: URLSessionFake(data: nil, response: nil, error: TestError.error))
         
         //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        moneyService.getMoneyCurrent { (moneyData,error) in
             // Then
             XCTAssertEqual(error, NetworkError.emptyData)
-            XCTAssertNil(weatherData)
+            XCTAssertNil(moneyData)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetmoneyShouldPostFailedCallbackIfNoData() {
+        // Given
+        let moneyService = MoneyService(
+            moneySession: URLSessionFake(data: nil, response: nil, error: nil))
+        
+        //When
+        let expectation = XCTestExpectation(description: "Wait for queue change")
+        moneyService.getMoneyCurrent { (moneyData,error) in
+            // Then
+            XCTAssertEqual(error, NetworkError.emptyData)
+            XCTAssertNil(moneyData)
             expectation.fulfill()
         }
         
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetWeatherShouldPostFailedCallbackIfNoData() {
+    func testGetMoneyShouldPostFailedCallbackIfIncorrectResponse() {
         // Given
-        let weatherService = WeatherService(
-            weatherSession: URLSessionFake(data: nil, response: nil, error: nil))
-        
-        //When
-        let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
-            // Then
-            XCTAssertEqual(error, NetworkError.emptyData)
-            XCTAssertNil(weatherData)
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 0.01)
-    }
-    
-    func testGetWeatherShouldPostFailedCallbackIfIncorrectResponse() {
-        // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeResponseData.weatherCorrectData,response: FakeResponseData.responseKO,error: nil))
+        let moneyService = MoneyService(moneySession: URLSessionFake(data: FakeResponseData.moneyCorrectData,response: FakeResponseData.responseKO,error: nil))
         
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        moneyService.getMoneyCurrent{ (moneyData,error) in
             // Then
             XCTAssertEqual(error,NetworkError.badResponse)
-            XCTAssertNil(weatherData)
+            XCTAssertNil(moneyData)
             expectation.fulfill()
         }
         
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetWeatherShouldPostFailedCallbackIfIncorrectData() {
+    func testGetMoneyShouldPostFailedCallbackIfIncorrectData() {
         // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeResponseData.weatherIncorrectData,response: FakeResponseData.responseOK,error: nil))
+        let moneyService = MoneyService(moneySession: URLSessionFake(data: FakeResponseData.moneyIncorrectData,response: FakeResponseData.responseOK,error: nil))
         
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        moneyService.getMoneyCurrent { (moneyData,error) in
             // Then
             XCTAssertEqual(error, NetworkError.jsonDecodeFailed)
-            XCTAssertNil(weatherData)
+            XCTAssertNil(moneyData)
             expectation.fulfill()
         }
         
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetWeatherShouldPostSuccessCallbackIfNoErrorAndCorrectData() {
+    func testGetMoneyShouldPostSuccessCallbackIfNoErrorAndCorrectData() {
         // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeResponseData.weatherCorrectData,response: FakeResponseData.responseOK,error: nil))
+        let moneyService = MoneyService(moneySession: URLSessionFake(data: FakeResponseData.moneyCorrectData,response: FakeResponseData.responseOK,error: nil))
         
         let expectation = XCTestExpectation(description: "Wait for queue change")
-        weatherService.getWeather(q: "Paris") { (weatherData,error) in
+        moneyService.getMoneyCurrent { (moneyData,error) in
             
             //XCTAssertEqual(FakeResponseData.weatherCorrectData, weatherData)
             XCTAssertNil(error)
-            XCTAssertEqual(weatherData!.name, "Paris")
-            XCTAssertEqual(weatherData!.main.temp, 301.34)
+            XCTAssertEqual(moneyData!.timestamp, 1562242745)
+            XCTAssertEqual(moneyData!.base, "EUR")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.01)

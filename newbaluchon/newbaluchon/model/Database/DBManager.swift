@@ -19,7 +19,7 @@ class DBManager {
     
     private init() {
     
-      var configuration = Realm.Configuration(
+      let configuration = Realm.Configuration(
             schemaVersion: 1,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
@@ -74,7 +74,7 @@ class DBManager {
         return results
         
     }
-
+/*
     func getDataFromDBSymbolsDataRealm() ->   Results<SymbolsDataRealm> {
         
         let results = database.objects(SymbolsDataRealm.self)
@@ -105,7 +105,7 @@ class DBManager {
         }
         
     }
-
+*/
     func addDataMoneyDataRealm(money: MoneyData)   {
         let moneyDataRealm = MoneyDataRealm()
         moneyDataRealm.timestamps = money.timestamp

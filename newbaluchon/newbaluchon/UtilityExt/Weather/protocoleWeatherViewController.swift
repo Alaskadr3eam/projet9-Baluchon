@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 extension WeatherViewController: AlertDelegate {
- 
+    
     func alertError(_ error: NetworkError) {
         DispatchQueue.main.async {
-        self.alertVC(title: "Error", message: error.rawValue)
+            self.alertVC(title: "Error", message: error.rawValue)
         }
     }
     
@@ -47,19 +47,19 @@ extension WeatherViewController: UpdateWeatherViewDelegate {
     func itISResultRequestLocation(weatherData: WeatherData) {
         DispatchQueue.main.async {
             DBManager.sharedInstance.addOrUpdateDataWeatherHolidayFirst(weather: weatherData)
-             self.updateCollectionView(view: self.weatherView)
+            self.updateCollectionView(view: self.weatherView)
         }
     }
     
     func itIsResultRequestLocationInCollectionView() {
         DispatchQueue.main.async {
-       self.updateCollectionView(view: self.weatherView)
+            self.updateCollectionView(view: self.weatherView)
         }
     }
     
     func itIsResultRequest(weatherData: WeatherData) {
         DispatchQueue.main.async {
-           DBManager.sharedInstance.addOrUpdateDataCityName(weather: weatherData)
+            DBManager.sharedInstance.addOrUpdateDataCityName(weather: weatherData)
             self.updateViewDomicile(city: self.weather.objectsCity[0], view: self.weatherView)
         }
     }
@@ -71,8 +71,8 @@ extension WeatherViewController: SaveCity {
     
     
     func saveCityInRealm(city: String) {
-        //addNewCity(city: city)
-        weather.requestNewCityDomicile(city: city)
+        cityFirst = city
+       weather.requestNewCityDomicile(city: city)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -94,7 +94,7 @@ extension WeatherViewController: IsHiddenDelegate {
         DispatchQueue.main.async {
             self.weatherView.toggleActivityIndicatorCollectionView(shown: true)
         }
-     
+        
     }
     
     func cellIsNotHidden() {
@@ -109,9 +109,9 @@ extension WeatherViewController: IsHiddenDelegate {
 extension WeatherViewController: WeatherTableViewControllerDelegate {
     func changeWeather(index: IndexPath) {
         weatherView.collectionView.reloadData()
-       // weatherView.pageControl.reloadInputViews()
-      weatherView.collectionView.scrollToItem(at: index, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true) 
-            
+        weatherView.collectionView.scrollToItem(at: index, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+        weatherView.pageControl.updateCurrentPageDisplay()
+        
         
         
     }

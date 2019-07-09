@@ -9,9 +9,9 @@
 import UIKit
 
 class TranslateView: UIView {
-
+    
     var delegateTranslateView: CommunicationTranslateView?
-
+    
     @IBOutlet weak var languageSource: UIButton!
     @IBOutlet weak var languageTarget: UIButton!
     @IBOutlet weak var textSource: UITextView!
@@ -20,15 +20,14 @@ class TranslateView: UIView {
     @IBOutlet weak var deleteText: UIButton!
     @IBOutlet weak var switchLanguage: UIButton!
     @IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
-
+    
     var textSourceIsNotEmpty: Bool {
         if textSource.text.isEmpty == true || textSource.text == "Placeholder" {
-            //Alerte
             return false
         }
         return true
     }
-
+    
     @IBAction func buttonIsClicked(sender: UIButton) {
         switch sender.tag {
         case 1:
@@ -40,17 +39,16 @@ class TranslateView: UIView {
                 //alerte
                 return
             }
-             toggleActivityIndicator(shown: true)
-        delegateTranslateView?.whenButtonTranslateIsClicked(textSource: textSource.text, sourceLangueCode: languageSource.accessibilityIdentifier!, targetLangueCode: languageTarget.accessibilityIdentifier!)
+            toggleActivityIndicator(shown: true)
+            delegateTranslateView?.whenButtonTranslateIsClicked(textSource: textSource.text, sourceLangueCode: languageSource.accessibilityIdentifier!, targetLangueCode: languageTarget.accessibilityIdentifier!)
         case 4:
             delegateTranslateView?.WhenButtonDeleteIsClicked(view: self)
         case 5:
-            //delegateTranslateView?.WhenButtonSwitchLanguageIsClicked(senderS: languageSource, senderT: languageTarget)
-           exchangeLanguage(senderTarget: languageTarget, senderSource: languageSource)
+            exchangeLanguage(senderTarget: languageTarget, senderSource: languageSource)
         default:return
+        }
     }
-    }
-
+    
     func initButtonLanguage(titleS: String, codeS: String, titleT: String, codeT: String) {
         languageSource.setTitle(titleS, for: .normal)
         languageSource.accessibilityIdentifier = codeS
@@ -58,7 +56,7 @@ class TranslateView: UIView {
         languageTarget.setTitle(titleT, for: .normal)
         languageTarget.accessibilityIdentifier = codeT
     }
-
+    
     func exchangeLanguage(senderTarget: UIButton, senderSource: UIButton) {
         let code = senderSource.accessibilityIdentifier
         let name = senderSource.title(for: .normal)
@@ -69,23 +67,17 @@ class TranslateView: UIView {
         senderTarget.setTitle(name, for: .normal)
         senderTarget.accessibilityIdentifier = code
     }
-
+    
     func toggleActivityIndicator(shown: Bool) {
         indicatorActivity.isHidden = !shown
         translateButton.isHidden = shown
     }
-
+    
     func printResultTranslate(translation: String) {
         textTranslated.text = translation
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    
+    
 }
 protocol CommunicationTranslateView {
     func whenButtonTranslateIsClicked(textSource: String, sourceLangueCode: String, targetLangueCode: String)

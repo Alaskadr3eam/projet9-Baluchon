@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*
 class DeviseService {
     
     private var task: URLSessionDataTask?
@@ -53,3 +53,4 @@ class DeviseService {
     }
     
 }
+*/ 

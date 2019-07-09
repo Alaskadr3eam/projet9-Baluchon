@@ -9,28 +9,28 @@
 import UIKit
 
 class LanguageTableViewController: UITableViewController {
-
+    
     var language: Language?
     
     var sender: UIButton?
-
+    
     var delegate: LanguageTableViewControllerDelegate?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Language.list.count
     }    
-   /// Validates the selection of a language
+    /// Validates the selection of a language
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         language = Language.list[indexPath.row]
@@ -45,7 +45,7 @@ class LanguageTableViewController: UITableViewController {
         
         let language = Language.list[indexPath.row]
         cell.textLabel?.text = language.name
-
+        
         if let currentLanguage = self.language, currentLanguage.code == language.code {
             cell.accessoryType = .checkmark
         } else {

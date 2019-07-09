@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import newbaluchon
+import RealmSwift
 
 class TranslateTestCase: XCTestCase {
 
@@ -48,21 +49,16 @@ class TranslateTestCase: XCTestCase {
     }
 
     func testSubmitTranslate() {
-    translate(textSource: "Bonjour", source: "FR", target: "EN")
+        let textSrouce = "coucou"
+        let source = "FR"
+        let target = "EN"
+        
+        translate.submitTranslate(textSource: textSrouce, source: source, target: target)
         
         
-        //XCTAssertEqual(translationData.data.translation[0].translatedText,"Hello")
+        
     }
 
-    
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
 
 }

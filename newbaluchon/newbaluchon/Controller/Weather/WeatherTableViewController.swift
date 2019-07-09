@@ -11,69 +11,45 @@ import RealmSwift
 
 class WeatherTableViewController: UITableViewController {
     
-    //var weather: Constant?
-    //var realm: Realm!
-    //var objectsWeathers = DBManager.sharedInstance.getDataFromDBWeatherHoliday()
     let weather = Weather()
     var sender: UIButton?
+  
     @IBOutlet weak var tableViewWeather: UITableView!
-
- 
+    
+    
     
     var delegate: WeatherTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //realm = try! Realm()
-        //DBManager.self
         initSwipeGesture()
         weather.delegateAddCityHoliday = self
-        //tableView.reloadData()
-      //  realoadrequest()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        //tableViewWeather.reloadData()
-    }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         tableViewWeather.reloadData()
     }
-
+    
     func initSwipeGesture(){
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(WeatherTableViewController.swipeForEditing(_:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
     }
-    
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //tableView.reloadData()
         return weather.objectsWeathers.count
     }
     /// Validates the weatherSelection
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.changeWeather(index: indexPath)
-        
-        
- 
         dismiss(animated: true, completion: nil)
     }
-/*
-    func realoadrequest() {
-        for i in 0...weather.objectsWeathers.count - 1 {
-            weather.requestNewCityReload(city: weather.objectsWeathers[i].name!, newWeather: weather.objectsWeathers[i], index: i)
-            tableViewWeather.reloadData()
-        }
-    }
-*/
-
+    
     @objc func swipeForEditing(_ sender: UISwipeGestureRecognizer?) {
         if tableView.isEditing == true {
             tableView.isEditing = false
@@ -87,7 +63,7 @@ class WeatherTableViewController: UITableViewController {
         // Return false if you do not want the specified item to be editable.
         return true
     }
- 
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard indexPath.row != 0 else {
@@ -106,7 +82,7 @@ class WeatherTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as! WeatherTableViewCell
         
@@ -117,17 +93,9 @@ class WeatherTableViewController: UITableViewController {
         cell.imageCell.image = UIImage(named: weather.image!)
         changeBackground(index: indexPath.row, cell: cell)
         
-        //cell.detailTextLabel?.text = language.code
-        /*
-        if let currentLanguage = self.language, currentLanguage.code == language.code {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
- */
         return cell
     }
-
+    
     func changeBackground(index: Int, cell: WeatherTableViewCell) {
         let letters = CharacterSet.init(charactersIn: "n")
         let range = weather.objectsWeathers[index].image?.rangeOfCharacter(from: letters)
@@ -151,8 +119,8 @@ class WeatherTableViewController: UITableViewController {
     }
     
 }
+
 protocol WeatherTableViewControllerDelegate: AnyObject {
-    /// Change the source or target language
     func changeWeather(index: IndexPath)
 }
 
@@ -171,19 +139,11 @@ extension WeatherTableViewController: AddCityHolidayDelegate {
             DBManager.sharedInstance.addDataWeatherHoliday(weather: weatherData)
         }
     }
-    
-    
+
     func updateTableViewWeather() {
         self.tableView.reloadData()
     }
 }
 
-class WeatherTableViewCell: UITableViewCell {
-    @IBOutlet var imageCell: UIImageView!
-    @IBOutlet var imageBackground: UIImageView!
-    @IBOutlet weak var newLabelTitle: UILabel!
-    @IBOutlet weak var newLabelDetail: UILabel!
-    @IBOutlet weak var swipeDelete: UISwipeGestureRecognizer!
-    @IBOutlet weak var indicatorActivity: UIActivityIndicatorView!
-}
+
 

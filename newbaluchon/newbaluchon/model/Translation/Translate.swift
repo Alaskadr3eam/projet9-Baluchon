@@ -29,7 +29,6 @@ class Translate {
         if !textSourceNotEmpty(textSource: textSource) {
             return
         }
-        //self.toggleActivityIndicator(shown: true)
         TranslateService.shared.getTranslate(text: textSource, source: source, target: target) { (translationData, error) in
             if let error = error {
                 self.delegateAlert?.alertError(error)
@@ -38,7 +37,6 @@ class Translate {
             guard let translationData = translationData else {
                 return
             }
-            print(translationData.data.translations[0].translatedText)
             self.delegateScreen?.itIsResultTranslation(text: translationData.data.translations[0].translatedText)
         }
         

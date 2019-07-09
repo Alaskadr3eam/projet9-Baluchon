@@ -5,7 +5,7 @@
 //  Created by Clément Martin on 26/06/2019.
 //  Copyright © 2019 clement. All rights reserved.
 //
-/*
+
 import XCTest
 @testable import newbaluchon
 
@@ -94,6 +94,6 @@ class WeatherServiceTestCase: XCTestCase {
     
 }
 
-*/
+
 
 

@@ -9,23 +9,23 @@
 import UIKit
 
 class CustomViewCell: UITableViewCell {
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         initCell()
     }
-
+    
     func initCell() {
         self.layer.masksToBounds = true
         self.separatorInset = UIEdgeInsets.zero
         self.layer.cornerRadius = 5.0
         self.backgroundColor = UIColor.white.withAlphaComponent(0.4)
     }
-
+    
 }

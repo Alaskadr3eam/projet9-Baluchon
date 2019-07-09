@@ -11,22 +11,22 @@ import RealmSwift
 import CoreLocation
 
 class WeatherViewController: UIViewController {
-
+    
     @IBOutlet weak var weatherView: WeatherView!
     let weather = Weather()
-     var currentPage = 0
+    var cityFirst = String()
+    var currentPage = 0
     var previousOffset: CGFloat = 0
-     let sectionInsets = UIEdgeInsets(top: 0.0,
-                                             left: 0.0,
-                                             bottom: 0.0,
-                                             right: 0.0)
+    let sectionInsets = UIEdgeInsets(top: 0.0,
+                                     left: 0.0,
+                                     bottom: 0.0,
+                                     right: 0.0)
     let itemsPerRow: CGFloat = 1
-    
-    var locationManager = CLLocationManager()
 
+    var locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //DBManager.sharedInstance.deleteAllFromDatabase()
 
         weatherView.delegateWeahter = self
         weather.delegateScreenWeather = self
@@ -34,44 +34,35 @@ class WeatherViewController: UIViewController {
         weather.delegateAlertError = self
         weather.delegateViewIsHidden = self
         
-        
         initLocationManager()
         locationWeatherCity()
-        //locationWeatherCity()
-       
+        
         weatherView.collectionView.delegate = self
         weatherView.collectionView.dataSource = self
         weatherView.pageControl.hidesForSinglePage = true
-        //reloadAllCollectionView()
-        
-        //weather.requestWeather()
-        
-        //weather.cityDomicileItEnter()
 
-        // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        
-        // weather.requestWeather()
-        //realoadrequest()
-        weatherView.collectionView.reloadData()
-       // initLocationManager()
-        
-        
-        
-    }
-
+    
     override func viewDidAppear(_ animated: Bool) {
-       // weather.requestWeather()
+         weatherView.collectionView.reloadData()
+         locationWeatherCity()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        rotated()
+    }
+
+    func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            weatherView.collectionView.reloadData()
+        } else {
+            weatherView.collectionView.reloadData()
+        }
     }
     
-
+    
     func updateViewDomicile(city: CityNameDomicile, view: WeatherView) {
         changeBackgroundWeatherDomicile(city, view)
         view.labelDomicileCity.text = city.name
@@ -80,23 +71,14 @@ class WeatherViewController: UIViewController {
         view.labelDomicileDescription.text = city.desctiptionWeather
         
     }
-
-    func reloadAllCollectionView() {
-        for i in 0...weather.objectsWeathers.count - 1 {
-            if i != 0 {
-                weather.requestNewCityReload(city: weather.objectsWeathers[i].name!, newWeather: weather.objectsWeathers[i], index: i)
-            }
-        }
-        weatherView.collectionView.reloadData()
-    }
-
+    
     func realoadRequest(city: String, index: Int, newWeather: WeatherHoliday) {
         if index != 0 {
-        weather.requestNewCityReload(city: city, newWeather: newWeather, index: index)
-        weatherView.collectionView.reloadData()
+            weather.requestNewCityReload(city: city, newWeather: newWeather, index: index)
+            weatherView.collectionView.reloadData()
         }
     }
- 
+    
     func changeBackgroundWeatherDomicile(_ cityData: CityNameDomicile, _ view: WeatherView) {
         let letters = CharacterSet.init(charactersIn: "n")
         let range = cityData.image?.rangeOfCharacter(from: letters)
@@ -106,34 +88,28 @@ class WeatherViewController: UIViewController {
             view.imageBackground.image = UIImage(named: "ciel jour")
         }
     }
-
+    
     func updateLabelDomicileCity(view: WeatherView) {
         view.labelDomicileCity.text = weather.objectsCity[0].name
     }
-
+    
     func updateCollectionView(view: WeatherView) {
         view.collectionView.reloadData()
     }
-/*
-    func addNewCity(city: String) {
-        weather.addNewCity(city: city)
-        //DBManager.sharedInstance.addOrUpdateDataFirst(city: city)
-    }
-*/
-    
-    // MARK: - Navigation
 
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == Constant.segueSettingWeather {
-        if let vcDestination = segue.destination as? WeatherSettingDomicileViewController1 {
-            vcDestination.delegateSaveCity = self
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constant.segueSettingWeather {
+            if let vcDestination = segue.destination as? WeatherSettingDomicileViewController {
+                vcDestination.delegateSaveCity = self
             }
         }
-    if segue.identifier == Constant.segueListeTableView {
-        if let vcDestination = segue.destination as? WeatherTableViewController {
-            vcDestination.delegate = self
+        if segue.identifier == Constant.segueListeTableView {
+            if let vcDestination = segue.destination as? WeatherTableViewController {
+                vcDestination.delegate = self
+            }
         }
     }
-    }
-
+    
 }

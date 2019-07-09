@@ -33,7 +33,7 @@ class FakeResponseData {
 
     static var moneyCorrectData: Data? {
         let bundle = Bundle(for: FakeResponseData.self)
-        let url = bundle.url(forResource: "Money", withExtension: "json")!
+        let url = bundle.url(forResource: "MoneyCurrent", withExtension: "json")!
         return try! Data(contentsOf: url)
     }
     

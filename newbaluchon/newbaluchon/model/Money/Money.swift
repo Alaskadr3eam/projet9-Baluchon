@@ -10,20 +10,14 @@ import Foundation
 import RealmSwift
 
 class Money {
-
+    
     var delegateAlerte: AlertMoneyDelegate?
-
-    var date = String()
-    var arrayCurrencyEur = [String:Double]()
-    var total = Double()
-
+    var dataSource1 = [DeviseSource]()
+    var dataSource2 = [DeviseSource]()
+    var isSwitch = false
+    
     var objectsMoney = DBManager.sharedInstance.getDataFromDBMoneyDataRealm()
-    var objectsDevise = DBManager.sharedInstance.getDataFromDBSymbolsDataRealm()
-    var rate = Rate()
-
-    //var deviseObject = DBManager.sharedInstance.getDataFromDBDeviseDataRealm()
-
-    //var delegateMoneyDelegate: UpdateMoneyDelegate?
+    
     var requestIsOk: Bool {
         return objectsMoney.count == 0
     }
@@ -32,145 +26,117 @@ class Money {
         let timestampOfDay = timeStampOfDay()
         return objectsMoney[0].timestamps + 86400 < timestampOfDay
     }
-
+    
     func allRequest() {
         if requestIsOk {
             requestCurrency()
             return
         } else if timestampIsOk {
-             DBManager.sharedInstance.deleteFromDbMoneyData(object: objectsMoney[0])
+            DBManager.sharedInstance.deleteFromDbMoneyData(object: objectsMoney[0])
             requestCurrency()
             return
         }
     }
-/*
-    func requestDevise() {
-       // DBManager.sharedInstance.deleteFromDbSymbolsDataRealm(object: objectsDevise[0])
-        DeviseService.shared.getMoneyDevise { (deviseData, error) in
-            if let error = error {
-                self.delegateAlerte?.alertError(error)
-                return
+    
+    func prepareArrayRate() {
+        for (key,value) in Constant.arrayDeviseSymbols {
+            var deviseSource = DeviseSource()
+            deviseSource.code = key
+            deviseSource.name = value
+            Constant.deviseSymbols.append(deviseSource)
+        }
+        
+        for (key,value) in Constant.arrayDeviseSymbolEuro {
+            var deviseSource = DeviseSource()
+            deviseSource.code = key
+            deviseSource.name = value
+            Constant.deviseSymbolsEuro.append(deviseSource)
+        }
+        dataSource1 = Constant.deviseSymbolsEuro
+        dataSource2 = Constant.deviseSymbols
+    }
+    
+    private func searchDevise(deviseSearch: String) -> Double {
+        var devise = Double()
+        for i in objectsMoney[0].symbols {
+            let range = i.symbols.lowercased().range(of: deviseSearch, options: .caseInsensitive, range: nil, locale: nil)
+            if range != nil {
+                devise = i.currencyValue
             }
-            guard let deviseData = deviseData else {
-                return
+        }
+        return devise
+    }
+    
+    func convert(view: MoneyView) {
+        
+        let sourceCurrency = view.pickerViewSource.selectedRow(inComponent: 0)
+        let targetCurrency = view.pickerViewTarget.selectedRow(inComponent: 0)
+        let deviseSource = dataSource1[sourceCurrency].code
+        let deviseTarget = dataSource2[targetCurrency].code
+        
+        guard let sourceValue = view.sourceValueTextField.text else {
+            return
+        }
+        
+        let sourceCurrencyRate = searchDevise(deviseSearch: deviseSource)
+        let targetCurrencyRate = searchDevise(deviseSearch: deviseTarget)
+        if !isSwitch {
+            let euroValue = (sourceValue as NSString).doubleValue// * targetCurrencyRate
+            
+            let targetValue = euroValue * targetCurrencyRate
+            if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
+                view.targetValueTextField.text = String(Int(targetValue))
+            } else {
+                view.targetValueTextField.text = String(targetValue)
             }
-            DispatchQueue.main.async {
-                DBManager.sharedInstance.addDataSymbolsDataRealm(symbols: deviseData)
+        } else {
+            let deviseValue = (sourceValue as NSString).doubleValue
+            let targetValue = deviseValue / sourceCurrencyRate
+            if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
+                view.targetValueTextField.text = String(Int(targetValue))
+            } else {
+                view.targetValueTextField.text = String(targetValue)
             }
-            //self.delegateMoneyDelegate?.itIsResultRequestDevise(deviseData: deviseData)
         }
     }
-*/
+
+    func exchangeDataSource(view: MoneyView) {
+        exchange()
+        view.pickerViewSource.reloadAllComponents()
+        view.pickerViewTarget.reloadAllComponents()
+        convert(view:view)
+    }
+    
+    func exchange() {
+        dataSource1 = isSwitch ? Constant.deviseSymbolsEuro : Constant.deviseSymbols
+        dataSource2 = isSwitch ? Constant.deviseSymbols : Constant.deviseSymbolsEuro
+        isSwitch = !isSwitch
+    }
+
     func requestCurrency() {
-       // date = dateOfDay()
-       // if date == objectsMoney[0]{
-     //       return
-       // } else {
-        //    DBManager.sharedInstance.deleteFromDbMoneyData(object: objectsMoney[0])
+        
         MoneyService.shared.getMoneyCurrent { (moneyData, error) in
             if let error = error {
                 self.delegateAlerte?.alertError(error)
                 return
             }
             guard let moneyData = moneyData else {
-                print("errordata")
+                self.delegateAlerte?.alertError(error!)
                 return
             }
             DispatchQueue.main.async {
-               DBManager.sharedInstance.addDataMoneyDataRealm(money: moneyData)
+                DBManager.sharedInstance.addDataMoneyDataRealm(money: moneyData)
             }
-            
-         //   self.delegateMoneyDelegate?.itIsResultRequestCurrency(moneyData: moneyData)
         }
-        //}
     }
- 
-
+    
     func timeStampOfDay() -> Int64 {
-        let timestamp = Date().currentTimeMillis()
+        let timestamp = Date().currentTime()
         return timestamp
     }
-/*
-    func resultConversion(value: String, targetDevise: Double) -> String {
-        let valueDouble = value
-        let currentValeur = targetDevise
-        let currencyString = currentValeur.formatToString()
-        let result = "\(valueDouble)*\(currencyString)"
-        return result
-    }
-
-    func calcul(value: String, targetDevise: Double) {
-        let mathExpression = NSExpression(format: resultConversion(value: value, targetDevise: targetDevise))
-        guard let mathValue = mathExpression.expressionValue(with: nil, context: nil) as? Double else { return }
-        total = mathValue
-    }
-
-    private func formatCurrencies(from currenciesList: DeviseData) -> [SymbolsDataRealm] {
-        var primaryCurrencies = [SymbolsDataRealm]()
-        var secondaryCurrencies = [SymbolsDataRealm]()
-        
-        for (currencyCode, currencyName) in currenciesList.symbols {
-            let newCurrency = SymbolsDataRealm()
-            newCurrency.code = currencyCode
-            newCurrency.name = currencyName
-            if self.mainCurrenciesCode.contains(currencyCode) {
-                primaryCurrencies.append(newCurrency)
-            } else {
-                secondaryCurrencies.append(newCurrency)
-            }
-        }
-        
-        primaryCurrencies.sort(by: { (currencyA, currencyB) -> Bool in
-            currencyA.name < currencyB.name
-        })
-        
-        secondaryCurrencies.sort(by: { (currencyA, currencyB) -> Bool in
-            currencyA.name < currencyB.name
-        })
-        
-        return primaryCurrencies + secondaryCurrencies
-    }
- */
-/*
-    func convert(value: String, targetDevise:String, sourceDevise: String) {
-        let deviseSource = sourceDevise
-        let targetCurrency = targetDevise
-        /*
-        guard let sourceValue = sourceValueTextField.text else {
-            print("There is no value to convert")
-            return
-        }
- 
-        guard let sourceCurrencyRate = CurrencyService.shared.rates[sourceCurrency.code] else {
-            print("Source currency rate not found")
-            return
-        }
-        
-        guard let targetCurrencyRate = CurrencyService.shared.rates[targetCurrency.code] else {
-            print("Target currency rate not found")
-            return
-        }
-        */
-        let euroValue = (sourceValue as NSString).floatValue / sourceCurrencyRate
-        
-        let targetValue = euroValue * targetCurrencyRate
-        if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
-            targetValueTextField.text = String(Int(targetValue))
-        } else {
-            targetValueTextField.text = String(targetValue)
-        }
-    }
-    
-*/
-    
     
 }
-/*
-protocol UpdateMoneyDelegate {
-    func itIsResultRequestDevise(deviseData: MoneyData)
-    func itIsResultRequestCurrency(moneyData: MoneyData)
-}
- */
+
 protocol AlertMoneyDelegate {
     func alertError(_ error: NetworkError)
 }

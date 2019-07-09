@@ -7,46 +7,81 @@
 //
 
 import XCTest
+//import RealmSwift
 @testable import newbaluchon
 
 class MoneyTestCase: XCTestCase {
 
     var money: Money!
 
+
     override func setUp() {
         super.setUp()
         money = Money()
        
+       
     }
 
-    func resultatConversion() {
-        money.arrayCurrencyEur["ZZZ"] = 1.5
+   /* func testTimestampsIsOK() {
+        money.objectsMoney[0].timestamps = 120
+        
+        let result = money.timestampIsOk
+        
+        XCTAssertEqual(result, true)
+    }*/
+
+    func testRequestIsOk() {
+        
+        let result = money.requestIsOk
+        
+        XCTAssertEqual(result, false)
     }
 
-    func testRequestDevise() {
-        money.requestDevise()
+    func testPrepareRate() {
+
+        money.prepareArrayRate()
+        
+        XCTAssertEqual(money.dataSource1[0].code, "EUR")
+        XCTAssertEqual(money.dataSource1[0].name, "Europe")
+         XCTAssertNotEqual(money.dataSource1[0].name, "EURO")
+        XCTAssertEqual(Constant.deviseSymbols.count, money.dataSource2.count)
     }
+
 
     func testRequestCurrency() {
         money.requestCurrency()
     }
 
-    func testResultConvertion() {
-        money.arrayCurrencyEur["ZZZ"] = 1.5
+    func testTimestamps() {
+        let timestamps = Date().currentTime()
         
-       let result = money.resultConversion(value: "5", targetDevise: "ZZZ")
+        let result = money.timeStampOfDay()
         
-    XCTAssertEqual(result, "5*1.5")
+        XCTAssertEqual(timestamps,result)
     }
 
-    func testCalcul() {
-        money.arrayCurrencyEur["ZZZ"] = 1.5
+    func testExchangeDataSource() {
+        money.isSwitch = false
         
-        money.calcul(value: "5", targetDevise: "ZZZ")
+        money.exchange()
         
-        XCTAssertFalse(money.total == 5)
-        XCTAssertEqual(money.total, 7.5)
+        XCTAssertEqual(money.dataSource1.count, Constant.deviseSymbolsEuro.count)
+        XCTAssertEqual(money.dataSource2.count, Constant.deviseSymbols.count)
+        XCTAssertEqual(money.isSwitch, true)
     }
+
+    func testTimestampIsNotOk() {
+        let result = money.timestampIsOk
+        
+        XCTAssertNotEqual(result,true)
+        
+    }
+
+
+
+
+
+
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
