@@ -7,7 +7,6 @@
 //
 
 import XCTest
-//import RealmSwift
 @testable import newbaluchon
 
 class MoneyTestCase: XCTestCase {
@@ -21,20 +20,13 @@ class MoneyTestCase: XCTestCase {
        
        
     }
-
-   /* func testTimestampsIsOK() {
-        money.objectsMoney[0].timestamps = 120
-        
-        let result = money.timestampIsOk
-        
-        XCTAssertEqual(result, true)
-    }*/
-
+// test à TRUE si Realm ne contient pas d'object, si Realm contient un object alors FALSE
     func testRequestIsOk() {
         
         let result = money.requestIsOk
         
         XCTAssertEqual(result, false)
+
     }
 
     func testPrepareRate() {
@@ -68,6 +60,16 @@ class MoneyTestCase: XCTestCase {
         XCTAssertEqual(money.dataSource1.count, Constant.deviseSymbolsEuro.count)
         XCTAssertEqual(money.dataSource2.count, Constant.deviseSymbols.count)
         XCTAssertEqual(money.isSwitch, true)
+    }
+
+    func testExchangeDataSource2() {
+        money.isSwitch = true
+        
+        money.exchange()
+        
+        XCTAssertEqual(money.dataSource1.count, Constant.deviseSymbols.count)
+        XCTAssertEqual(money.dataSource2.count, Constant.deviseSymbolsEuro.count)
+        XCTAssertEqual(money.isSwitch, false)
     }
 
     func testTimestampIsNotOk() {

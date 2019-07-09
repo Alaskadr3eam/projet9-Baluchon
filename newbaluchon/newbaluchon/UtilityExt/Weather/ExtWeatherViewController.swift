@@ -15,10 +15,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
     
     func initLocationManager() {
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        locationManager.startMonitoringSignificantLocationChanges()
     }
     
     func locationWeatherCity() {
@@ -43,12 +39,15 @@ extension WeatherViewController: CLLocationManagerDelegate {
                         self.weather.cityLocation = city
                         self.weather.countryLocation = country
                         self.weather.requestWeather()
-                    }
-                )
+                    
+                    
+            })
+            break
               
             case .notDetermined, .restricted, .denied:
                alertVC(title: "Error", message: "Either Not Determined, Restricted, or Denied")
-             
+                break
+               
             }
         }
     }
@@ -160,9 +159,7 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
             
             let itemWithSpaceWidth = weatherView.collectionLayoutFlow.itemSize.width + weatherView.collectionLayoutFlow.minimumLineSpacing
             let itemWidth = weatherView.collectionLayoutFlow.itemSize.width
-            
-            //  realoadRequest(city: weather.objectsWeathers[i].name!, index: i, newWeather: weather.objectsWeathers[i])
-            
+ 
             if collectionView.contentOffset.x <= CGFloat(i) * itemWithSpaceWidth + itemWidth / 2 {
                 let indexPath = IndexPath(item: i, section: 0)
                 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)

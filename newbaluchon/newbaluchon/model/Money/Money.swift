@@ -56,7 +56,7 @@ class Money {
         dataSource2 = Constant.deviseSymbols
     }
     
-    private func searchDevise(deviseSearch: String) -> Double {
+    func searchDevise(deviseSearch: String) -> Double {
         var devise = Double()
         for i in objectsMoney[0].symbols {
             let range = i.symbols.lowercased().range(of: deviseSearch, options: .caseInsensitive, range: nil, locale: nil)
@@ -65,46 +65,6 @@ class Money {
             }
         }
         return devise
-    }
-    
-    func convert(view: MoneyView) {
-        
-        let sourceCurrency = view.pickerViewSource.selectedRow(inComponent: 0)
-        let targetCurrency = view.pickerViewTarget.selectedRow(inComponent: 0)
-        let deviseSource = dataSource1[sourceCurrency].code
-        let deviseTarget = dataSource2[targetCurrency].code
-        
-        guard let sourceValue = view.sourceValueTextField.text else {
-            return
-        }
-        
-        let sourceCurrencyRate = searchDevise(deviseSearch: deviseSource)
-        let targetCurrencyRate = searchDevise(deviseSearch: deviseTarget)
-        if !isSwitch {
-            let euroValue = (sourceValue as NSString).doubleValue// * targetCurrencyRate
-            
-            let targetValue = euroValue * targetCurrencyRate
-            if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
-                view.targetValueTextField.text = String(Int(targetValue))
-            } else {
-                view.targetValueTextField.text = String(targetValue)
-            }
-        } else {
-            let deviseValue = (sourceValue as NSString).doubleValue
-            let targetValue = deviseValue / sourceCurrencyRate
-            if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
-                view.targetValueTextField.text = String(Int(targetValue))
-            } else {
-                view.targetValueTextField.text = String(targetValue)
-            }
-        }
-    }
-
-    func exchangeDataSource(view: MoneyView) {
-        exchange()
-        view.pickerViewSource.reloadAllComponents()
-        view.pickerViewTarget.reloadAllComponents()
-        convert(view:view)
     }
     
     func exchange() {
@@ -121,7 +81,6 @@ class Money {
                 return
             }
             guard let moneyData = moneyData else {
-                self.delegateAlerte?.alertError(error!)
                 return
             }
             DispatchQueue.main.async {

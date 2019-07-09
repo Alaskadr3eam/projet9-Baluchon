@@ -27,7 +27,6 @@
 		31682D4622C12C3B00216813 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4522C12C3B00216813 /* Money.swift */; };
 		31682D4B22C12E8F00216813 /* protocoleMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4A22C12E8F00216813 /* protocoleMoneyViewController.swift */; };
 		31682D4D22C12E9F00216813 /* ExtMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4C22C12E9F00216813 /* ExtMoneyViewController.swift */; };
-		31682D4F22C2183500216813 /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D4E22C2183500216813 /* DoubleExt.swift */; };
 		31682D5122C3798B00216813 /* WeatherServiceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D5022C3798B00216813 /* WeatherServiceTestCase.swift */; };
 		31682D5322C37AAF00216813 /* Weather.json in Resources */ = {isa = PBXBuildFile; fileRef = 31682D5222C37AAF00216813 /* Weather.json */; };
 		31682D5522C38D5200216813 /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31682D5422C38D5200216813 /* URLSessionFake.swift */; };
@@ -37,7 +36,6 @@
 		31A77EAB22B91A2400C47B52 /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */; };
 		31A77EAD22B91A5400C47B52 /* MoneyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAC22B91A5400C47B52 /* MoneyService.swift */; };
 		31A77EAF22B921BD00C47B52 /* MoneyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EAE22B921BD00C47B52 /* MoneyData.swift */; };
-		31A77EB122B924F200C47B52 /* DeviseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB022B924F200C47B52 /* DeviseService.swift */; };
 		31A77EB822BB878700C47B52 /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB722BB878700C47B52 /* Translate.swift */; };
 		31A77EBA22BB890000C47B52 /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EB922BB890000C47B52 /* TranslateViewController.swift */; };
 		31A77EBC22BBB91200C47B52 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A77EBB22BBB91200C47B52 /* WeatherView.swift */; };
@@ -104,7 +102,6 @@
 		31682D4522C12C3B00216813 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
 		31682D4A22C12E8F00216813 /* protocoleMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocoleMoneyViewController.swift; sourceTree = "<group>"; };
 		31682D4C22C12E9F00216813 /* ExtMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtMoneyViewController.swift; sourceTree = "<group>"; };
-		31682D4E22C2183500216813 /* DoubleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
 		31682D5022C3798B00216813 /* WeatherServiceTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceTestCase.swift; sourceTree = "<group>"; };
 		31682D5222C37AAF00216813 /* Weather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Weather.json; sourceTree = "<group>"; };
 		31682D5422C38D5200216813 /* URLSessionFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
@@ -114,7 +111,6 @@
 		31A77EAA22B91A2400C47B52 /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
 		31A77EAC22B91A5400C47B52 /* MoneyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyService.swift; sourceTree = "<group>"; };
 		31A77EAE22B921BD00C47B52 /* MoneyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyData.swift; sourceTree = "<group>"; };
-		31A77EB022B924F200C47B52 /* DeviseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviseService.swift; sourceTree = "<group>"; };
 		31A77EB722BB878700C47B52 /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		31A77EB922BB890000C47B52 /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
 		31A77EBB22BBB91200C47B52 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
@@ -228,6 +224,19 @@
 			path = Money;
 			sourceTree = "<group>";
 		};
+		3152E73622D4F645007757E7 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				BA0B193D229E5E200063BF8A /* AppDelegate.swift */,
+				BA0B1947229E5E240063BF8A /* Assets.xcassets */,
+				BA0B1949229E5E240063BF8A /* LaunchScreen.storyboard */,
+				31D5425422CB5467003FCFBE /* countries.json */,
+				BA0B194C229E5E240063BF8A /* Info.plist */,
+				BA0B1944229E5E200063BF8A /* newbaluchon.xcdatamodeld */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		316399A1229E97D500660E8B /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,7 +297,6 @@
 			children = (
 				311C287122B3952500BE0EF8 /* ServiceCreateRequest.swift */,
 				31A77EAC22B91A5400C47B52 /* MoneyService.swift */,
-				31A77EB022B924F200C47B52 /* DeviseService.swift */,
 				311C287522B3956100BE0EF8 /* TranslateService.swift */,
 				311C287322B3954300BE0EF8 /* WeatherService.swift */,
 			);
@@ -319,7 +327,6 @@
 				31A77ECA22BCD63E00C47B52 /* Weather */,
 				31A77EC922BCD62900C47B52 /* Translate */,
 				31A77EC722BCD55300C47B52 /* ExtUIViewController.swift */,
-				31682D4E22C2183500216813 /* DoubleExt.swift */,
 				3157334022D0D85D00C5D860 /* DateExt.swift */,
 			);
 			path = UtilityExt;
@@ -368,16 +375,11 @@
 		BA0B193C229E5E200063BF8A /* newbaluchon */ = {
 			isa = PBXGroup;
 			children = (
+				3152E73622D4F645007757E7 /* SupportingFiles */,
 				31A77EC222BCD23C00C47B52 /* UtilityExt */,
 				BA0B196E229F11080063BF8A /* Controller */,
 				316399A2229E97F100660E8B /* view */,
 				316399A1229E97D500660E8B /* model */,
-				BA0B193D229E5E200063BF8A /* AppDelegate.swift */,
-				BA0B1947229E5E240063BF8A /* Assets.xcassets */,
-				BA0B1949229E5E240063BF8A /* LaunchScreen.storyboard */,
-				31D5425422CB5467003FCFBE /* countries.json */,
-				BA0B194C229E5E240063BF8A /* Info.plist */,
-				BA0B1944229E5E200063BF8A /* newbaluchon.xcdatamodeld */,
 			);
 			path = newbaluchon;
 			sourceTree = "<group>";
@@ -606,7 +608,6 @@
 				31A77EC622BCD3A000C47B52 /* protocoleTranslateViewController.swift in Sources */,
 				31A77EC822BCD55300C47B52 /* ExtUIViewController.swift in Sources */,
 				31A77ECE22BCD6A800C47B52 /* ExtWeatherViewController.swift in Sources */,
-				31A77EB122B924F200C47B52 /* DeviseService.swift in Sources */,
 				311C287422B3954300BE0EF8 /* WeatherService.swift in Sources */,
 				BA0B1970229F112E0063BF8A /* LanguageTableViewController.swift in Sources */,
 				31A77EBC22BBB91200C47B52 /* WeatherView.swift in Sources */,
@@ -625,7 +626,6 @@
 				3157334122D0D85D00C5D860 /* DateExt.swift in Sources */,
 				31A77EAD22B91A5400C47B52 /* MoneyService.swift in Sources */,
 				316399A4229E980E00660E8B /* TranslateView.swift in Sources */,
-				31682D4F22C2183500216813 /* DoubleExt.swift in Sources */,
 				BA0B1946229E5E200063BF8A /* newbaluchon.xcdatamodeld in Sources */,
 				31A77ECC22BCD69200C47B52 /* protocoleWeatherViewController.swift in Sources */,
 				311C28A822B515C400BE0EF8 /* DBManager.swift in Sources */,
@@ -823,7 +823,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ABP4G8VUJL;
-				INFOPLIST_FILE = newbaluchon/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/newbaluchon/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -842,7 +842,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ABP4G8VUJL;
-				INFOPLIST_FILE = newbaluchon/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/newbaluchon/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -860,6 +860,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = newbaluchonTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -880,6 +881,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = newbaluchonTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -899,6 +901,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = newbaluchonUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -918,6 +921,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = newbaluchonUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

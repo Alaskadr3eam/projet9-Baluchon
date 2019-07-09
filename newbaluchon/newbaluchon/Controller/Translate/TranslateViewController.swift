@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 
 class TranslateViewController: UIViewController {
@@ -14,14 +15,14 @@ class TranslateViewController: UIViewController {
     var translate = Translate()
     @IBOutlet weak var translateView: TranslateView!
     
-    
+    var locationManager = CLLocationManager()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       //DBManager.sharedInstance.deleteAllFromDatabase()
-        
+       
+        initLocationManager()
         translateView.delegateTranslateView = self
         translate.delegateScreen = self
         translate.delegateAlert = self
@@ -36,6 +37,13 @@ class TranslateViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         initGeneral()
+    }
+
+    func initLocationManager() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
     }
     
     func initGeneral() {

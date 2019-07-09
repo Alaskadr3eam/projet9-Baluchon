@@ -18,7 +18,6 @@ class Translate {
 
     func textSourceNotEmpty(textSource: String) -> Bool {
         if textSource.isEmpty == true || textSource == "Placeholder" {
-            //alert
             return false
         } else {
             return true

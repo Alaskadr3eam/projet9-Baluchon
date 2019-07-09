@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import newbaluchon
-//import RealmSwift
 
 class WeatherTestCase: XCTestCase {
 
@@ -29,29 +28,39 @@ class WeatherTestCase: XCTestCase {
 
     func requestWeatherNewCity(q: String) {
         weather.requestNewCity(city: q)
+        weather.requestNewCityDomicile(city: q)
     }
 
+    func requestReload(q: String, newWeather: WeatherHoliday, index: Int) {
+        weather.requestNewCityReload(city: q, newWeather: newWeather, index: index)
+    }
+// test à TRUE si Realm ne contient pas d'object, si Realm contient un object alors FALSE
     func testRequestIsOk() {
         
         let result = weather.requestIsOk
     
-        XCTAssertEqual(result, true)
+        XCTAssertEqual(result, false)
     }
 
     func testRequest() {
-       // weather.objectsCity[0].name = "Paris"
-        weather.requestWeather()
-        
+        requestWeather(q: "paris")
     }
 
     func testRequestLocation() {
-        weather.requestWeatherLocation(city: "Paris")
+        requestWeatherLocation(q: "paris")
     }
 
     func testNewCity() {
-        weather.requestNewCityDomicile(city: "paris")
-        
-   
+        requestWeatherNewCity(q: "paris")
+    }
+
+   func testRequestReload() {
+    let weather3 = WeatherHoliday()
+        let weather1 = Weathers(id: 1, main: "ah", description: "beau", icon: "1n")
+        let main1 = Main(temp: 20.0, pressure: 20.0, humidity: 20.0, temp_min: 20.0, temp_max: 20.0)
+        let weatherTest = WeatherData(weather: [weather1], main: main1, name: "Paris")
+        DBManager.sharedInstance.addDataWeatherHoliday(weather: weatherTest)
+        requestReload(q: "paris", newWeather: weather3, index: 0)
     }
 
     override func tearDown() {

@@ -54,9 +54,15 @@ class TranslateTestCase: XCTestCase {
         let target = "EN"
         
         translate.submitTranslate(textSource: textSrouce, source: source, target: target)
+    }
+
+    func testSubmitTranslateSourceTextIsEmpty() {
+        let textSrouce = ""
+        let source = "FR"
+        let target = "EN"
         
-        
-        
+        translate.submitTranslate(textSource: textSrouce, source: source, target: target)
+
     }
 
 

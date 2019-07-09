@@ -29,7 +29,6 @@ extension TranslateViewController: CommunicationTranslateView {
     }
     
     func WhenButtonSwitchLanguageIsClicked(senderS: UIButton, senderT: UIButton) {
-        //exchangeLanguage(senderTarget: senderT, senderSource: senderS)
     }
     
     
@@ -54,6 +53,6 @@ extension TranslateViewController: UpdateTranslate {
 
 extension TranslateViewController: AlertTranslateDelegate {
     func alertError(_ error: NetworkError) {
-        alertVC(title: "Error", message: error.rawValue)
+        self.present(NetworkError.getAlert(error), animated: true)
     }
 }

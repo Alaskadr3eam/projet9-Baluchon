@@ -14,14 +14,11 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtSearchBar: UITextField!
     @IBOutlet weak var tblCountryList: UITableView!
     @IBOutlet weak var buttonAnulate: UIBarButtonItem!
-      @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var navigationBar: UINavigationBar!
 
-    
     let weather = Weather()
     
     var delegateSaveCityHoliday: SaveCityHolidayDelegate?
-    
-    
     
     var cityName:[String] = Array()
     var cityNameSearch:[String] = Array()
@@ -32,7 +29,6 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         city = loadJson(fileName: "countries")!
-        // Do any additional setup after loading the view.
         
         tblCountryList.isHidden = true
         tblCountryList.delegate = self
@@ -54,7 +50,7 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK:- UITextFieldDelegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    private func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         txtSearchBar.resignFirstResponder()
         return true
     }
@@ -70,7 +66,7 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
         tblCountryList.reloadData()
     }
 
-    func searchCountrie(_ textField: UITextField) {
+    private func searchCountrie(_ textField: UITextField) {
         self.cityName.removeAll()
         self.countryName.removeAll()
         
@@ -92,14 +88,14 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
                 }
             }                }
         for (key,value) in city {
-            if textField.text == key as? String {
+            if textField.text == key {//as? String {
                 cityName = value
             }
         }
         tblCountryList.reloadData()
     }
 
-    func loadJson(fileName: String) -> Cities? {
+    private func loadJson(fileName: String) -> Cities? {
         if let url = Bundle.main.url(forResource: fileName, withExtension:"json") {
             do {
                 let data = try Data(contentsOf: url)

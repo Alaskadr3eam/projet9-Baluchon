@@ -74,38 +74,7 @@ class DBManager {
         return results
         
     }
-/*
-    func getDataFromDBSymbolsDataRealm() ->   Results<SymbolsDataRealm> {
-        
-        let results = database.objects(SymbolsDataRealm.self)
-        
-        return results
-        
-    }
 
-    func addDataSymbolsDataRealm(symbols: DeviseData) {
-        
-        for (key,value) in symbols.symbols {
-            let symbolsDataRealm = SymbolsDataRealm()
-            symbolsDataRealm.code = key
-            symbolsDataRealm.name = value
-            try! database.write {
-                database.add(symbolsDataRealm)
-                print("Added / Update new object")
-            }
-        }
-    }
-
-    func deleteFromDbSymbolsDataRealm(object: SymbolsDataRealm)   {
-        
-        try!   database.write {
-            
-            database.delete(object)
-            
-        }
-        
-    }
-*/
     func addDataMoneyDataRealm(money: MoneyData)   {
         let moneyDataRealm = MoneyDataRealm()
         moneyDataRealm.timestamps = money.timestamp
@@ -133,15 +102,7 @@ class DBManager {
         }
         
     }
-/*
-    func getDataFromDBRateDataRealm() ->   Results<Rate> {
-        
-        let results = database.objects(Rate.self)
-        
-        return results
-        
-    }
-*/
+
     func addDataDeviseData(object: MoneyDataRealm)   {
         
         try! database.write {
@@ -225,20 +186,6 @@ class DBManager {
         }
     }
 
-/*
-    func addOrUpdateDataFirst(city: String) {
-            let cityRealm = CityNameDomicile()
-            cityRealm.name = city
-            addDataCityNameDomicile(object: cityRealm)
-        } else {
-            updateDataCity(city: city)
-        }
-    }
-}
-    
-*/
-  
-
     //MARK: -Function for DBWeatherHoliday
 
     func getDataFromDBWeatherHoliday() ->   Results<WeatherHoliday> {
@@ -297,52 +244,4 @@ class DBManager {
     }
     
 }
-/*
-func getDataFromDBCityNameDomicile() ->   Results<CityNameDomicile> {
- 
-    let results = database.objects(CityNameDomicile.self)
- 
-    return results
- 
-}
 
-func addDataCityNameDomicile(object: CityNameDomicile)   {
- 
-    try! database.write {
- 
-        database.add(object)
- 
-        print("Added / Update new object")
- 
-    }
- 
-}
-
-func deleteFromDbCityNameDomicile(object: CityNameDomicile)   {
- 
-    try!   database.write {
- 
-        database.delete(object)
- 
-    }
- 
-}
-
-func updateDataCity(city: String) {
-    if let newCity = weather.objectsCity?.first {
-        try! database.write {
-            newCity.name = city
-        }
-    }
-}
-
-func addOrUpdateDataFirst(city: String) {
-    if DBManager.sharedInstance.getDataFromDBCityNameDomicile().count == 0 {
-        let cityRealm = CityNameDomicile()
-        cityRealm.name = city
-        addDataCityNameDomicile(object: cityRealm)
-    } else {
-        updateDataCity(city: city)
-    }
-}
-*/

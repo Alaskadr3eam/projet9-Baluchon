@@ -13,17 +13,18 @@ extension WeatherViewController: AlertDelegate {
     
     func alertError(_ error: NetworkError) {
         DispatchQueue.main.async {
-            self.alertVC(title: "Error", message: error.rawValue)
+            self.present(NetworkError.getAlert(error), animated: true)
         }
     }
     
     
 }
+/*
 extension WeatherViewController: PerfomSegueDelegate {
     func perfomSegueIsCalled() {
         performSegue(withIdentifier: Constant.segueSettingWeather, sender: nil)
     }
-}
+}*/
 
 extension WeatherViewController: WeatherViewDelegate {
     func whenButtonSettingIsClicked() {
@@ -37,6 +38,7 @@ extension WeatherViewController: WeatherViewDelegate {
 }
 
 extension WeatherViewController: UpdateWeatherViewDelegate {
+
     func itIsResultRequestReloadCell(weatherdata: WeatherData, newWeather: WeatherHoliday, index: Int) {
         DispatchQueue.main.async {
             DBManager.sharedInstance.update(newweather1: self.weather.objectsWeathers[index], weatherData: weatherdata)
@@ -63,13 +65,14 @@ extension WeatherViewController: UpdateWeatherViewDelegate {
             self.updateViewDomicile(city: self.weather.objectsCity[0], view: self.weatherView)
         }
     }
-    
-    
+
+    func perfomSegueIsCalled() {
+            performSegue(withIdentifier: Constant.segueSettingWeather, sender: nil)
+    }
 }
 
 extension WeatherViewController: SaveCity {
-    
-    
+
     func saveCityInRealm(city: String) {
         cityFirst = city
        weather.requestNewCityDomicile(city: city)
@@ -111,9 +114,6 @@ extension WeatherViewController: WeatherTableViewControllerDelegate {
         weatherView.collectionView.reloadData()
         weatherView.collectionView.scrollToItem(at: index, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
         weatherView.pageControl.updateCurrentPageDisplay()
-        
-        
-        
     }
     
 }

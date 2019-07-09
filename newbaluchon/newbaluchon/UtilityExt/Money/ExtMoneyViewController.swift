@@ -28,7 +28,7 @@ extension MoneyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     /// Launch actions each time selected row changes
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         moneyView.updateCurrencyLabel(pickerView: pickerView, row: row, money: money)
-        money.convert(view: moneyView)
+        convert(view: moneyView)
     }
     
     

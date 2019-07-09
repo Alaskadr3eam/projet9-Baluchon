@@ -30,9 +30,9 @@ class WeatherViewController: UIViewController {
 
         weatherView.delegateWeahter = self
         weather.delegateScreenWeather = self
-        weather.delegatePerformSegue = self
         weather.delegateAlertError = self
         weather.delegateViewIsHidden = self
+        
         
         initLocationManager()
         locationWeatherCity()
@@ -40,13 +40,13 @@ class WeatherViewController: UIViewController {
         weatherView.collectionView.delegate = self
         weatherView.collectionView.dataSource = self
         weatherView.pageControl.hidesForSinglePage = true
+        
 
     }
 
     
     override func viewDidAppear(_ animated: Bool) {
          weatherView.collectionView.reloadData()
-         locationWeatherCity()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

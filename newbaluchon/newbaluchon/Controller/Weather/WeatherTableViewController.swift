@@ -67,14 +67,14 @@ class WeatherTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard indexPath.row != 0 else {
-            print("impossible")
+            alertVC(title: "Attention", message: "Cette cellule est celle de la localisation on ne peut pas la supprimer")
             return
         }
         if editingStyle == .delete {
-            guard indexPath.row != 0 else {
+         /*   guard indexPath.row != 0 else {
                 alertVC(title: "Attention", message: "Cette cellule est celle de la localisation on ne peut pas la supprimer")
                 return
-            }
+            }*/
             let weatherDelete = weather.objectsWeathers[indexPath.row]
             DBManager.sharedInstance.deleteFromDbWeatherHoliday(object: weatherDelete)
             tableView.deleteRows(at: [indexPath], with: .fade)

@@ -13,7 +13,7 @@ import RealmSwift
 class Weather {
     
     var delegateScreenWeather: UpdateWeatherViewDelegate?
-    var delegatePerformSegue: PerfomSegueDelegate?
+    //var delegatePerformSegue: PerfomSegueDelegate?
     var delegateAddCityHoliday: AddCityHolidayDelegate?
     var delegateAlertError: AlertDelegate?
     var delegateViewIsHidden: IsHiddenDelegate?
@@ -31,14 +31,10 @@ class Weather {
     var requestIsOk: Bool {
         return objectsCity.count == 0
     }
-    
-    func addDataCityNameDomicile(object: CityNameDomicile)   {
-        DBManager.sharedInstance.addDataCityNameDomicile(object: object)
-    }
-    
+
     func requestWeather() {
         if requestIsOk {
-            delegatePerformSegue?.perfomSegueIsCalled()
+            delegateScreenWeather?.perfomSegueIsCalled()
             return
         } else {
             self.delegateViewIsHidden?.viewDomicileIsHidden()
@@ -52,7 +48,6 @@ class Weather {
                     return
                 }
                 guard let weatherData = weatherData else {
-                    self.delegateAlertError?.alertError(NetworkError.emptyData)
                     return
                 }
                 self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
@@ -73,7 +68,6 @@ class Weather {
                 return
             }
             guard let weatherData = weatherData else {
-                self.delegateAlertError?.alertError(NetworkError.emptyData)
                 return
             }
             self.delegateScreenWeather?.itISResultRequestLocation(weatherData: weatherData)
@@ -92,7 +86,6 @@ class Weather {
                 return
             }
             guard let weatherData = weatherData else {
-                self.delegateAlertError?.alertError(NetworkError.emptyData)
                 return
             }
             self.delegateScreenWeather?.itIsResultRequest(weatherData: weatherData)
@@ -111,7 +104,6 @@ class Weather {
                 return
             }
             guard let weatherData = weatherData else {
-                self.delegateAlertError?.alertError(NetworkError.emptyData)
                 return
             }
             self.delegateAddCityHoliday?.itISResultRequestNewCityHoliday(weatherData: weatherData)
@@ -131,7 +123,6 @@ class Weather {
                 return
             }
             guard let weatherData = weatherData else {
-                self.delegateAlertError?.alertError(NetworkError.emptyData)
                 return
             }
             DispatchQueue.main.async {
@@ -146,6 +137,7 @@ protocol UpdateWeatherViewDelegate {
     func itISResultRequestLocation(weatherData: WeatherData)
     func itIsResultRequestLocationInCollectionView()
     func itIsResultRequestReloadCell(weatherdata: WeatherData, newWeather: WeatherHoliday, index: Int)
+    func perfomSegueIsCalled()
 }
 
 protocol AddCityHolidayDelegate {
@@ -154,7 +146,7 @@ protocol AddCityHolidayDelegate {
 }
 
 protocol PerfomSegueDelegate {
-    func perfomSegueIsCalled()
+    //func perfomSegueIsCalled()
 }
 
 protocol AlertDelegate {

@@ -9,13 +9,12 @@
 import Foundation
 struct Constant {
     // MARK: - PROPERTIES WEATHER
-    //key: 2567298816d0d1f85b5a7edfdc58aa63,"aa9e109ce2968dabc49a4e7bda426532"
     static let weatherUrl = URL(string: "http://api.openweathermap.org/data/2.5/weather")!
     static let apiKeyWeather = "2567298816d0d1f85b5a7edfdc58aa63"
     static let dataWeatherHoliday = [WeatherHoliday]()
     static let unit = "metric"
     static let lang = "fr"
-    //static var weatherUrlCity = URL(string: "http://bulk.openweathermap.org/sample/city.list.json.gz")!
+    
 
     // MARK: - properties translate
     static let translateUrl = URL(string: "https://translation.googleapis.com/language/translate/v2")!

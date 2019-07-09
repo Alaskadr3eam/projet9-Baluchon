@@ -11,11 +11,18 @@ import UIKit
 
 extension MoneyViewController: WhenButtonIsClickedDelegateInMoneyView {
     func textFieldSourceIsEdited(value: String) {
-        money.convert(view: moneyView)
+        convert(view: moneyView)
+    }
+
+    private func reloadPickerView(view: MoneyView) {
+        view.pickerViewSource.reloadAllComponents()
+        view.pickerViewTarget.reloadAllComponents()
     }
     
     func buttonConvertIsClicked() {
-        money.exchangeDataSource(view: moneyView)
+        money.exchange()
+        reloadPickerView(view: moneyView)
+        convert(view: moneyView)
         moneyView.updateCurrencyLabel(pickerView: moneyView.pickerViewSource, row: 0, money: money)
         moneyView.updateCurrencyLabel(pickerView: moneyView.pickerViewTarget, row: 0, money: money)
     }
@@ -25,7 +32,7 @@ extension MoneyViewController: WhenButtonIsClickedDelegateInMoneyView {
 extension MoneyViewController: AlertMoneyDelegate {
     func alertError(_ error: NetworkError) {
         DispatchQueue.main.async {
-            self.alertVC(title: "error", message: error.rawValue)
+            self.present(NetworkError.getAlert(error), animated: true)
         }
     }
 }
