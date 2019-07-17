@@ -27,7 +27,9 @@ class MoneyView: UIView {
     
     @IBAction func sourceValueTextFieldEdited(_ sender: UITextField) {
         if sourceValueTextField.text?.isEmpty == false{
-            delegateConvert?.textFieldSourceIsEdited(value: sourceValueTextField.text!)
+            if let text = sourceValueTextField.text {
+            delegateConvert?.textFieldSourceIsEdited(value: text)
+            }
         } else {
             return
         }

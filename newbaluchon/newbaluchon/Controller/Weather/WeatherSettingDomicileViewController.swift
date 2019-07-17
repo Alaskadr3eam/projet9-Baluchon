@@ -14,7 +14,7 @@ class WeatherSettingDomicileViewController: UIViewController {
     @IBOutlet weak var txtSearchBar: UITextField!
     @IBOutlet weak var tblCountryList: UITableView!
 
-    let weather = Weather()
+    let weather = Weather(weatherServiceSession: WeatherService.shared)
     
     var city = Cities()
     
@@ -140,8 +140,9 @@ extension WeatherSettingDomicileViewController: UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         txtSearchBar.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
-        delegateSaveCity?.saveCityInRealm(city: txtSearchBar.text!)
-        
+        if let text = txtSearchBar.text {
+            delegateSaveCity?.saveCityInRealm(city: text)
+        }
     }
     
     

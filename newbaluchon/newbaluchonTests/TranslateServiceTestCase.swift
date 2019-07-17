@@ -12,11 +12,15 @@ import XCTest
 @testable import newbaluchon
 
 class TranslateServiceTestCase: XCTestCase {
-    //let expectation = XCTestExpectation(description: "Wait for queue change")
+  
     
+    override func setUp() {
+        super.setUp()
+      
+    }
+
     func testGetTranslateShouldPostFailedCallbackIfError() {
         // Given
-        //let session = URLSessionFake(data: nil, response: nil, error: WeatherError.error)
         let translateService = TranslateService(translateSession: URLSessionFake(data: nil, response: nil, error: TestError.error))
         
         //When
@@ -48,7 +52,6 @@ class TranslateServiceTestCase: XCTestCase {
     }
     
     func testGetWeatherShouldPostFailedCallbackIfIncorrectResponse() {
-        // Given
         // Given
         let translateService = TranslateService(translateSession: URLSessionFake(data: FakeResponseData.translateCorrectData, response: FakeResponseData.responseKO, error: nil))
         
@@ -87,6 +90,22 @@ class TranslateServiceTestCase: XCTestCase {
         //When
         let expectation = XCTestExpectation(description: "Wait for queue change")
         translateService.getTranslate(text: "Bonjour", source:"FR", target:"EN") { (translateData,error) in
+            // Then
+            XCTAssertNil(error)
+            XCTAssertEqual(translateData?.data.translations[0].translatedText, "Hello")
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 0.01)
+    }
+
+    func testGetWeatherShouldPostSuccessCallbackIfNoErrorAndCorrectData1() {
+        // Given
+        let translateService = TranslateService(translateSession: URLSessionFake(data: FakeResponseData.translateCorrectData, response: FakeResponseData.responseOK, error: nil))
+        
+        //When
+        let expectation = XCTestExpectation(description: "Wait for queue change")
+        translateService.getTranslate(text: "Bonjour", source:"FRMNK", target:"EN") { (translateData,error) in
             // Then
             XCTAssertNil(error)
             XCTAssertEqual(translateData?.data.translations[0].translatedText, "Hello")

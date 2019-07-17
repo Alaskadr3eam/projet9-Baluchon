@@ -12,7 +12,7 @@ import CoreLocation
 
 class TranslateViewController: UIViewController {
     
-    var translate = Translate()
+    var translate = Translate(translateServiceSession: TranslateService.shared)
     @IBOutlet weak var translateView: TranslateView!
     
     var locationManager = CLLocationManager()
@@ -20,8 +20,7 @@ class TranslateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
+
         initLocationManager()
         translateView.delegateTranslateView = self
         translate.delegateScreen = self
@@ -40,16 +39,20 @@ class TranslateViewController: UIViewController {
     }
 
     func initLocationManager() {
-        locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        locationManager.startMonitoringSignificantLocationChanges()
     }
     
     func initGeneral() {
         translateView.toggleActivityIndicator(shown: false)
         customTextViewPlaceholder(textView: translateView.textSource)
         customTextView(textView: translateView.textTranslated)
+    }
+
+    func updateScreen(text: String) {
+        self.translateView.textTranslated.text = text
+        self.translateView.indicatorActivity.isHidden = true
     }
     
     // MARK: - Navigation

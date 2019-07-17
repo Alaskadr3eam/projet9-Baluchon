@@ -11,13 +11,10 @@ import RealmSwift
 
 class WeatherTableViewController: UITableViewController {
     
-    let weather = Weather()
-    var sender: UIButton?
+    let weather = Weather(weatherServiceSession: WeatherService.shared)
+  //  var sender: UIButton?
   
     @IBOutlet weak var tableViewWeather: UITableView!
-    
-    
-    
     var delegate: WeatherTableViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -71,10 +68,6 @@ class WeatherTableViewController: UITableViewController {
             return
         }
         if editingStyle == .delete {
-         /*   guard indexPath.row != 0 else {
-                alertVC(title: "Attention", message: "Cette cellule est celle de la localisation on ne peut pas la supprimer")
-                return
-            }*/
             let weatherDelete = weather.objectsWeathers[indexPath.row]
             DBManager.sharedInstance.deleteFromDbWeatherHoliday(object: weatherDelete)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -89,8 +82,10 @@ class WeatherTableViewController: UITableViewController {
         let weather = self.weather.objectsWeathers[indexPath.row]
         cell.imageCell.contentMode = .scaleAspectFit
         cell.newLabelTitle.text = weather.name
-        cell.newLabelDetail.text = ("\(weather.temperature!)°C")
-        cell.imageCell.image = UIImage(named: weather.image!)
+        if let temperature = weather.temperature, let image = weather.image {
+            cell.newLabelDetail.text = ("\(temperature)°C")
+            cell.imageCell.image = UIImage(named: image)
+        }
         changeBackground(index: indexPath.row, cell: cell)
         
         return cell

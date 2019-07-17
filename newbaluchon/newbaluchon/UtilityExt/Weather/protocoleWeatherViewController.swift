@@ -16,15 +16,7 @@ extension WeatherViewController: AlertDelegate {
             self.present(NetworkError.getAlert(error), animated: true)
         }
     }
-    
-    
 }
-/*
-extension WeatherViewController: PerfomSegueDelegate {
-    func perfomSegueIsCalled() {
-        performSegue(withIdentifier: Constant.segueSettingWeather, sender: nil)
-    }
-}*/
 
 extension WeatherViewController: WeatherViewDelegate {
     func whenButtonSettingIsClicked() {
@@ -32,12 +24,16 @@ extension WeatherViewController: WeatherViewDelegate {
     }
     
     func whenButtonListIsClicked() {
-        //performSegue(withIdentifier: Constant.segueListeTableView, sender: nil)
+        performSegue(withIdentifier: Constant.segueListeTableView, sender: nil)
     }
     
 }
 
 extension WeatherViewController: UpdateWeatherViewDelegate {
+    func doLocation() {
+        locationHandler()
+    }
+    
 
     func itIsResultRequestReloadCell(weatherdata: WeatherData, newWeather: WeatherHoliday, index: Int) {
         DispatchQueue.main.async {

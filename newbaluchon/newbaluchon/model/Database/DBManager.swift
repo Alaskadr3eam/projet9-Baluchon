@@ -13,48 +13,24 @@ class DBManager {
     
     var   database: Realm
     
+    
     static let   sharedInstance = DBManager()
     
-    //var Object1: Results<CityNameDomcile>? = nil
     
     private init() {
-    
-      let configuration = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    
-                    
-                    // if you want to fill a new property with some values you have to enumerate
-                    // the existing objects and set the new value
-                    migration.enumerateObjects(ofType: CityNameDomicile.className()) { oldObject, newObject in
-                        newObject!["temperature"] = String()
-                        newObject!["desctiptionWeather"] = String()
-                        newObject!["temperature"] = String()
-                        newObject!["image"] = String()
-                    }
-                    
-                    migration.enumerateObjects(ofType: MoneyDataRealm.className()) { oldObject, newObject in
-                        newObject!["date"] = String()
-                    }
-                    
-                    // if you added a new property or removed a property you don't
-                    // have to do anything because Realm automatically detects that
-                }
+        
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            let configuration = Realm.Configuration(inMemoryIdentifier: "Test", schemaVersion: 1)
+            database = try! Realm(configuration: configuration)
+        } else {
+            let configuration = Realm.Configuration(schemaVersion: 1)
+            Realm.Configuration.defaultConfiguration = configuration
+            database = try! Realm()
         }
-        )
-        Realm.Configuration.defaultConfiguration = configuration
-        
-        // opening the Realm file now makes sure that the migration is performed
-       // let realm = try! Realm()
-        
-        database = try! Realm()
-    
         
     }
     
-
-
+    
     func deleteAllFromDatabase()  {
         
         try!   database.write {
@@ -64,9 +40,9 @@ class DBManager {
         }
         print("all deleted")
     }
-
+    
     //MARK: -Function for DBMoneyAndDevise
-
+    
     func getDataFromDBMoneyDataRealm() ->   Results<MoneyDataRealm> {
         
         let results = database.objects(MoneyDataRealm.self)
@@ -74,25 +50,25 @@ class DBManager {
         return results
         
     }
-
+    
     func addDataMoneyDataRealm(money: MoneyData)   {
         let moneyDataRealm = MoneyDataRealm()
         moneyDataRealm.timestamps = money.timestamp
-       // moneyDataRealm.date = money.date
-            var i = 0
-            for (key,value) in money.rates {
-                let rate = Rate()
-           rate.symbols = key
-                rate.currencyValue = value
-                moneyDataRealm.symbols.append(rate)
-                i += 1
-            }
+        // moneyDataRealm.date = money.date
+        var i = 0
+        for (key,value) in money.rates {
+            let rate = Rate()
+            rate.symbols = key
+            rate.currencyValue = value
+            moneyDataRealm.symbols.append(rate)
+            i += 1
+        }
         try! database.write {
             database.add(moneyDataRealm)
             print("Added / Update new object")
         }
     }
-
+    
     func deleteFromDbMoneyData(object: MoneyDataRealm)   {
         
         try!   database.write {
@@ -102,21 +78,9 @@ class DBManager {
         }
         
     }
-
-    func addDataDeviseData(object: MoneyDataRealm)   {
-        
-        try! database.write {
-            
-            database.add(object)
-            
-            print("Added / Update new object")
-            
-        }
-        
-    }
-
+    
     //MARK: -Function for DBCityNameDomicile
-
+    
     func getDataFromDBCityNameDomicile() ->   Results<CityNameDomicile> {
         
         let results = database.objects(CityNameDomicile.self)
@@ -124,19 +88,7 @@ class DBManager {
         return results
         
     }
-   
-    func addDataCityNameDomicile(object: CityNameDomicile)   {
-        
-        try! database.write {
-            
-            database.add(object)
-            
-            print("Added / Update new object")
-            
-        }
-        
-    }
-
+    
     func addDataCityNameDomicile(weather: WeatherData)   {
         let weatherCityName = CityNameDomicile()
         weatherCityName.name = weather.name
@@ -158,15 +110,7 @@ class DBManager {
         }
         
     }
-    
-    func updateDataCity(city: String, object: CityNameDomicile) {
-       
-            try! database.write {
-                object.name = city
-            }
-        
-    }
-
+ 
     func updateDataCityNameDomicile(weather: WeatherData) {
         if let newWeather = DBManager.sharedInstance.getDataFromDBCityNameDomicile().first {
             try! database.write {
@@ -177,7 +121,7 @@ class DBManager {
             }
         }
     }
-
+    
     func addOrUpdateDataCityName(weather: WeatherData) {
         if DBManager.sharedInstance.getDataFromDBCityNameDomicile().count == 0 {
             addDataCityNameDomicile(weather: weather)
@@ -185,15 +129,26 @@ class DBManager {
             updateDataCityNameDomicile(weather: weather)
         }
     }
-
+    
     //MARK: -Function for DBWeatherHoliday
-
+    
     func getDataFromDBWeatherHoliday() ->   Results<WeatherHoliday> {
         
         let results = database.objects(WeatherHoliday.self)
         
         return results
         
+    }
+    
+    func addDataWeatherHoliday(object: WeatherHoliday)   {
+        
+        try! database.write {
+            
+            database.add(object)
+            
+            print("Added / Update new object")
+            
+        }
     }
     
     func addDataWeatherHoliday(weather: WeatherData)   {
@@ -213,7 +168,7 @@ class DBManager {
             database.delete(object)
         }
     }
-
+    
     func update(newweather1: WeatherHoliday, weatherData: WeatherData) {
         let newWeather = newweather1
         try! database.write {

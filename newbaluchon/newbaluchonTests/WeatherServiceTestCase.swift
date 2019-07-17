@@ -10,11 +10,10 @@ import XCTest
 @testable import newbaluchon
 
 class WeatherServiceTestCase: XCTestCase {
-    //let expectation = XCTestExpectation(description: "Wait for queue change")
+
     
     func testGetWeatherShouldPostFailedCallbackIfError() {
         // Given
-        //let session = URLSessionFake(data: nil, response: nil, error: WeatherError.error)
         let weatherService = WeatherService(weatherSession: URLSessionFake(data: nil, response: nil, error: TestError.error))
         
         //When

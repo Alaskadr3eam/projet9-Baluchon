@@ -16,7 +16,7 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var buttonAnulate: UIBarButtonItem!
     @IBOutlet weak var navigationBar: UINavigationBar!
 
-    let weather = Weather()
+    let weather = Weather(weatherServiceSession: WeatherService.shared)
     
     var delegateSaveCityHoliday: SaveCityHolidayDelegate?
     
@@ -120,7 +120,6 @@ extension SettingTableViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomViewCell
-        
         cell.textLabel?.text = "\(countryName[indexPath.row]), \(cityName[indexPath.row])"
         
         return cell
@@ -129,7 +128,9 @@ extension SettingTableViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         txtSearchBar.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
-        delegateSaveCityHoliday?.saveCityHolidayRealm(city: txtSearchBar.text!)
+        if let text = txtSearchBar.text {
+            delegateSaveCityHoliday?.saveCityHolidayRealm(city: text)
+        }
     }
     
 }

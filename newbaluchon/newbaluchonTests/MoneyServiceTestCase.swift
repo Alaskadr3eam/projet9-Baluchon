@@ -9,11 +9,9 @@ import XCTest
 @testable import newbaluchon
 
 class MoneyServiceTestCase: XCTestCase {
-    //let expectation = XCTestExpectation(description: "Wait for queue change")
     
     func testGetMoneyShouldPostFailedCallbackIfError() {
         // Given
-        //let session = URLSessionFake(data: nil, response: nil, error: WeatherError.error)
         let moneyService = MoneyService(moneySession: URLSessionFake(data: nil, response: nil, error: TestError.error))
         
         //When

@@ -10,3 +10,8 @@ target 'newbaluchon' do
 pod 'RealmSwift'
 
 end
+
+target 'newbaluchonTests' do
+use_frameworks!
+pod 'RealmSwift'
+end

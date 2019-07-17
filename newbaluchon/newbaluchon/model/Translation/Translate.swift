@@ -15,33 +15,42 @@ class Translate {
 
     var translatedText: String?
     
+    var errorTranslate: String?
 
-    func textSourceNotEmpty(textSource: String) -> Bool {
-        if textSource.isEmpty == true || textSource == "Placeholder" {
-            return false
-        } else {
-            return true
-        }
+    private var translateServiceSession = TranslateService(translateSession: URLSession(configuration: .default))
+    init(translateServiceSession: TranslateService) {
+        self.translateServiceSession = translateServiceSession
     }
 
+    func textSourceNotEmpty1(textSource: String) -> Bool {
+        
+            return textSource.isEmpty == false || textSource == "Placeholder"
+        }
+    
+    
+
     func submitTranslate(textSource: String, source: String, target: String) {
-        if !textSourceNotEmpty(textSource: textSource) {
+        if !textSourceNotEmpty1(textSource: textSource) {
             return
         }
-        TranslateService.shared.getTranslate(text: textSource, source: source, target: target) { (translationData, error) in
+        translateServiceSession.getTranslate(text: textSource, source: source, target: target) { [weak self] (translationData, error) in
+            guard let self = self else {
+                return
+            }
             if let error = error {
+                self.errorTranslate = error.rawValue
                 self.delegateAlert?.alertError(error)
                 return
             }
             guard let translationData = translationData else {
                 return
             }
+            self.translatedText = translationData.data.translations[0].translatedText
             self.delegateScreen?.itIsResultTranslation(text: translationData.data.translations[0].translatedText)
         }
-        
     }
- 
 }
+
 protocol UpdateTranslate {
     func itIsResultTranslation(text: String)
 }

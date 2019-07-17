@@ -12,58 +12,78 @@ import RealmSwift
 
 class TranslateTestCase: XCTestCase {
 
-    var translate: Translate!
+   var translate: Translate!
 
     override func setUp() {
         super.setUp()
-        translate = Translate()
+        translate = Translate(translateServiceSession: TranslateService.shared)
     }
-    func translate(textSource: String, source: String, target: String) {
+ 
+    func testTextSourceTranslateIsEmpty1() {
         
-    translate.submitTranslate(textSource: textSource, source: source, target: target)
-
-    }
-
-    func testTextSourceTranslateIsEmpty() {
         let textSource = String()
         
-        let result = translate.textSourceNotEmpty(textSource: textSource)
-
+        let result = translate.textSourceNotEmpty1(textSource: textSource)
+        
         XCTAssertEqual(result,false)
     }
-
-    func testTextSourceTranslateIsEmptyPlaceHolder() {
+    
+    func testTextSourceTranslateIsEmptyPlaceHolder1() {
         let textSource = "Placeholder"
         
-        let result = translate.textSourceNotEmpty(textSource: textSource)
+        let result = translate.textSourceNotEmpty1(textSource: textSource)
         
-        XCTAssertEqual(result,false)
+        XCTAssertEqual(result,true)
     }
-
-    func testTextSourceTranslateIsNotEmpty() {
+    
+    func testTextSourceTranslateIsNotEmpty1() {
         let textSource = "Coucou"
         
-        let result = translate.textSourceNotEmpty(textSource: textSource)
+        let result = translate.textSourceNotEmpty1(textSource: textSource)
         
         XCTAssertEqual(result,true)
     }
 
-    func testSubmitTranslate() {
+   func testSubmitTranslate() {
+    let translate1 = Translate(translateServiceSession: TranslateService(translateSession: URLSessionFake(data: nil, response: nil, error: TestError.error)))
+    
         let textSrouce = "coucou"
-        let source = "FR"
-        let target = "EN"
-        
-        translate.submitTranslate(textSource: textSrouce, source: source, target: target)
-    }
-
-    func testSubmitTranslateSourceTextIsEmpty() {
-        let textSrouce = ""
-        let source = "FR"
-        let target = "EN"
-        
-        translate.submitTranslate(textSource: textSrouce, source: source, target: target)
+        let source = ""
+        let target = ""
+    
+    translate1.submitTranslate(textSource: textSrouce, source: source, target: target)
+    
+    XCTAssertEqual(translate1.errorTranslate, NetworkError.emptyData.rawValue)
 
     }
+
+    func testSubmitTranslate1() {
+        let translate1 = Translate(translateServiceSession: TranslateService(translateSession: URLSessionFake(data: nil , response: nil, error: nil)))
+        
+        let textSrouce = "coucou"
+        let source = ""
+        let target = ""
+        
+        translate1.submitTranslate(textSource: textSrouce, source: source, target: target)
+        
+        XCTAssertEqual(translate1.errorTranslate, NetworkError.emptyData.rawValue)
+       
+    }
+
+    func testSubmitTranslate2() {
+        let translate1 = Translate(translateServiceSession: TranslateService(translateSession: URLSessionFake(data: FakeResponseData.translateCorrectData , response: FakeResponseData.responseOK, error: nil)))
+        
+        let textSrouce = "coucou"
+        let source = ""
+        let target = ""
+        
+        translate1.submitTranslate(textSource: textSrouce, source: source, target: target)
+        
+        XCTAssertNil(translate1.errorTranslate)
+        XCTAssertEqual(translate1.translatedText, "Hello")
+      
+    }
+
 
 
 

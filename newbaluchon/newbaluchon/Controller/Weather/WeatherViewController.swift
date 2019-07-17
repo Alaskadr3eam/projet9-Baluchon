@@ -13,7 +13,7 @@ import CoreLocation
 class WeatherViewController: UIViewController {
     
     @IBOutlet weak var weatherView: WeatherView!
-    let weather = Weather()
+    let weather = Weather(weatherServiceSession: WeatherService.shared)
     var cityFirst = String()
     var currentPage = 0
     var previousOffset: CGFloat = 0
@@ -33,14 +33,14 @@ class WeatherViewController: UIViewController {
         weather.delegateAlertError = self
         weather.delegateViewIsHidden = self
         
-        
         initLocationManager()
-        locationWeatherCity()
-        
+        locationHandler()
+        weatherView.indicatorActivity.isHidden = true
         weatherView.collectionView.delegate = self
         weatherView.collectionView.dataSource = self
         weatherView.pageControl.hidesForSinglePage = true
-        
+
+        locIsDenied()
 
     }
 
@@ -52,6 +52,13 @@ class WeatherViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         rotated()
+    }
+    
+    func locIsDenied() {
+        if CLLocationManager.authorizationStatus() == .denied || weather.cityLocation == "" {
+            weather.createObjectForNoLoc()
+        }
+        weather.requestWeather()
     }
 
     func rotated() {
@@ -66,8 +73,10 @@ class WeatherViewController: UIViewController {
     func updateViewDomicile(city: CityNameDomicile, view: WeatherView) {
         changeBackgroundWeatherDomicile(city, view)
         view.labelDomicileCity.text = city.name
-        view.labelDomicileTemp.text = "\(city.temperature!)°C"
-        view.imageWeather.image = UIImage(named: city.image!)
+        if let temperature = city.temperature, let image = city.image{
+            view.labelDomicileTemp.text = "\(temperature)°C"
+            view.imageWeather.image = UIImage(named: image)
+        }
         view.labelDomicileDescription.text = city.desctiptionWeather
         
     }

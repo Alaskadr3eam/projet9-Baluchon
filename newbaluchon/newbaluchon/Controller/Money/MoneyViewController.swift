@@ -10,7 +10,7 @@ import UIKit
 
 class MoneyViewController: UIViewController {
     
-    let money = Money()
+    let money = Money(moneyServiceSession: MoneyService.shared)
     
     
     @IBOutlet weak var moneyView: MoneyView!
@@ -24,11 +24,8 @@ class MoneyViewController: UIViewController {
         money.delegateAlerte = self
         moneyView.delegateConvert = self
         
-
-    
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
-        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.initView(view: self.moneyView) }
     }
@@ -39,20 +36,6 @@ class MoneyViewController: UIViewController {
         
         moneyView.pickerViewTarget.dataSource = self
         moneyView.pickerViewTarget.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-      /* money.delegateAlerte = self
-        moneyView.delegateConvert = self
-        //initView(view: moneyView)
-        moneyView.pickerViewSource.dataSource = self
-        moneyView.pickerViewSource.delegate = self
-        
-        moneyView.pickerViewTarget.dataSource = self
-        moneyView.pickerViewTarget.delegate = self
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        self.view.addGestureRecognizer(tapGesture)*/
     }
     
     @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
@@ -87,7 +70,7 @@ class MoneyViewController: UIViewController {
             
             let targetValue = euroValue * targetCurrencyRate
             if targetValue.truncatingRemainder(dividingBy: 1) == 0 {
-                view.targetValueTextField.text = String(Int(targetValue))
+                view.targetValueTextField.text = String(Int64(targetValue))
             } else {
                 view.targetValueTextField.text = String(targetValue)
             }

@@ -15,7 +15,8 @@ class Money {
     var dataSource1 = [DeviseSource]()
     var dataSource2 = [DeviseSource]()
     var isSwitch = false
-    
+    var errorMoney: NetworkError!
+    var moneyCurrent: MoneyData!
     var objectsMoney = DBManager.sharedInstance.getDataFromDBMoneyDataRealm()
     
     var requestIsOk: Bool {
@@ -25,6 +26,11 @@ class Money {
     var timestampIsOk: Bool {
         let timestampOfDay = timeStampOfDay()
         return objectsMoney[0].timestamps + 86400 < timestampOfDay
+    }
+
+    private var moneyServiceSession = MoneyService(moneySession: URLSession(configuration: .default))
+    init(moneyServiceSession: MoneyService) {
+        self.moneyServiceSession = moneyServiceSession
     }
     
     func allRequest() {
@@ -75,16 +81,22 @@ class Money {
 
     func requestCurrency() {
         
-        MoneyService.shared.getMoneyCurrent { (moneyData, error) in
+        moneyServiceSession.getMoneyCurrent { [weak self] (moneyData, error) in
+            guard let self = self else {
+                return
+            }
             if let error = error {
-                self.delegateAlerte?.alertError(error)
+                self.errorMoney = error
+                self.delegateAlerte?.alertError(self.errorMoney)
                 return
             }
             guard let moneyData = moneyData else {
+                self.delegateAlerte?.alertError(self.errorMoney)
                 return
             }
+            self.moneyCurrent = moneyData
             DispatchQueue.main.async {
-                DBManager.sharedInstance.addDataMoneyDataRealm(money: moneyData)
+                DBManager.sharedInstance.addDataMoneyDataRealm(money: self.moneyCurrent)
             }
         }
     }

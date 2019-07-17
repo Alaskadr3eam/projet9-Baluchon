@@ -36,11 +36,12 @@ class TranslateView: UIView {
             delegateTranslateView?.WhenButtonLanguageIsClicked(sender: sender)
         case 3:
             if !textSourceIsNotEmpty {
-                //alerte
                 return
             }
             toggleActivityIndicator(shown: true)
-            delegateTranslateView?.whenButtonTranslateIsClicked(textSource: textSource.text, sourceLangueCode: languageSource.accessibilityIdentifier!, targetLangueCode: languageTarget.accessibilityIdentifier!)
+            if let sourceAccessibilityIdentifier = languageSource.accessibilityIdentifier, let targetAccessibilityIdentifier = languageTarget.accessibilityIdentifier {
+            delegateTranslateView?.whenButtonTranslateIsClicked(textSource: textSource.text, sourceLangueCode: sourceAccessibilityIdentifier, targetLangueCode: targetAccessibilityIdentifier)
+            }
         case 4:
             delegateTranslateView?.WhenButtonDeleteIsClicked(view: self)
         case 5:

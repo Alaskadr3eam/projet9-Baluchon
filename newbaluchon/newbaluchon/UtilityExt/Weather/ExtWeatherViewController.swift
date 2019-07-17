@@ -13,44 +13,70 @@ import UIKit
 
 extension WeatherViewController: CLLocationManagerDelegate {
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        locationHandler()
+        
+    }
+    
     func initLocationManager() {
         locationManager.delegate = self
     }
     
-    func locationWeatherCity() {
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case .authorizedAlways, .authorizedWhenInUse:
+    func locationHandler() {
+        
+        if CLLocationManager.locationServicesEnabled() == true {
+            
+            if (CLLocationManager.authorizationStatus() == .denied) {
+                DispatchQueue.main.async {
+                    if self.weather.objectsCity.count == 0 {
+                        self.alertVC(title: "Attention", message: "Location Refusé. Vous pouvez rentrer votre ville d'origine manuellement(en haut à droite). Vous pouvez aussi rajouter des villes de vacance (en bas à droite).")
+                    } else {
+                        self.alertVC(title: "Attention", message: "Location non trouvé. Vous pouvez aussi rajouter des villes de vacance (en bas à droite)1.")
+                    }
+                }
+            } else if (CLLocationManager.authorizationStatus() == .authorizedAlways || (CLLocationManager.authorizationStatus() == .authorizedWhenInUse)) {
                 let lat = locationManager.location?.coordinate.latitude
                 let long = locationManager.location?.coordinate.longitude
-                let location = CLLocation(latitude: lat!, longitude: long!)
-                CLGeocoder().reverseGeocodeLocation(location, completionHandler: { [weak self] (placemarks, error) in
-                    guard let self = self else {
-                        return
+                guard lat != nil, long != nil else {
+                    DispatchQueue.main.async {
+                    if self.weather.objectsCity.count == 0 {
+                        self.alertVC(title: "Attention", message: "Location non trouvé. Vous pouvez rentrer votre ville d'origine manuellement(en haut à droite). Vous pouvez aussi rajouter des villes de vacance (en bas à droite).")
+                    } else {
+                        self.alertVC(title: "Attention", message: "Location non trouvé. Vous pouvez aussi rajouter des villes de vacance (en bas à droite).")
                     }
-                    guard error == nil else {
-                        self.alertVC(title: "Erreur01", message: "Probleme de localisation")
-                        return
                     }
-                    guard let country = placemarks?.first?.country, let city = placemarks?.first?.locality else {
-                        self.alertVC(title: "Erreur02", message: "Probleme localisation")
-                        return
-                    }
+                    return
+                }
+                if let lat = lat, let long = long {
+                    let location = CLLocation(latitude: lat, longitude: long)
+                    CLGeocoder().reverseGeocodeLocation(location, completionHandler: { [weak self] (placemarks, error) in
+                        guard let self = self else {
+                            return
+                        }
+                        guard error == nil else {
+                            self.alertVC(title: "Erreur01", message: "Probleme de localisation")
+                            return
+                        }
+                        guard let country = placemarks?.first?.country, let city = placemarks?.first?.locality else {
+                            self.alertVC(title: "Erreur02", message: "Probleme localisation")
+                            return
+                        }
                         self.weather.cityLocation = city
                         self.weather.countryLocation = country
-                        self.weather.requestWeather()
-                    
-                    
-            })
-            break
-              
-            case .notDetermined, .restricted, .denied:
-               alertVC(title: "Error", message: "Either Not Determined, Restricted, or Denied")
-                break
-               
-            }
+                    })
+                } else {
+                    locationHandler()
+                }
+            } else if (CLLocationManager.authorizationStatus() == .notDetermined){
+                alertVC(title: "Error", message: "Either Not Determined")
+                
+            } else /*if (CLLocationManager.authorizationStatus() == .never)*/ { }
+        } else {
+            weather.requestWeather()
+            
         }
     }
+    
 }
 
 
@@ -76,14 +102,18 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
         weatherView.pageControl.numberOfPages = weather.objectsWeathers.count
         cell.imageWeather.contentMode = .scaleAspectFit
         cell.labelCityName.text = weather.objectsWeathers[indexPath.row].name
-        cell.labelTemp.text = ("\(weather.objectsWeathers[indexPath.row].temperature!)°C")
+        if let temperature = weather.objectsWeathers[indexPath.row].temperature {
+        cell.labelTemp.text = ("\(temperature)°C")
+        }
         cell.labelDescription.text = weather.objectsWeathers[indexPath.row].descriptionWeather
-        cell.imageWeather.image = UIImage(named: weather.objectsWeathers[indexPath.row].image!)
+        if let image = weather.objectsWeathers[indexPath.row].image {
+        cell.imageWeather.image = UIImage(named: image)
+        }
         changeBackground(index: indexPath.row, cell: cell)
         
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         weatherView.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
@@ -105,20 +135,21 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         let index = weatherView.pageControl.currentPage
         if index == 0 {
-            locationWeatherCity()
+            if CLLocationManager.authorizationStatus() == .denied || weather.cityLocation != ""{
+                locationHandler()
+             //   weather.requestWeather()
+            }
+            weather.requestWeather()
         } else {
-            realoadRequest(city: weather.objectsWeathers[index].name!, index: index, newWeather: weather.objectsWeathers[index])
+            if let city = weather.objectsWeathers[index].name {
+                realoadRequest(city: city, index: index, newWeather: weather.objectsWeathers[index])
+            }
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
         snapToNearestCell(weatherView.collectionView)
     }
-    
-    
-    
-    
 }
 
 extension WeatherViewController: UICollectionViewDelegateFlowLayout {
@@ -159,7 +190,7 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
             
             let itemWithSpaceWidth = weatherView.collectionLayoutFlow.itemSize.width + weatherView.collectionLayoutFlow.minimumLineSpacing
             let itemWidth = weatherView.collectionLayoutFlow.itemSize.width
- 
+            
             if collectionView.contentOffset.x <= CGFloat(i) * itemWithSpaceWidth + itemWidth / 2 {
                 let indexPath = IndexPath(item: i, section: 0)
                 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -167,5 +198,5 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
             }
         }
     }
-
+    
 }
