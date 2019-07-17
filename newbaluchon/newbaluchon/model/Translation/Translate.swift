@@ -13,7 +13,7 @@ class Translate {
     var delegateScreen: UpdateTranslate?
     var delegateAlert: AlertTranslateDelegate?
 
-    var translatedText: String?
+    var translatedText: String!
     
     var errorTranslate: String?
 
@@ -46,7 +46,7 @@ class Translate {
                 return
             }
             self.translatedText = translationData.data.translations[0].translatedText
-            self.delegateScreen?.itIsResultTranslation(text: translationData.data.translations[0].translatedText)
+            self.delegateScreen?.itIsResultTranslation(text: self.translatedText)
         }
     }
 }

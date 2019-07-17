@@ -67,28 +67,32 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
     }
 
     private func searchCountrie(_ textField: UITextField) {
+        guard let text = textField.text else {
+            return
+        }
         self.cityName.removeAll()
         self.countryName.removeAll()
         
-        if textField.text?.isEmpty == true {
-            tblCountryList.isHidden = true
-        }
+        tblCountryList.isHidden = text.isEmpty
+        
         if textField.text?.count != 0 {
             tblCountryList.isHidden = false
             for (key,_) in city {
-                for i in 0...city[key]!.count - 1 {
+                guard let keySecure = city[key] else {
+                    break
+                }
+                for i in 0...keySecure.count - 1 {
                     if let countrySearch = textField.text {
-                        
-                        let range = city[key]![i].lowercased().range(of: countrySearch, options: .caseInsensitive, range: nil, locale: nil)
+                        let range = keySecure[i].lowercased().range(of: countrySearch, options: .caseInsensitive, range: nil, locale: nil)
                         if range != nil {
-                            self.countryName.append(city[key]![i])
+                            self.countryName.append(keySecure[i])
                             self.cityName.append(key)
                         }
                     }
                 }
             }                }
         for (key,value) in city {
-            if textField.text == key {//as? String {
+            if textField.text == key {
                 cityName = value
             }
         }
@@ -102,9 +106,7 @@ class SettingTableViewController: UIViewController, UITextFieldDelegate {
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(Cities.self, from: data)
                 return jsonData
-            } catch {
-                print("error")
-            }
+            } catch { }
         }
         return nil
     }

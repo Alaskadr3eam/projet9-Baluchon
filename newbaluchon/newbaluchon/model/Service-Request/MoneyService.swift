@@ -39,8 +39,6 @@ class MoneyService {
                 completionHandler(nil, NetworkError.badResponse)
                 return
             }
-            print(response)
-            
             guard let moneyData = try? JSONDecoder().decode(MoneyData.self, from: data) else {
                 completionHandler(nil, NetworkError.jsonDecodeFailed)
                 return

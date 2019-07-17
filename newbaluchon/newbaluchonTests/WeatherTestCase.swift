@@ -244,9 +244,7 @@ class WeatherTestCase: XCTestCase {
     }
     
     func testAddOrUpdateWeatherHoliday2() {
-        //let weather2 = Weathers(id: 1, main: "ah", description: "beau", icon: "1n")
-        //let main2 = Main(temp: 20.0, pressure: 20.0, humidity: 20.0, temp_min: 20.0, temp_max: 20.0)
-        let weatherTest2 = createWeatherData(cityName: "NewYork") //WeatherData(weather: [weather2], main: main2, name: "NewYork")
+        let weatherTest2 = createWeatherData(cityName: "NewYork")
         
         DBManager.sharedInstance.addOrUpdateDataWeatherHolidayFirst(weather: weatherTest2)
         

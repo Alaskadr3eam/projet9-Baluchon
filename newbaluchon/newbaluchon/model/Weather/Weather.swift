@@ -61,29 +61,27 @@ class Weather {
         } else {
             self.delegateViewIsHidden?.viewDomicileIsHidden()
             if let q = objectsCity[0].name {
-            weatherServiceSession.getWeather(q: q) { [weak self] (weatherData, error) in
-                guard let self = self else {
-                    return
+                weatherServiceSession.getWeather(q: q) { [weak self] (weatherData, error) in
+                    guard let self = self else {
+                        return
+                    }
+                    self.delegateViewIsHidden?.viewDomicileIsNotHidden()
+                    if let error = error {
+                        self.errorWeather = error
+                        self.delegateAlertError?.alertError(self.errorWeather)
+                        return
+                    }
+                    guard let weatherData = weatherData else {
+                        return
+                    }
+                    self.weatherCity = weatherData
+                    self.delegateScreenWeather?.itIsResultRequest(weatherData: self.weatherCity)
+                    if self.cityLocation.isEmpty == true && self.countryLocation.isEmpty == true {
+                        self.delegateScreenWeather?.doLocation()
+                    }
+                    self.requestWeatherLocation(city: ("\(self.cityLocation), \(self.countryLocation)"))
                 }
-                self.delegateViewIsHidden?.viewDomicileIsNotHidden()
-                if let error = error {
-                    self.errorWeather = error
-                    
-                    self.delegateAlertError?.alertError(self.errorWeather)
-                    
-                    return
-                }
-                guard let weatherData = weatherData else {
-                    return
-                }
-                self.weatherCity = weatherData
-                self.delegateScreenWeather?.itIsResultRequest(weatherData: self.weatherCity)
-                if self.cityLocation.isEmpty == true && self.countryLocation.isEmpty == true {
-                    self.delegateScreenWeather?.doLocation()
-                }
-                self.requestWeatherLocation(city: ("\(self.cityLocation), \(self.countryLocation)"))
             }
-        }
         }
     }
     

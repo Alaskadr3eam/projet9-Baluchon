@@ -80,7 +80,6 @@ class Money {
     }
 
     func requestCurrency() {
-        
         moneyServiceSession.getMoneyCurrent { [weak self] (moneyData, error) in
             guard let self = self else {
                 return

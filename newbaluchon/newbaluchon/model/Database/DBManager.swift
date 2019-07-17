@@ -27,28 +27,21 @@ class DBManager {
             Realm.Configuration.defaultConfiguration = configuration
             database = try! Realm()
         }
-        
     }
-    
-    
+
     func deleteAllFromDatabase()  {
         
         try!   database.write {
             
             database.deleteAll()
-            
         }
-        print("all deleted")
     }
     
     //MARK: -Function for DBMoneyAndDevise
     
     func getDataFromDBMoneyDataRealm() ->   Results<MoneyDataRealm> {
-        
         let results = database.objects(MoneyDataRealm.self)
-        
         return results
-        
     }
     
     func addDataMoneyDataRealm(money: MoneyData)   {
@@ -65,7 +58,6 @@ class DBManager {
         }
         try! database.write {
             database.add(moneyDataRealm)
-            print("Added / Update new object")
         }
     }
     
@@ -74,9 +66,7 @@ class DBManager {
         try!   database.write {
             
             database.delete(object)
-            
         }
-        
     }
     
     //MARK: -Function for DBCityNameDomicile
@@ -84,9 +74,7 @@ class DBManager {
     func getDataFromDBCityNameDomicile() ->   Results<CityNameDomicile> {
         
         let results = database.objects(CityNameDomicile.self)
-        
         return results
-        
     }
     
     func addDataCityNameDomicile(weather: WeatherData)   {
@@ -97,20 +85,15 @@ class DBManager {
         weatherCityName.image = weather.weather[0].icon
         try! database.write {
             database.add(weatherCityName)
-            print("Added / Update new object")
         }
     }
     
     func deleteFromDbCityNameDomicile(object: CityNameDomicile)   {
-        
         try!   database.write {
-            
             database.delete(object)
-            
         }
-        
     }
- 
+    
     func updateDataCityNameDomicile(weather: WeatherData) {
         if let newWeather = DBManager.sharedInstance.getDataFromDBCityNameDomicile().first {
             try! database.write {
@@ -133,21 +116,13 @@ class DBManager {
     //MARK: -Function for DBWeatherHoliday
     
     func getDataFromDBWeatherHoliday() ->   Results<WeatherHoliday> {
-        
         let results = database.objects(WeatherHoliday.self)
-        
         return results
-        
     }
     
     func addDataWeatherHoliday(object: WeatherHoliday)   {
-        
         try! database.write {
-            
             database.add(object)
-            
-            print("Added / Update new object")
-            
         }
     }
     
@@ -159,7 +134,6 @@ class DBManager {
         weatherHoliday.image = weather.weather[0].icon
         try! database.write {
             database.add(weatherHoliday)
-            print("Added / Update new object")
         }
     }
     
