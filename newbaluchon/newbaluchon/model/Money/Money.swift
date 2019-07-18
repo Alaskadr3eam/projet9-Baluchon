@@ -81,9 +81,7 @@ class Money {
 
     func requestCurrency() {
         moneyServiceSession.getMoneyCurrent { [weak self] (moneyData, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             if let error = error {
                 self.errorMoney = error
                 self.delegateAlerte?.alertError(self.errorMoney)

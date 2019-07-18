@@ -44,6 +44,20 @@ class TranslateTestCase: XCTestCase {
         XCTAssertEqual(result,true)
     }
 
+    func testSubmitTranslateNoText() {
+        let translate1 = Translate(translateServiceSession: TranslateService(translateSession: URLSessionFake(data: nil, response: nil, error: TestError.error)))
+        
+        let textSrouce = ""
+        let source = ""
+        let target = ""
+        
+        translate1.submitTranslate(textSource: textSrouce, source: source, target: target)
+        
+        XCTAssertNil(translate1.errorTranslate)
+        
+        
+    }
+
    func testSubmitTranslate() {
     let translate1 = Translate(translateServiceSession: TranslateService(translateSession: URLSessionFake(data: nil, response: nil, error: TestError.error)))
     
@@ -53,7 +67,7 @@ class TranslateTestCase: XCTestCase {
     
     translate1.submitTranslate(textSource: textSrouce, source: source, target: target)
     
-    XCTAssertEqual(translate1.errorTranslate, NetworkError.emptyData.rawValue)
+    XCTAssertEqual(translate1.errorTranslate, NetworkError.emptyData)
 
     }
 
@@ -66,7 +80,7 @@ class TranslateTestCase: XCTestCase {
         
         translate1.submitTranslate(textSource: textSrouce, source: source, target: target)
         
-        XCTAssertEqual(translate1.errorTranslate, NetworkError.emptyData.rawValue)
+        XCTAssertEqual(translate1.errorTranslate, NetworkError.emptyData)
        
     }
 

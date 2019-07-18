@@ -62,18 +62,14 @@ class Weather {
             self.delegateViewIsHidden?.viewDomicileIsHidden()
             if let q = objectsCity[0].name {
                 weatherServiceSession.getWeather(q: q) { [weak self] (weatherData, error) in
-                    guard let self = self else {
-                        return
-                    }
+                    guard let self = self else { return }
                     self.delegateViewIsHidden?.viewDomicileIsNotHidden()
                     if let error = error {
                         self.errorWeather = error
                         self.delegateAlertError?.alertError(self.errorWeather)
                         return
                     }
-                    guard let weatherData = weatherData else {
-                        return
-                    }
+                    guard let weatherData = weatherData else { return }
                     self.weatherCity = weatherData
                     self.delegateScreenWeather?.itIsResultRequest(weatherData: self.weatherCity)
                     if self.cityLocation.isEmpty == true && self.countryLocation.isEmpty == true {
@@ -88,18 +84,14 @@ class Weather {
     func requestWeatherLocation(city: String) {
         self.delegateViewIsHidden?.cellIsHidden()
         weatherServiceSession.getWeather(q:city) { [weak self] (weatherData, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.delegateViewIsHidden?.cellIsNotHidden()
             if let error = error {
                 self.errorWeather = error
                 self.delegateAlertError?.alertError(self.errorWeather)
                 return
             }
-            guard let weatherData = weatherData else {
-                return
-            }
+            guard let weatherData = weatherData else { return }
             self.weatherCity = weatherData
             self.delegateScreenWeather?.itISResultRequestLocation(weatherData: self.weatherCity)
         }
@@ -108,18 +100,14 @@ class Weather {
     
     func requestNewCityDomicile(city: String) {
         weatherServiceSession.getWeather(q: city) { [weak self] (weatherData, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.delegateViewIsHidden?.viewDomicileIsNotHidden()
             if let error = error {
                 self.errorWeather = error
                 self.delegateAlertError?.alertError(self.errorWeather)
                 return
             }
-            guard let weatherData = weatherData else {
-                return
-            }
+            guard let weatherData = weatherData else { return }
             self.weatherCity = weatherData
             self.delegateScreenWeather?.itIsResultRequest(weatherData: self.weatherCity)
             if self.cityLocation.isEmpty != true && self.countryLocation.isEmpty != true {
@@ -131,17 +119,13 @@ class Weather {
     
     func requestNewCity(city: String) {
         weatherServiceSession.getWeather(q: city) { [weak self] (weatherData, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             if let error = error {
                 self.errorWeather = error
                 self.delegateAlertError?.alertError(self.errorWeather)
                 return
             }
-            guard let weatherData = weatherData else {
-                return
-            }
+            guard let weatherData = weatherData else { return }
             self.weatherCity = weatherData
             self.delegateAddCityHoliday?.itISResultRequestNewCityHoliday(weatherData: self.weatherCity)
         }
@@ -151,18 +135,14 @@ class Weather {
     func requestNewCityReload(city: String, newWeather: WeatherHoliday, index: Int) {
         self.delegateViewIsHidden?.cellIsHidden()
         weatherServiceSession.getWeather(q: city) { [weak self] (weatherData, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.delegateViewIsHidden?.cellIsNotHidden()
             if let error = error {
                 self.errorWeather = error
                 self.delegateAlertError?.alertError(self.errorWeather)
                 return
             }
-            guard let weatherData = weatherData else {
-                return
-            }
+            guard let weatherData = weatherData else { return }
             self.weatherCity = weatherData
             DispatchQueue.main.async {
                 self.delegateScreenWeather?.itIsResultRequestReloadCell(weatherdata: self.weatherCity, newWeather: self.objectsWeathers[index], index: index)

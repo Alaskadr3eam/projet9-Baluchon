@@ -27,7 +27,7 @@ class MoneyService {
     private init () {}
 
     func getMoneyCurrent(completionHandler: @escaping(MoneyData?,NetworkError?) -> Void) {
-        var request = ServiceCreateRequest.createRequest(url: Constant.moneyUrl, arguments: arguments)
+        guard var request = ServiceCreateRequest.createRequest(url: Constant.moneyUrl, arguments: arguments) else { return }
         request.httpMethod = "GET"
         task?.cancel()
         task = moneySession.dataTask(with: request) { (data, response, error) in

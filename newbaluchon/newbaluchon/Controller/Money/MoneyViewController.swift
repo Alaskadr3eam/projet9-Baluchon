@@ -30,12 +30,16 @@ class MoneyViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.initView(view: self.moneyView) }
     }
 
-    func initPickerView() {
+    func initPickerView() -> Bool {
+        if money.objectsMoney.count != 0 {
         moneyView.pickerViewSource.dataSource = self
         moneyView.pickerViewSource.delegate = self
         
         moneyView.pickerViewTarget.dataSource = self
         moneyView.pickerViewTarget.delegate = self
+            return true
+        }
+        return false
     }
     
     @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
@@ -43,7 +47,9 @@ class MoneyViewController: UIViewController {
     }
     
     private func initView(view: MoneyView) {
-        initPickerView()
+        if !initPickerView() {
+            return
+        }
         view.sourceValueTextField.text = "1"
         view.pickerViewSource.selectRow(0, inComponent: 0, animated: true)
         view.pickerViewTarget.selectRow(0, inComponent: 0, animated: true)

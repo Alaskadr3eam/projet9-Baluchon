@@ -25,6 +25,10 @@ extension TranslateViewController: LanguageTableViewControllerDelegate {
 }
 extension TranslateViewController: CommunicationTranslateView {
     func whenButtonTranslateIsClicked(textSource: String, sourceLangueCode: String, targetLangueCode: String) {
+        if !translate.isConnectedToNetwork() {
+            self.alertVC(title: "Attention", message: "Pas de réseau")
+            return
+        }
         translate.submitTranslate(textSource: textSource, source: sourceLangueCode, target: targetLangueCode)
     }
     

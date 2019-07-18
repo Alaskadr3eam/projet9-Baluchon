@@ -31,7 +31,7 @@ class WeatherService {
     
     func getWeather(q: String, completionHandler: @escaping (WeatherData?,NetworkError?) -> Void) {
         arguments["q"] = q
-        var request = ServiceCreateRequest.createRequest(url: Constant.weatherUrl, arguments: arguments)
+        guard var request = ServiceCreateRequest.createRequest(url: Constant.weatherUrl, arguments: arguments) else { return }
         request.httpMethod = "GET"
         task?.cancel()
         task = weatherSession.dataTask(with: request) { (data, response, error) in

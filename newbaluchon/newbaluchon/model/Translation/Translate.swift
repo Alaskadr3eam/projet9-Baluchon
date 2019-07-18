@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SystemConfiguration
 
 class Translate {
 
@@ -15,7 +16,7 @@ class Translate {
 
     var translatedText: String!
     
-    var errorTranslate: String?
+    var errorTranslate: NetworkError!
 
     private var translateServiceSession = TranslateService(translateSession: URLSession(configuration: .default))
     init(translateServiceSession: TranslateService) {
@@ -26,6 +27,30 @@ class Translate {
         
             return textSource.isEmpty == false || textSource == "Placeholder"
         }
+
+    
+    
+    
+   func isConnectedToNetwork() -> Bool {
+            var zeroAddress = sockaddr_in()
+            zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+            zeroAddress.sin_family = sa_family_t(AF_INET)
+            
+            let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+                $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { zeroSockAddress in
+                    SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+                }
+            }
+            
+            var flags = SCNetworkReachabilityFlags()
+            if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+                return false
+            }
+            let isReachable = flags.contains(.reachable)
+            let needsConnection = flags.contains(.connectionRequired)
+            return (isReachable && !needsConnection)
+        }
+    
     
     
 
@@ -34,17 +59,13 @@ class Translate {
             return
         }
         translateServiceSession.getTranslate(text: textSource, source: source, target: target) { [weak self] (translationData, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             if let error = error {
-                self.errorTranslate = error.rawValue
-                self.delegateAlert?.alertError(error)
+                self.errorTranslate = error
+                self.delegateAlert?.alertError(self.errorTranslate)
                 return
             }
-            guard let translationData = translationData else {
-                return
-            }
+            guard let translationData = translationData else { return }
             self.translatedText = translationData.data.translations[0].translatedText
             self.delegateScreen?.itIsResultTranslation(text: self.translatedText)
         }

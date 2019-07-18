@@ -8,9 +8,10 @@
 
 import Foundation
 struct ServiceCreateRequest {
-
-    static func createRequest(url: URL, arguments: [String:String]) -> URLRequest {
-        var request: URLRequest!
+   
+    static func createRequest(url: URL, arguments: [String:String]) -> URLRequest? {
+        
+        
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         var items = [URLQueryItem]()
         let param = arguments
@@ -19,8 +20,9 @@ struct ServiceCreateRequest {
             items.append(queryItem)
         }
         urlComponents?.queryItems = items
-        let url = urlComponents?.url
-        request = URLRequest(url: url!)
+        let urlComplete = urlComponents?.url
+        guard let urlSecure = urlComplete else { return nil }
+        let request = URLRequest(url: urlSecure)
         return request
     }
 }

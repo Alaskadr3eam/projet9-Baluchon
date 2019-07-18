@@ -29,7 +29,7 @@ class TranslateService {
         arguments["q"] = text
         arguments["source"] = source
         arguments["target"] = target
-        var request = ServiceCreateRequest.createRequest(url: Constant.translateUrl, arguments: arguments)
+        guard var request = ServiceCreateRequest.createRequest(url: Constant.translateUrl, arguments: arguments) else { return }
         request.httpMethod = "GET"
         task?.cancel()
         task = translateSession.dataTask(with: request) { (data, response, error) in
